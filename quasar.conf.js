@@ -56,18 +56,18 @@ module.exports = function (/* ctx */) {
       // Quasar plugins
       plugins: [],
       config: {
-      brand: {
-        primary: '#191919',
-        secondary: '#26A69A',
-        accent: '#33ff33',
+        brand: {
+          primary: '#293241',
+          secondary: '#4ecdc4',
+          accent: '#4cc9f0',
 
-        dark: '#1d1d1d',
+          dark: '#1d1d1d',
 
-        positive: '#21BA45',
-        negative: '#C10015',
-        info: '#31CCEC',
-        warning: '#F2C037'
-      }
+          positive: '#21BA45',
+          negative: '#C10015',
+          info: '#1789fc',
+          warning: '#F2C037'
+        }
     }
     },
 

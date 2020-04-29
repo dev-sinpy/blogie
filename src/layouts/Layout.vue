@@ -10,16 +10,16 @@
           </q-avatar>
         </q-toolbar-title>
         
-        <q-input dark dense standout v-model="text" input-class="text-right" class="q-ml-md mobile-hide">
+        <q-input dark dense standout 
+        input-class="text-right" class="q-ml-md mobile-hide">
           <template v-slot:append>
-            <q-icon v-if="text === ''" name="search" />
-            <q-icon v-else name="clear" class="cursor-pointer" @click="text = ''" />
+            <q-icon name="search" />
+            <q-icon class="cursor-pointer" />
           </template>
         </q-input>
         
         <div>
           <q-fab
-            v-model="fab2"
             label="Menu"
             vertical-actions-align="left"
             color="transparent"
@@ -27,10 +27,10 @@
             direction="down"
             
           >
-            <q-fab-action color="primary" @click="onClick" icon="mail" label="Signup" />
-            <q-fab-action color="primary" @click="onClick" icon="login" label="Login" />
-            <q-fab-action color="secondary" @click="onClick" icon="github" label="Github" />
-            <q-fab-action color="orange" @click="onClick" icon="logout" label="Logout" />
+            <q-fab-action color="primary" icon="mail" label="Signup" />
+            <q-fab-action color="primary" icon="login" label="Login" />
+            <q-fab-action color="secondary" icon="github" label="Github" />
+            <q-fab-action color="orange" icon="logout" label="Logout" />
             
           </q-fab>
         </div>
@@ -49,7 +49,7 @@
             <q-item 
             clickable 
             v-close-popup 
-            v-for="item in desktopNav"
+            v-for="item in mobileNav"
             :key="item.label"
             :to="item.to">
             
@@ -62,16 +62,9 @@
         </q-btn-dropdown>
           
         <q-btn-toggle class="mobile-hide absolute-center"
-      v-model="model"
       flat stretch
       toggle-color="yellow"
-      :options="[
-        {label: 'Feed', value: 'one'},
-        {label: 'Latest', value: 'two'},
-        {label: 'Popular', value: 'three'},
-        {label: 'Popular', value: 'three'},
-        {label: 'Popular', value: 'three'},
-      ]"
+      :options="desktopNav"
     />
       </q-toolbar>
 
@@ -115,16 +108,16 @@
       v-ripple 
       clickable
       v-for="tag in tags"
-      :key="tag.label"
-      @click="tag.check = !tag.check">
+      :key="tag.tag"
+      @click="tag.enabled = !tag.enabled">
         
         <q-item-section side top>
           <q-checkbox 
-          v-model="tag.check" />
+          v-model="tag.enabled" />
         </q-item-section>
 
         <q-item-section>
-          <q-item-label>{{tag.label}}</q-item-label>
+          <q-item-label>{{tag.tag}}</q-item-label>
         </q-item-section>
       </q-item>
 
@@ -167,7 +160,38 @@
 </template>
 
 <script>
-var tags = ['android', 'ios', 'windows', 'programming', 'news', 'random'];
+var tags = [
+{
+  tag: 'android',
+  popularity: 1,
+  enabled: true
+},
+{
+  tag: 'ios',
+  popularity: 1,
+  enabled: true
+},
+{
+  tag: 'windows',
+  popularity: 1,
+  enabled: true
+},
+{
+  tag: 'programming',
+  popularity: 1,
+  enabled: true
+},
+{
+  tag: 'news',
+  popularity: 1,
+  enabled: true
+},
+{
+  tag: 'random',
+  popularity: 1,
+  enabled: false
+},
+];
 
 function assignTags(tags) {
     let obj = Array();
@@ -180,7 +204,6 @@ function assignTags(tags) {
     }));
     counter++
     }
-    console.log(obj)
     return obj
 }
 
@@ -193,8 +216,7 @@ export default {
   data() {
     
     return {
-      desktopNav: [
-      
+      mobileNav: [
       {
         label: 'Latest',
         to: '/latest',
@@ -210,7 +232,17 @@ export default {
         to: '/random',
       },
       ],
-      tags: assignTags(tags),
+      
+      desktopNav: [
+        {label: 'Feed', value: 'one'},
+        {label: 'Latest', value: 'two'},
+        {label: 'Popular', value: 'three'},
+        {label: 'Popular', value: 'three'},
+        {label: 'Popular', value: 'three'},
+      ],
+      
+      tags: tags,
+      
       settings: [
       {
         label: 'Enable Dark Theme',

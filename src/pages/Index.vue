@@ -3,85 +3,116 @@
     <q-page padding>
           
     <!--main card -->
-    <q-card class="my-card" flat bordered>
+    <q-card class="my-card" 
+    flat bordered
+    v-for="article in cardsPrimary" 
+    :key="article.index">
       <q-img style="height: 175px; width: 100%; overflow: hidden;"
         src="https://cdn.quasar.dev/img/parallax2.jpg"
       />
 
       <q-card-section>
-        <div class="text-overline text-orange-9">Overline</div>
-        <div class="text-h5 q-mt-sm q-mb-xs">Title</div>
-        <div class="text-caption text-grey">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        <div class="flex justify-between">
+        <div class="text-overline text-orange-9">{{article.websiteName}}</div>
+        <q-icon name="favorite_border" style="font-size: 25px;" />
         </div>
-      </q-card-section>
-
-      <q-card-actions class="row justify-between">
-        <q-badge color="blue">
-          Tags
+        <div class="text-h5 q-mt-sm q-mb-xs">{{article.title}}</div>
+        <div class="text-caption text-grey">
+          {{article.content}}
+        </div>
+        
+      <div class="flex justify-between q-mt-sm">
+        <q-badge color="accent">
+          {{article.tags}}
         </q-badge>
         
-      <q-btn color="orange" size="sm" rounded>
+      <q-btn color="primary" size="sm" rounded>
           read more
         </q-btn>
-      </q-card-actions>
+        </div>
+        
+      </q-card-section>
+      
     </q-card>
     <q-separator />
     
-    <!-- secondary cards -->
-    <q-card class="my-card" flat bordered>
-      <q-card-section horizontal>
-        <q-card-section class="q-pt-xs">
-          <div class="text-overline">Website name</div>
-          <div class="text-h5 q-mt-sm q-mb-xs">Title</div>
-          <div class="text-caption text-grey">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          </div>
-        </q-card-section>
+    <!-- sub-secondary cards -->
+    <q-card 
+    class="my-card" 
+    flat bordered 
+    v-for="article in cardsSubSecondary"
+    :key="article.index">
 
-        <q-card-section class="col-xs-5 col-sm-4  col-md-6  col-lg-5 flex flex-center">
+      <q-card-section>
+        <div class="flex justify-between">
+            <div class="text-overline text-orange-9">{{article.websiteName}}</div>
+            <q-icon name="favorite_border" style="font-size: 25px;" />
+          </div>
+        
+        <div class="text-h5 q-mt-sm q-mb-xs">{{article.title}}</div>
+        <div class="text-caption text-grey">
+          {{article.content}}
+        </div>
+        
+        <div class="flex justify-between q-mt-sm">
+        <q-badge class="ml-md" color="accent">
+          {{article.tags}}
+        </q-badge>
+        
+        <q-btn color="primary" size="sm" rounded>
+          read more
+        </q-btn>
+        </div>
+        
+      </q-card-section>
+      
+    </q-card>
+    
+    <!-- secondary cards -->
+    <q-card 
+    class="my-card" 
+    flat bordered
+    v-for="article in cardsSecondary" 
+    :key="article.index"
+    >
+      <q-card-section>
+          <div class="flex justify-between">
+            <div class="text-overline text-orange-9">{{article.websiteName}}</div>
+            <q-icon name="favorite_border" style="font-size: 25px;" />
+          </div>
+          
+          <div class="row flex">
+          
+          <div class="col-8">
+          <div class="text-h5 q-mb-xs">{{article.title}}</div>
+          <div class="text-caption text-grey">
+            {{article.content}}
+          </div>
+          </div>
+          
+          <div class="col-4">
           <q-img
             class="rounded-borders"
             src="https://cdn.quasar.dev/img/parallax2.jpg"
           />
-        </q-card-section>
+          </div>
+          </div>
+          
+          <div class="flex justify-between q-mt-sm">
+            <q-badge color="accent">
+              {{article.tags}}
+            </q-badge>
+            
+            <q-btn color="primary" size="sm" rounded>
+              read more
+            </q-btn>
+          </div>
+          
       </q-card-section>
-
-      <q-card-actions class="row justify-between">
-        <q-badge color="blue">
-          Tags
-        </q-badge>
-        
-      <q-btn color="orange" size="sm" rounded>
-          read more
-        </q-btn>
-      </q-card-actions>
+      
     </q-card>
     
     <q-separator />
-    
-    
-    <!-- sub-secondary cards -->
-    <q-card class="my-card" flat bordered>
-
-      <q-card-section>
-        <div class="text-overline text-orange-9">Website Name</div>
-        <div class="text-h5 q-mt-sm q-mb-xs">Title</div>
-        <div class="text-caption text-grey">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        </div>
-      </q-card-section>
-
-      <q-card-actions class="row justify-between">
-        <q-badge class="ml-md" color="blue">
-          Tags
-        </q-badge>
-        
-      <q-btn color="orange" size="sm" rounded>
-          read more
-        </q-btn>
-      </q-card-actions>
-    </q-card>
           
         </q-page>
       </q-page-container>
@@ -94,6 +125,57 @@ export default {
   data() {
     
     return {
+      cardsPrimary: [
+      {
+        websiteName: 'example',
+        title: 'Blog 1',
+        content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,',
+        tags: 'android',
+      },
+      
+      ],
+      
+      cardsSubSecondary: [
+      {
+        websiteName: 'example',
+        title: 'Blog 1',
+        content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,',
+        tags: 'android',
+      },
+      
+      {
+        websiteName: 'example',
+        title: 'Blog 1',
+        content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,',
+        tags: 'android',
+      },
+      
+      {
+        websiteName: 'example',
+        title: 'Blog 1',
+        content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,',
+        tags: 'android',
+      },
+      
+      ],
+      
+      cardsSecondary: [
+      {
+        websiteName: 'example',
+        title: 'Blog 1',
+        content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,',
+        tags: 'android',
+      },
+      
+      {
+        websiteName: 'example',
+        title: 'Blog 1',
+        content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,',
+        tags: 'android',
+      },
+      
+      ],
+      
       lorem: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
     }
     
