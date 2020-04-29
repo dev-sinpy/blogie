@@ -41,44 +41,44 @@
 
     <q-layout view="lHh Lpr lff" container class="shadow-2" style="margin-top: 50px;  min-height: inherit;">
 
-        <q-toolbar>
-          <q-btn flat class="desktop-hide" @click="drawer = !drawer" round dense icon="menu" />
-          
-          <q-btn-dropdown class="col-10 desktop-hide text-orange text-h6 text-bold" color="transparent" label="Feed" dropdown-icon="none" flat>
-            <q-list>
-              <q-item clickable v-close-popup @click="onItemClick">
-                <q-item-section>
-                  <q-item-label>Latest</q-item-label>
-                </q-item-section>
-              </q-item>
+      <q-toolbar>
+        <q-btn flat class="desktop-hide" @click="drawer = !drawer" round dense icon="menu" />
+        
+        <q-btn-dropdown class="col-10 desktop-hide text-orange text-h6 text-bold" color="transparent" label="Feed" dropdown-icon="none" flat>
+          <q-list>
+            <q-item clickable v-close-popup @click="onItemClick">
+              <q-item-section>
+                <q-item-label>Latest</q-item-label>
+              </q-item-section>
+            </q-item>
 
-              <q-item clickable v-close-popup @click="onItemClick">
-                <q-item-section>
-                  <q-item-label>Popular</q-item-label>
-                </q-item-section>
-              </q-item>
+            <q-item clickable v-close-popup @click="onItemClick">
+              <q-item-section>
+                <q-item-label>Popular</q-item-label>
+              </q-item-section>
+            </q-item>
 
-              <q-item clickable v-close-popup @click="onItemClick">
-                <q-item-section>
-                  <q-item-label>Recommendation</q-item-label>
-                </q-item-section>
-              </q-item>
-            </q-list>
-          </q-btn-dropdown>
+            <q-item clickable v-close-popup @click="onItemClick">
+              <q-item-section>
+                <q-item-label>Recommendation</q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-btn-dropdown>
           
-          <q-btn-toggle class="mobile-hide absolute-center"
-        v-model="model"
-        flat stretch
-        toggle-color="yellow"
-        :options="[
-          {label: 'Feed', value: 'one'},
-          {label: 'Latest', value: 'two'},
-          {label: 'Popular', value: 'three'},
-          {label: 'Popular', value: 'three'},
-          {label: 'Popular', value: 'three'},
-        ]"
-      />
-        </q-toolbar>
+        <q-btn-toggle class="mobile-hide absolute-center"
+      v-model="model"
+      flat stretch
+      toggle-color="yellow"
+      :options="[
+        {label: 'Feed', value: 'one'},
+        {label: 'Latest', value: 'two'},
+        {label: 'Popular', value: 'three'},
+        {label: 'Popular', value: 'three'},
+        {label: 'Popular', value: 'three'},
+      ]"
+    />
+      </q-toolbar>
 
 
       <q-drawer
@@ -101,7 +101,7 @@
               label="Account"
             >
             <q-item>
-              <q-btn class="relative-position absolute-center" color="primary" icon="mail" label="Signup" />
+              <q-btn class="absolute-center" color="primary" icon="mail" label="Signup" />
               </q-item>
             </q-expansion-item>
             </q-list>
@@ -229,7 +229,7 @@ const menuList = [
 ]
 export default {
   
-  name: 'MainLayout',
+  name: 'Layout',
 
   components: {
   },
@@ -245,9 +245,6 @@ export default {
       notif2: true,
       notif3: false,
 
-      volume: 6,
-      brightness: 3,
-      mic: 8,
       drawer: false,
       menuList,
       lorem: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
