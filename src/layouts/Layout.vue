@@ -46,23 +46,18 @@
         
         <q-btn-dropdown class="col-10 desktop-hide text-orange text-h6 text-bold" color="transparent" label="Feed" dropdown-icon="none" flat>
           <q-list>
-            <q-item clickable v-close-popup @click="onItemClick">
+            <q-item 
+            clickable 
+            v-close-popup 
+            v-for="item in desktopNav"
+            :key="item.label"
+            :to="item.to">
+            
               <q-item-section>
-                <q-item-label>Latest</q-item-label>
+                <q-item-label>{{item.label}}</q-item-label>
               </q-item-section>
             </q-item>
 
-            <q-item clickable v-close-popup @click="onItemClick">
-              <q-item-section>
-                <q-item-label>Popular</q-item-label>
-              </q-item-section>
-            </q-item>
-
-            <q-item clickable v-close-popup @click="onItemClick">
-              <q-item-section>
-                <q-item-label>Recommendation</q-item-label>
-              </q-item-section>
-            </q-item>
           </q-list>
         </q-btn-dropdown>
           
@@ -101,7 +96,7 @@
               label="Account"
             >
             <q-item>
-              <q-btn class="absolute-center" color="primary" icon="mail" label="Signup" />
+              <q-btn to="/signup" class="absolute-center" color="primary" icon="mail" label="Signup" />
               </q-item>
             </q-expansion-item>
             </q-list>
@@ -116,70 +111,52 @@
       >
       <q-item-label header>Popular</q-item-label>
 
-      <q-item tag="label" v-ripple>
+      <q-item 
+      v-ripple 
+      clickable
+      v-for="tag in tags"
+      :key="tag.label"
+      @click="tag.check = !tag.check">
+        
         <q-item-section side top>
-          <q-checkbox v-model="check1" />
+          <q-checkbox 
+          v-model="tag.check" />
         </q-item-section>
 
         <q-item-section>
-          <q-item-label>Android</q-item-label>
+          <q-item-label>{{tag.label}}</q-item-label>
         </q-item-section>
       </q-item>
 
-      <q-item tag="label" v-ripple>
-        <q-item-section side top>
-          <q-checkbox v-model="check2" />
-        </q-item-section>
-
-        <q-item-section>
-          <q-item-label>ios</q-item-label>
-        </q-item-section>
-      </q-item>
-
-      <q-item tag="label" v-ripple>
-        <q-item-section side top>
-          <q-checkbox v-model="check3" />
-        </q-item-section>
-
-        <q-item-section>
-          <q-item-label>Windows</q-item-label>
-        </q-item-section>
-      </q-item>
-
-      <q-item tag="label" v-ripple>
-        <q-item-section side top>
-          <q-checkbox v-model="check3" />
-        </q-item-section>
-
-        <q-item-section>
-          <q-item-label>Programming</q-item-label>
-        </q-item-section>
-      </q-item>
-
-      <q-item tag="label" v-ripple>
-        <q-item-section side top>
-          <q-checkbox v-model="check3" />
-        </q-item-section>
-
-        <q-item-section>
-          <q-item-label>Random</q-item-label>
-        </q-item-section>
-      </q-item>
       </q-expansion-item>
     </q-list>
 
       <q-list bordered class="rounded-borders">
-            <q-expansion-item
-              switch-toggle-side
-              expand-separator
-              icon="setting"
-              label="Setting"
-            >
-            <q-item>
-              <q-checkbox label="Enable Dark Theme" v-model="check1" />
-              </q-item>
-            </q-expansion-item>
-            </q-list>
+        <q-expansion-item
+          switch-toggle-side
+          expand-separator
+          icon="settings"
+          label="Preferences"
+        >
+          <q-item 
+          v-ripple
+          clickable
+          v-for="setting in settings"
+          :key="setting.label"
+          @click="setting.enabled=!setting.enabled">
+            
+            <q-item-section side top>
+              <q-checkbox v-model="setting.enabled" />
+            </q-item-section>
+            
+            <q-item-section>
+              <q-item-label>{{setting.label}}</q-item-label>
+              </q-item-section>
+            
+            </q-item>
+          </q-expansion-item>
+          </q-list>
+          
         </q-scroll-area>
       </q-drawer>
           <router-view />
@@ -190,63 +167,58 @@
 </template>
 
 <script>
-const menuList = [
-  {
-    icon: 'signup',
-    label: 'Signup',
-    separator: true
-  },
-  {
-    icon: 'tags',
-    label: 'Tags',
-    separator: false
-  },
-  {
-    icon: 'news',
-    label: 'news',
-    separator: false
-  },
-  {
-    icon: 'tech',
-    label: 'technology',
-    separator: false
-  },
-  {
-    icon: 'programming',
-    label: 'Programming',
-    separator: false
-  },
-  {
-    icon: 'android',
-    label: 'Android',
-    separator: false
-  },
-  {
-    icon: 'windows',
-    label: 'Windows',
-    separator: false
-  }
-]
+var tags = ['android', 'ios', 'windows', 'programming', 'news', 'random'];
+
+function assignTags(tags) {
+    let obj = Array();
+    let counter = 0;
+    for (let i=0; i < tags.length-1; i++) {
+        obj.push(Object.assign({
+        index: counter,
+        label: tags[i],
+        check: true
+    }));
+    counter++
+    }
+    console.log(obj)
+    return obj
+}
+
 export default {
   
   name: 'Layout',
 
   components: {
   },
-  
   data() {
     
     return {
-      check1: true,
-      check2: false,
-      check3: false,
-
-      notif1: true,
-      notif2: true,
-      notif3: false,
+      desktopNav: [
+      
+      {
+        label: 'Latest',
+        to: '/latest',
+      },
+      
+      {
+        label: 'Popular',
+        to: '/popular',
+      },
+      
+      {
+        label: 'Random',
+        to: '/random',
+      },
+      ],
+      tags: assignTags(tags),
+      settings: [
+      {
+        label: 'Enable Dark Theme',
+        enabled: false
+      },
+      ],
 
       drawer: false,
-      menuList,
       lorem: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
     }
     

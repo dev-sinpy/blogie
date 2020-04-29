@@ -117,6 +117,7 @@
       <q-item-label header>Popular</q-item-label>
 
       <q-item tag="label" v-ripple>
+        
         <q-item-section side top>
           <q-checkbox v-model="check1" />
         </q-item-section>
@@ -229,7 +230,7 @@ const menuList = [
 ]
 export default {
   
-  name: 'MainLayout',
+  name: 'Layout',
 
   components: {
   },
