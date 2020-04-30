@@ -94,35 +94,27 @@
             </q-expansion-item>
             </q-list>
       
-      <q-list bordered class="rounded-borders q-mt-md">
-      <q-expansion-item
+      <q-list 
+      bordered 
+      class="rounded-borders q-mt-md">
+        
+        <q-expansion-item
         switch-toggle-side
         expand-separator
         default-opened
         icon="tags"
-        label="Select Tags"
-      >
+        label="Select Tags">
       <q-item-label header>Popular</q-item-label>
-
-      <q-item 
-      v-ripple 
-      clickable
+      
+      <tags 
       v-for="tag in tags"
-      :key="tag.tag"
-      @click="tag.enabled = !tag.enabled">
-        
-        <q-item-section side top>
-          <q-checkbox 
-          v-model="tag.enabled" />
-        </q-item-section>
-
-        <q-item-section>
-          <q-item-label>{{tag.tag}}</q-item-label>
-        </q-item-section>
-      </q-item>
+      v-bind:tag="tag"
+      :key="tag.tag"/>
 
       </q-expansion-item>
-    </q-list>
+        
+        
+      </q-list>
 
       <q-list bordered class="rounded-borders">
         <q-expansion-item
@@ -212,6 +204,7 @@ export default {
   name: 'Layout',
 
   components: {
+    'tags': require('components/Tags.vue').default,
   },
   data() {
     

@@ -1,116 +1,30 @@
 <template>
   <q-page-container>
     <q-page padding>
-          
-    <!--main card -->
-    <q-card class="my-card" 
-    flat bordered
-    v-for="article in cardsPrimary" 
-    :key="article.index">
-      <q-img style="height: 175px; width: 100%; overflow: hidden;"
-        src="https://cdn.quasar.dev/img/parallax2.jpg"
-      />
-
-      <q-card-section>
-        <div class="flex justify-between">
-        <div class="text-overline text-orange-9">{{article.websiteName}}</div>
-        <q-icon name="favorite_border" style="font-size: 25px;" />
-        </div>
-        <div class="text-h5 q-mt-sm q-mb-xs">{{article.title}}</div>
-        <div class="text-caption text-grey">
-          {{article.content}}
-        </div>
-        
-      <div class="flex justify-between q-mt-sm">
-        <q-badge color="accent">
-          {{article.tags}}
-        </q-badge>
-        
-      <q-btn color="primary" size="sm" rounded>
-          read more
-        </q-btn>
-        </div>
-        
-      </q-card-section>
-      
-    </q-card>
+    
+    <!--Primary card-->
+    
+    <primary-card
+    v-for="article in cardsPrimary"
+    :key="article.index"
+    v-bind:article="article" />
     <q-separator />
     
     <!-- sub-secondary cards -->
-    <q-card 
-    class="my-card" 
-    flat bordered 
+    
+    <tiny-card
     v-for="article in cardsSubSecondary"
-    :key="article.index">
-
-      <q-card-section>
-        <div class="flex justify-between">
-            <div class="text-overline text-orange-9">{{article.websiteName}}</div>
-            <q-icon name="favorite_border" style="font-size: 25px;" />
-          </div>
-        
-        <div class="text-h5 q-mt-sm q-mb-xs">{{article.title}}</div>
-        <div class="text-caption text-grey">
-          {{article.content}}
-        </div>
-        
-        <div class="flex justify-between q-mt-sm">
-        <q-badge class="ml-md" color="accent">
-          {{article.tags}}
-        </q-badge>
-        
-        <q-btn color="primary" size="sm" rounded>
-          read more
-        </q-btn>
-        </div>
-        
-      </q-card-section>
-      
-    </q-card>
+    :key="article.index"
+    v-bind:article="article" />
+    <q-separator />
     
     <!-- secondary cards -->
-    <q-card 
-    class="my-card" 
-    flat bordered
-    v-for="article in cardsSecondary" 
+    
+    <sub-card
+    v-for="article in cardsSecondary"
     :key="article.index"
-    >
-      <q-card-section>
-          <div class="flex justify-between">
-            <div class="text-overline text-orange-9">{{article.websiteName}}</div>
-            <q-icon name="favorite_border" style="font-size: 25px;" />
-          </div>
-          
-          <div class="row flex">
-          
-          <div class="col-8">
-          <div class="text-h5 q-mb-xs">{{article.title}}</div>
-          <div class="text-caption text-grey">
-            {{article.content}}
-          </div>
-          </div>
-          
-          <div class="col-4">
-          <q-img
-            class="rounded-borders"
-            src="https://cdn.quasar.dev/img/parallax2.jpg"
-          />
-          </div>
-          </div>
-          
-          <div class="flex justify-between q-mt-sm">
-            <q-badge color="accent">
-              {{article.tags}}
-            </q-badge>
-            
-            <q-btn color="primary" size="sm" rounded>
-              read more
-            </q-btn>
-          </div>
-          
-      </q-card-section>
-      
-    </q-card>
+    v-bind:article="article" />
+    <q-separator />
     
     <q-separator />
           
@@ -122,6 +36,11 @@
 
 export default {
   name: 'PageIndex',
+  components: {
+    'primary-card': require('components/PrimaryCard.vue').default,
+    'tiny-card': require('components/TinyCard.vue').default,
+    'sub-card': require('components/SubCard.vue').default,
+  },
   data() {
     
     return {
