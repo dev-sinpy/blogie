@@ -1,19 +1,18 @@
 <template>
   <q-page-container>
     <q-page padding>
-    
+      
+    <h5 class="text-h5 text-weight-bold" style="color: #293241;">Recommended For You</h5>
     <!--Primary card-->
     
     <primary-card
-    v-for="article in cardsPrimary"
-    :key="article.index"
-    v-bind:article="article" />
+    v-bind:article="primaryCard" />
     <q-separator />
     
     <!-- sub-secondary cards -->
     
     <tiny-card
-    v-for="article in cardsSubSecondary"
+    v-for="article in subCard"
     :key="article.index"
     v-bind:article="article" />
     <q-separator />
@@ -21,7 +20,7 @@
     <!-- secondary cards -->
     
     <sub-card
-    v-for="article in cardsSecondary"
+    v-for="article in secondaryCard"
     :key="article.index"
     v-bind:article="article" />
     <q-separator />
@@ -33,6 +32,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'PageIndex',
@@ -41,61 +41,27 @@ export default {
     'tiny-card': require('components/TinyCard.vue').default,
     'sub-card': require('components/SubCard.vue').default,
   },
+  
+  computed: {
+    ...mapGetters('articles', ['articles']),
+    
+    primaryCard() {
+      return this.$store.getters['articles/articles'][0]
+    },
+    
+    subCard() {
+      return this.$store.getters['articles/articles'].slice(1, -1)
+    },
+    
+    secondaryCard() {
+      return this.$store.getters['articles/articles'].slice(-2, )
+    },
+  },
+  
   data() {
     
     return {
-      cardsPrimary: [
-      {
-        websiteName: 'example',
-        title: 'Blog 1',
-        content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,',
-        tags: 'android',
-      },
-      
-      ],
-      
-      cardsSubSecondary: [
-      {
-        websiteName: 'example',
-        title: 'Blog 1',
-        content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,',
-        tags: 'android',
-      },
-      
-      {
-        websiteName: 'example',
-        title: 'Blog 1',
-        content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,',
-        tags: 'android',
-      },
-      
-      {
-        websiteName: 'example',
-        title: 'Blog 1',
-        content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,',
-        tags: 'android',
-      },
-      
-      ],
-      
-      cardsSecondary: [
-      {
-        websiteName: 'example',
-        title: 'Blog 1',
-        content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,',
-        tags: 'android',
-      },
-      
-      {
-        websiteName: 'example',
-        title: 'Blog 1',
-        content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,',
-        tags: 'android',
-      },
-      
-      ],
-      
-      lorem: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+
     }
     
   }

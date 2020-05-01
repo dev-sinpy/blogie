@@ -42,7 +42,7 @@
     <q-layout view="lHh Lpr lff" container class="shadow-2" style="margin-top: 50px;  min-height: inherit;">
 
       <q-toolbar>
-        <q-btn flat class="desktop-hide" @click="drawer = !drawer" round dense icon="menu" />
+        <q-btn flat class="desktop-hide" @click="drawer = !drawer" round dense icon="linear_scale" />
         
         <q-btn-dropdown class="col-10 desktop-hide text-orange text-h6 text-bold" color="transparent" label="Feed" dropdown-icon="none" flat>
           <q-list>
@@ -152,60 +152,22 @@
 </template>
 
 <script>
-var tags = [
-{
-  tag: 'android',
-  popularity: 1,
-  enabled: true
-},
-{
-  tag: 'ios',
-  popularity: 1,
-  enabled: true
-},
-{
-  tag: 'windows',
-  popularity: 1,
-  enabled: true
-},
-{
-  tag: 'programming',
-  popularity: 1,
-  enabled: true
-},
-{
-  tag: 'news',
-  popularity: 1,
-  enabled: true
-},
-{
-  tag: 'random',
-  popularity: 1,
-  enabled: false
-},
-];
-
-function assignTags(tags) {
-    let obj = Array();
-    let counter = 0;
-    for (let i=0; i < tags.length-1; i++) {
-        obj.push(Object.assign({
-        index: counter,
-        label: tags[i],
-        check: true
-    }));
-    counter++
-    }
-    return obj
-}
+  import { mapGetters } from 'vuex'
+  import { mapState } from 'vuex'
 
 export default {
   
   name: 'Layout',
-
+  
   components: {
     'tags': require('components/Tags.vue').default,
   },
+  
+  computed: {
+    ...mapState('articles', ['tags']),
+    ...mapGetters('articles', ['enabledTags'])
+  },
+  
   data() {
     
     return {
@@ -234,7 +196,6 @@ export default {
         {label: 'Popular', value: 'three'},
       ],
       
-      tags: tags,
       
       settings: [
       {
@@ -244,7 +205,6 @@ export default {
       ],
 
       drawer: false,
-      lorem: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
     }
     
   }
