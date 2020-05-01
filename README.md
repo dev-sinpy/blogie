@@ -1,6 +1,4 @@
-# blogie (blogie)
-
-Article recommendation site
+# Blogie
 
 ## Install the dependencies
 ```bash
