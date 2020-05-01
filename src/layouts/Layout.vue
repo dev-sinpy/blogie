@@ -19,10 +19,10 @@
         </q-input>
         
         <div>
-          <q-fab
+          <q-fab flat
             label="Menu"
             vertical-actions-align="left"
-            color="transparent"
+            color="white"
             icon="none"
             direction="down"
             
