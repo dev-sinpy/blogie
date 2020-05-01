@@ -14,6 +14,8 @@
   "dependencies": {
     "@quasar/extras": "^1.6.4",
     "axios": "^0.18.1",
+    "firebase": "^7.14.2",
+    "firebaseui": "^4.5.0",
     "quasar": "^1.0.0"
   },
   "devDependencies": {
@@ -22,7 +24,8 @@
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.9.0",
     "eslint-loader": "^3.0.3",
-    "eslint-plugin-vue": "^6.1.2"
+    "eslint-plugin-vue": "^6.1.2",
+    "json-loader": "^0.5.7"
   },
   "engines": {
     "node": ">= 10.18.1",

@@ -27,8 +27,9 @@
             direction="down"
             
           >
-            <q-fab-action color="primary" icon="mail" label="Signup" />
-            <q-fab-action color="primary" icon="login" label="Login" />
+            <q-fab-action to="/" color="primary" icon="home" label="Home" />
+            <q-fab-action to="/auth" color="primary" icon="mail" label="Signup" />
+            <q-fab-action to="/login" color="primary" icon="login" label="Login" />
             <q-fab-action color="secondary" icon="github" label="Github" />
             <q-fab-action color="orange" icon="logout" label="Logout" />
             
@@ -54,14 +55,16 @@
             :to="item.to">
             
               <q-item-section>
-                <q-item-label>{{item.label}}</q-item-label>
+                <q-item-label style="text-align: center;">{{item.label}}</q-item-label>
               </q-item-section>
             </q-item>
 
           </q-list>
         </q-btn-dropdown>
           
-        <q-btn-toggle class="mobile-hide absolute-center"
+          <q-space />
+          
+        <q-btn-toggle class="mobile-hide"
       flat stretch
       toggle-color="yellow"
       :options="desktopNav"
@@ -89,7 +92,7 @@
               label="Account"
             >
             <q-item>
-              <q-btn to="/signup" class="absolute-center" color="primary" icon="mail" label="Signup" />
+              <q-btn class="absolute-center" color="primary" icon="mail" label="Signup" to="/auth" @click="drawer = !drawer" />
               </q-item>
             </q-expansion-item>
             </q-list>
@@ -144,6 +147,7 @@
           
         </q-scroll-area>
       </q-drawer>
+      
           <router-view />
       </q-layout>
 
@@ -171,6 +175,7 @@ export default {
   data() {
     
     return {
+      popup: false,
       mobileNav: [
       {
         label: 'Latest',
@@ -191,8 +196,6 @@ export default {
       desktopNav: [
         {label: 'Feed', value: 'one'},
         {label: 'Latest', value: 'two'},
-        {label: 'Popular', value: 'three'},
-        {label: 'Popular', value: 'three'},
         {label: 'Popular', value: 'three'},
       ],
       

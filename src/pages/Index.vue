@@ -33,6 +33,9 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { AUTH } from '../plugins/firebase'
+
+console.log(AUTH.currentUser)
 
 export default {
   name: 'PageIndex',
