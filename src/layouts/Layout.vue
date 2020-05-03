@@ -12,7 +12,7 @@
         
         <q-input dark dense standout 
         input-class="text-right" class="q-ml-md mobile-hide">
-          <template v-slot:append>
+          <template>
             <q-icon name="search" />
             <q-icon class="cursor-pointer" />
           </template>
@@ -28,10 +28,10 @@
             
           >
             <q-fab-action to="/" color="primary" icon="home" label="Home" />
-            <q-fab-action to="/auth" color="primary" icon="mail" label="Signup" />
-            <q-fab-action to="/login" color="primary" icon="login" label="Login" />
+            <q-fab-action v-if="!isAuthenticated" to="/register" color="primary" icon="mail" label="Signup" />
+            <q-fab-action v-if="!isAuthenticated" to="/login" color="primary" icon="login" label="Login" />
             <q-fab-action color="secondary" icon="github" label="Github" />
-            <q-fab-action color="orange" icon="logout" label="Logout" />
+            <q-fab-action v-if="isAuthenticated" @click="logout" color="orange" icon="logout" label="Logout" />
             
           </q-fab>
         </div>
@@ -83,7 +83,7 @@
       >
         <q-scroll-area class="fit">
           
-          <q-list bordered class="rounded-borders">
+          <q-list v-if="!isAuthenticated" bordered class="rounded-borders">
             <q-expansion-item
               switch-toggle-side
               expand-separator
@@ -92,7 +92,9 @@
               label="Account"
             >
             <q-item>
-              <q-btn class="absolute-center" color="primary" icon="mail" label="Signup" to="/auth" @click="drawer = !drawer" />
+              <q-btn class="absolute-center desktop-hide" color="primary" icon="mail" label="Signup" to="/register" @click="drawer = !drawer" />
+              
+              <q-btn class="absolute-center mobile-hide" color="primary" icon="mail" label="Signup" to="/register" />
               </q-item>
             </q-expansion-item>
             </q-list>
@@ -110,7 +112,7 @@
       <q-item-label header>Popular</q-item-label>
       
       <tags 
-      v-for="tag in tags"
+      v-for="tag in Tags"
       v-bind:tag="tag"
       :key="tag.tag"/>
 
@@ -147,8 +149,7 @@
           
         </q-scroll-area>
       </q-drawer>
-      
-          <router-view />
+          <router-view :success="success" :error="error" />
       </q-layout>
 
   </q-layout>
@@ -158,6 +159,7 @@
 <script>
   import { mapGetters } from 'vuex'
   import { mapState } from 'vuex'
+  import { AUTH } from '../plugins/firebase'
 
 export default {
   
@@ -166,15 +168,39 @@ export default {
   components: {
     'tags': require('components/Tags.vue').default,
   },
-  
-  computed: {
-    ...mapState('articles', ['tags']),
-    ...mapGetters('articles', ['enabledTags'])
+  methods: {
+    logout () {
+      
+      this.$q.dialog({
+        title: 'Logout',
+        message: 'Are you sure you want to logout?',
+        cancel: true,
+        persistent: true
+      }).onOk(() => {
+        //
+      }).onOk(() => {
+        AUTH.signOut().then(() => {
+          this.success = 'Logged out successfully'
+          }).catch((error) => {
+            this.error = error;
+          });
+      }).onCancel(() => {
+        // console.log('>>>> Cancel')
+      }).onDismiss(() => {
+        // console.log('I am triggered on both OK and Cancel')
+      })
+    },
   },
   
+  computed: {
+    ...mapGetters('articles', ['Tags']),
+    ...mapGetters('articles', ['isAuthenticated'])
+  },
   data() {
     
     return {
+      success: null,
+      error: null,
       popup: false,
       mobileNav: [
       {

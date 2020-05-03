@@ -1,8 +1,15 @@
 <template>
   <q-page-container>
     <q-page padding>
-      
-    <h5 class="text-h5 text-weight-bold" style="color: #293241;">Recommended For You</h5>
+    <q-banner v-if="success" inline-actions class="text-white bg-positive">
+      {{success}}
+    </q-banner>
+    
+    <q-banner v-if="error" inline-actions class="text-white bg-negative">
+      {{error}}
+    </q-banner>
+    
+    <div class="q-pb-md text-h5 text-primary text-weight-bold">Recommended For You</div>
     <!--Primary card-->
     
     <primary-card
@@ -33,9 +40,6 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { AUTH } from '../plugins/firebase'
-
-console.log(AUTH.currentUser)
 
 export default {
   name: 'PageIndex',
@@ -44,6 +48,7 @@ export default {
     'tiny-card': require('components/TinyCard.vue').default,
     'sub-card': require('components/SubCard.vue').default,
   },
+  props: ['success', 'error'],
   
   computed: {
     ...mapGetters('articles', ['articles']),
@@ -64,7 +69,6 @@ export default {
   data() {
     
     return {
-
     }
     
   }

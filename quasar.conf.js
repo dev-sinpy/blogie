@@ -13,7 +13,7 @@ module.exports = function (/* ctx */) {
     // --> boot files are part of "main.js"
     // https://quasar.dev/quasar-cli/cli-documentation/boot-files
     boot: [
-      
+      'boot',
       'axios',
     ],
 
@@ -54,7 +54,7 @@ module.exports = function (/* ctx */) {
       directives: [],
 
       // Quasar plugins
-      plugins: [],
+      plugins: ['Dialog', 'LocalStorage'],
       config: {
         brand: {
           primary: '#293241',
@@ -73,6 +73,7 @@ module.exports = function (/* ctx */) {
 
     // https://quasar.dev/quasar-cli/cli-documentation/supporting-ie
     supportIE: false,
+    preFetch: true,
 
     // https://quasar.dev/quasar-cli/cli-documentation/supporting-ts
     supportTS: false,
@@ -165,7 +166,7 @@ module.exports = function (/* ctx */) {
     // Full list of options: https://quasar.dev/quasar-cli/developing-cordova-apps/configuring-cordova
     cordova: {
       // noIosLegacyBuildFlag: true, // uncomment only if you know what you are doing
-      id: 'org.cordova.quasar.app'
+      id: 'org.cordova.blogie.app'
     },
 
     // Full list of options: https://quasar.dev/quasar-cli/developing-capacitor-apps/configuring-capacitor

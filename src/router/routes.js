@@ -4,9 +4,10 @@ const routes = [
     path: '/',
     component: () => import('layouts/Layout.vue'),
     children: [
-      { path: '', component: () => import('pages/Index.vue') },
-      { path: '/auth', component: () => import('pages/Auth.vue') },
-      { path: '/login', component: () => import('pages/Login.vue') },
+      { path: '', name: 'index', component: () => import('pages/Index.vue') },
+      { path: '/register', name: 'register', component: () => import('pages/Register.vue') },
+      { path: '/login', name: 'login', component: () => import('pages/Login.vue') },
+      { path: '/dashboard', name: 'dashboard', meta: {authRequired: true}, component: () => import('pages/Dashboard.vue') },
     ]
   }
 ]
