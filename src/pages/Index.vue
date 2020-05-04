@@ -1,76 +1,74 @@
 <template>
   <q-page-container>
     <q-page padding>
-    <q-banner v-if="success" inline-actions class="text-white bg-positive">
+      <q-banner v-if="success" inline-actions class="text-white bg-positive">
       {{success}}
     </q-banner>
     
     <q-banner v-if="error" inline-actions class="text-white bg-negative">
       {{error}}
     </q-banner>
-    
-    <div class="q-pb-md text-h5 text-primary text-weight-bold">Recommended For You</div>
-    <!--Primary card-->
-    
-    <primary-card
-    v-bind:article="primaryCard" />
-    <q-separator />
-    
-    <!-- sub-secondary cards -->
-    
-    <tiny-card
-    v-for="article in subCard"
-    :key="article.index"
-    v-bind:article="article" />
-    <q-separator />
-    
-    <!-- secondary cards -->
-    
-    <sub-card
-    v-for="article in secondaryCard"
-    :key="article.index"
-    v-bind:article="article" />
-    <q-separator />
-    
-    <q-separator />
-          
-        </q-page>
-      </q-page-container>
+    <q-card class="doc-container">
+      <q-card-section class="column items-center q-pa-lg">
+        <div class="text-h3">
+          Logged in? {{isAuthenticated}}
+          </div>
+        <div class="text-h3">
+          Logged in as {{user}}
+          </div>
+        <q-btn class="flex-break" v-if="isAuthenticated" to="/dashboard" label="dashboard" color="primary"/>
+        
+        <q-btn v-if="!isAuthenticated" to="/login" label="login" color="primary"/>
+        
+        <q-btn v-if="!isAuthenticated" to="/register" label="register" color="primary"/>
+        
+        <q-btn v-if="isAuthenticated" @click="logout" label="logout" color="primary"/>
+        
+        </q-card-section>
+      </q-card>
+      </q-page>
+  </q-page-container>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import { AUTH } from '../plugins/firebase'
 
 export default {
   name: 'PageIndex',
-  components: {
-    'primary-card': require('components/PrimaryCard.vue').default,
-    'tiny-card': require('components/TinyCard.vue').default,
-    'sub-card': require('components/SubCard.vue').default,
-  },
-  props: ['success', 'error'],
-  
   computed: {
-    ...mapGetters('articles', ['articles']),
-    
-    primaryCard() {
-      return this.$store.getters['articles/articles'][0]
-    },
-    
-    subCard() {
-      return this.$store.getters['articles/articles'].slice(1, -1)
-    },
-    
-    secondaryCard() {
-      return this.$store.getters['articles/articles'].slice(-2, )
-    },
+    ...mapGetters('articles', ['isAuthenticated']),
+    ...mapGetters('articles', ['user']),
   },
-  
-  data() {
-    
-    return {
+  methods: {
+    logout() {
+      this.$q.dialog({
+        title: 'Logout',
+        message: 'Are you sure you want to logout?',
+        cancel: true,
+        persistent: true
+      }).onOk(() => {
+        //
+      }).onOk(() => {
+        AUTH.signOut().then(() => {
+          this.success = 'Logged out successfully'
+          this.$store.dispatch('articles/fetchUser')
+          this.$router.push('/')
+          }).catch((error) => {
+            this.error = error;
+          });
+      }).onCancel(() => {
+        // console.log('>>>> Cancel')
+      }).onDismiss(() => {
+        // console.log('I am triggered on both OK and Cancel')
+      })
     }
-    
+  },
+  data() {
+    return {
+      success: null,
+      error: null,
+    }
   }
 }
 </script>

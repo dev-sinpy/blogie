@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Firebase from 'firebase/app'
 import { AUTH } from '../plugins/firebase'
 import routes from './routes'
 
@@ -15,7 +14,7 @@ Vue.use(VueRouter)
  * with the Router instance.
  */
 
-export default function (/* { store, ssrContext } */) {
+export default function ({ store, ssrContext }) {
   const Router = new VueRouter({
     scrollBehavior: () => ({ x: 0, y: 0 }),
     routes,
@@ -26,28 +25,18 @@ export default function (/* { store, ssrContext } */) {
     mode: process.env.VUE_ROUTER_MODE,
     base: process.env.VUE_ROUTER_BASE
   })
-  Router.beforeEach((to, from, next) => {
-    // Check to see if the route has the meta field "authRequired" set to true
-    let authRequired = to.matched.some(route => route.meta.authRequired)
-
-    let isAuthenticated = AUTH.currentUser
-
-    if (authRequired) {
-        console.log(isAuthenticated);
-      if (isAuthenticated) {
-        // User is already signed in. Continue on.
-        next()
-      } else {
-        // Not signed in. Redirect to login page.
-        next({
-          name: 'register'
-        })
-      }
-    } else {
-      // Doesn't require authentication. Just continue on.
-      next()
-    }
-  })
+  //~ AUTH.onAuthStateChanged(user => {
+      //~ if (user) {
+        //~ // Signed in. Let Vuex know.
+        //~ console.log('user is logged in');
+        //~ console.log(user);
+        //~ store.dispatch('articles/fetchTags', user)
+        
+      //~ } else {
+        //~ // Signed out. Let Vuex know.
+        //~ store.commit('articles/RESET_USER')
+      //~ }
+    //~ })
 
   return Router
 }
