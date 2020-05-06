@@ -57,10 +57,11 @@ module.exports = function (/* ctx */) {
       plugins: ['Dialog', 'LocalStorage'],
       config: {
         brand: {
-          primary: '#293241',
+          primary: '#121212',
           secondary: '#4ecdc4',
-          accent: '#4cc9f0',
+          accent: '#50B4F4',
 
+          dark: '#1d1d1d',
           dark: '#1d1d1d',
 
           positive: '#21BA45',

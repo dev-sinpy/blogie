@@ -1,7 +1,7 @@
 <template>
   <q-layout>
 
-    <q-header reveal bordered class="bg-primary text-white">
+    <q-header reveal class="bg-primary text-white">
       <q-toolbar>
 
         <q-toolbar-title>
@@ -10,16 +10,8 @@
           </q-avatar>
         </q-toolbar-title>
         
-        <q-input dark dense standout 
-        input-class="text-right" class="q-ml-md mobile-hide">
-          <template>
-            <q-icon name="search" />
-            <q-icon class="cursor-pointer" />
-          </template>
-        </q-input>
-        
-        <div>
-          <q-fab flat
+        <div class="desktop-hide">
+          <q-fab flat 
             label="Menu"
             vertical-actions-align="left"
             color="white"
@@ -27,13 +19,25 @@
             direction="down"
             
           >
-            <q-fab-action to="/" color="primary" icon="home" label="Home" />
-            <q-fab-action v-if="!isAuthenticated" to="/register" color="primary" icon="mail" label="Signup" />
-            <q-fab-action v-if="!isAuthenticated" to="/login" color="primary" icon="login" label="Login" />
-            <q-fab-action color="secondary" icon="github" label="Github" />
-            <q-fab-action v-if="isAuthenticated" @click="logout" color="orange" icon="logout" label="Logout" />
+            <q-fab-action to="/" color="primary" label="Home" />
+            
+            <q-fab-action v-if="!isAuthenticated" to="/register" color="primary" label="Signup" />
+            
+            <q-fab-action v-if="!isAuthenticated" to="/login" color="primary" label="Login" />
+            
+            <q-fab-action v-if="isAuthenticated" @click="toDashboard" color="primary" label="Dashboard" />
+            
+            <q-fab-action color="primary" label="Github" />
+            
+            <q-fab-action v-if="isAuthenticated" @click="logout" color="primary" label="Logout" />
             
           </q-fab>
+        </div>
+        <div class="mobile-hide row justify-around">
+          <q-btn flat v-if="isAuthenticated" to="/dashboard" color="blue" label="Dashboard"/>
+          <q-btn flat v-if="!isAuthenticated" to="/register" color="blue" label="signup"/>
+          <q-btn flat v-if="!isAuthenticated" to="/login" color="blue" label="login"/>
+          <q-btn flat v-if="isAuthenticated" @click="logout" color="blue" label="logout"/>
         </div>
 
       </q-toolbar>
@@ -53,7 +57,16 @@ export default {
   
   components: {
   },
+  
+  created() {
+    this.$q.dark.set(true)
+  },
+    
   methods: {
+    toDashboard() {
+      window.location.href = '/dashboard'
+    },
+    
     logout () {
       
       this.$q.dialog({
@@ -67,7 +80,7 @@ export default {
         AUTH.signOut().then(() => {
           this.success = 'Logged out successfully'
           this.$store.dispatch('articles/fetchUser')
-          this.$router.push('/')
+          window.location.href = '/'
           }).catch((error) => {
             this.error = 'Unknown error occured.';
           });
