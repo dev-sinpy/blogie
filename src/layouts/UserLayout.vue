@@ -22,8 +22,7 @@
             <q-fab-action to="/" color="primary" icon="home" label="Home" />
             <q-fab-action v-if="!isAuthenticated" to="/register" color="primary" icon="mail" label="Signup" />
             <q-fab-action v-if="!isAuthenticated" to="/login" color="primary" icon="login" label="Login" />
-            <q-fab-action color="secondary" icon="github" label="Github" />
-            <q-fab-action v-if="isAuthenticated" @click="logout" color="orange" icon="logout" label="Logout" />
+            <q-fab-action v-if="isAuthenticated" @click="logout" color="primary" icon="logout" label="Logout" />
             
           </q-fab>
         </div>
@@ -42,23 +41,7 @@
         bordered
         content-class="accent"
       >
-        <q-scroll-area class="fit">
-          
-          <q-list v-if="!isAuthenticated" bordered class="rounded-borders">
-            <q-expansion-item
-              switch-toggle-side
-              expand-separator
-              default-opened
-              icon="perm_identity"
-              label="Account"
-            >
-            <q-item>
-              <q-btn class="absolute-center desktop-hide" color="primary" icon="mail" label="Signup" to="/register" @click="drawer = !drawer" />
-              
-              <q-btn class="absolute-center mobile-hide" color="primary" icon="mail" label="Signup" to="/register" />
-              </q-item>
-            </q-expansion-item>
-            </q-list>
+      <q-scroll-area class="fit">
       
       <q-list 
       bordered 

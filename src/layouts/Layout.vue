@@ -1,6 +1,33 @@
 <template>
-  <q-layout>
+  <q-layout class="is-boxed has-animations">
+    <div class="body-wrap boxed-container">
+        <header class="site-header">
+            <div class="container">
+                <div class="site-header-inner">
+                    <div class="row brand header-brand">
+                        <h2 class="logo-text m-0">
+                            Blogie
+                        </h2>
+                        <q-space />
+                        <div class="absolute-right">
+                        <div class="row justify-around">
+          <q-btn flat v-if="isAuthenticated" @click="toDashboard" color="blue" label="Dashboard"/>
+          <q-btn flat v-if="!isAuthenticated" to="/register" color="blue" label="signup"/>
+          <q-btn flat v-if="!isAuthenticated" to="/login" color="blue" label="login"/>
+          <q-btn flat v-if="isAuthenticated" @click="logout" color="blue" label="logout"/>
+        </div>
+        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
 
+        
+    </div>
+        <router-view />
+  </q-layout>
+        <!-- 
+        
     <q-header reveal class="bg-primary text-white">
       <q-toolbar>
 
@@ -44,7 +71,7 @@
     </q-header>
     <router-view />
   </q-layout>
-  
+  -->
 </template>
 
 <script>
@@ -59,7 +86,7 @@ export default {
   },
   
   created() {
-    this.$q.dark.set(true)
+    //this.$q.dark.set(true)
   },
     
   methods: {
@@ -104,3 +131,12 @@ export default {
   }
 }
 </script>
+
+<style lang="css">
+@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
+
+.logo-text {
+  font-family: 'Righteous', cursive;
+
+}
+  </style>

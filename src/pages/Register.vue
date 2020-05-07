@@ -40,7 +40,7 @@
             :rules="[ val => val.length > 6 || 'Your password is too short']"
           />
           <div class="row justify-end">
-            <q-btn label="Submit" type="submit" color="primary"/>
+            <q-btn label="Submit" type="submit" color="blue"/>
           </div>
         </q-form>
         </div>
@@ -66,6 +66,7 @@
           <div class="q-pa-md text-h6 text-center">
             We've sent you a confirmation email.
           </div>
+          <!--
           <q-separator />
           <div class="q-pb-md">
             To help reduce spam we need to verify your email address.
@@ -73,7 +74,10 @@
           <div>
             Please follow the instructions given in the email and then come back to continue registration process.
           </div>
-          <q-btn label="resend email" color="primary" @click="resendEmail" />
+          -->
+          <div class="row justify-center">
+            <q-btn label="resend email" color="blue" @click="resendEmail" />
+          </div>
       </q-step>
 
       <q-step
@@ -99,7 +103,7 @@
         >
           
           <div class="row justify-end">
-            <q-btn @click="redirect" label="Finish" color="primary"/>
+            <q-btn @click="redirect" label="Finish" color="blue"/>
           </div>
         </q-form>
         </div>
