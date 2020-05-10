@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { LocalStorage } from 'quasar'
 import { AUTH } from '../plugins/firebase'
+import { Dark } from 'quasar'
 
 const state = {
   tags: [
@@ -61,8 +62,8 @@ const mutations = {
       state.tags = tags;
     },
     
-    SET_DARk_MODE(state, darkMode) {
-      state.darkMode = darkMode;
+    SET_DARK_MODE(state, darkMode) {
+      state.darkMode = !state.darkMode;
     },
     
     SET_FEED(state, data) {
@@ -100,6 +101,8 @@ const actions = {
         } else {
           // Signed out. Let Vuex know.
           commit("RESET_USER");
+          LocalStorage.remove('tags');
+          LocalStorage.remove('feed');
         }
       })
       }
@@ -117,7 +120,7 @@ const actions = {
         console.log('did not find tags in local storage');
         let email = getters.user;
         axios
-        .get(`https://blogie-api.web.app/api/v1/user/${email}`)
+        .get(`https://blogie.now.sh/api/user/?email=${email}`)
         .then((response) => {
           commit("SET_TAGS", response.data.data.preferences);
           LocalStorage.set('tags', response.data.data.preferences)
@@ -137,7 +140,7 @@ const actions = {
         }
         let finalTags = tags.join();
         axios
-        .get(`https://blogie-api.web.app/api/v1/feed/?q=${finalTags}&limit=${payload.limit}&page=${payload.page}`)
+        .get(`https://blogie.now.sh/api/?q=${finalTags}&limit=${payload.limit}&page=${payload.page}`)
         .then((response) => {
           commit("SET_FEED", response.data.content);
           commit("SET_STATUS", 'loaded');
@@ -161,7 +164,7 @@ const actions = {
         }
         let finalTags = tags.join();
         axios
-        .get(`https://blogie-api.web.app/api/v1/feed/?q=${finalTags}&limit=${payload.limit}&page=${payload.page}`)
+        .get(`https://blogie.now.sh/api/?q=${finalTags}&limit=${payload.limit}&page=${payload.page}`)
         .then((response) => {
           commit("SET_FEED", response.data.content);
           commit("SET_STATUS", 'loaded');
@@ -180,7 +183,7 @@ const actions = {
       }
       let finalTags = tags.join();
       axios
-      .get(`https://blogie-api.web.app/api/v1/feed/?q=${finalTags}&limit=${payload.limit}&page=${payload.page}`)
+      .get(`https://blogie.now.sh/api/?q=${finalTags}&limit=${payload.limit}&page=${payload.page}`)
       .then((response) => {
         commit("SET_MORE_FEED", response.data.content);
         //commit("SET_STATUS", 'loaded');

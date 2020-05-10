@@ -6,8 +6,8 @@
       <q-toolbar>
         <q-btn flat class="desktop-hide" @click="drawer = !drawer" round dense icon="linear_scale" />
         
-        <div class="absolute-center text-h5 text-bold text-orange">
-          Feed
+        <div class="absolute-center text-h5 text-bold text-orange logo-text">
+          Blogie
           </div>
           
           <div class="absolute-right">
@@ -80,7 +80,7 @@
           @click="darkMode">
             
             <q-item-section side top>
-              <q-checkbox keep-color color="accent" v-model="setting.isDarkmode" />
+              <q-checkbox keep-color color="accent" v-model="dark" />
             </q-item-section>
             
             <q-item-section>
@@ -128,6 +128,7 @@ export default {
   methods: {
     darkMode() {
       this.$q.dark.toggle()
+      this.$store.dispatch('articles/setDarkMode')
     },
     logout () {
       
@@ -156,7 +157,17 @@ export default {
   
   computed: {
     ...mapGetters('articles', ['Tags']),
-    ...mapGetters('articles', ['isAuthenticated'])
+    ...mapGetters('articles', ['isAuthenticated']),
+    ...mapGetters('articles', ['isDarkMode']),
+    dark: {
+      get() {
+        return this.isDarkMode
+      },
+      set(val) {
+        this.$q.dark.toggle()
+        this.$store.dispatch('articles/setDarkMode')
+      },
+    }
   },
   data() {
     
@@ -164,40 +175,25 @@ export default {
       success: null,
       error: null,
       popup: false,
-      mobileNav: [
-      {
-        label: 'Latest',
-        to: '/latest',
-      },
-      
-      {
-        label: 'Popular',
-        to: '/popular',
-      },
-      
-      {
-        label: 'Random',
-        to: '/random',
-      },
-      ],
-      
-      desktopNav: [
-        {label: 'Feed', value: 'one'},
-        {label: 'Latest', value: 'two'},
-        {label: 'Popular', value: 'three'},
-      ],
-      
       
       settings: [
       {
-        label: 'Enable Dark Theme',
-        isDarkmode: true
+        label: 'Enable Dark Theme'
       },
       ],
 
-      drawer: false,
+      drawer: false
     }
     
   }
 }
 </script>
+
+<style lang="css">
+@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
+
+.logo-text {
+font-family: 'Righteous', cursive;
+
+}
+</style>

@@ -1108,11 +1108,6 @@ label {
   padding-left: 64px;
 }
 
-/* Reveal animations */
-.sr .has-animations .is-revealing {
-  visibility: hidden;
-}
-
 /*--------------------------------------------------------------
 # Forms
 --------------------------------------------------------------*/
@@ -1389,7 +1384,7 @@ label {
 
 .bubble-2 {
   bottom: 0;
-  right: -30px;
+  right: -15px;
 }
 .bubble-2 svg {
   width: 78px;
@@ -1405,7 +1400,7 @@ label {
 
 .bubble-4 {
   top: -25px;
-  right: -54px;
+  right: -15px;
 }
 .bubble-4 svg {
   width: 104px;
@@ -1542,31 +1537,7 @@ label {
     margin-top: 16px;
   }
 }
-/*--------------------------------------------------------------
-# Newsletter
---------------------------------------------------------------*/
-.newsletter .section-inner {
-  padding-bottom: 64px;
-}
-.newsletter .section-paragraph {
-  margin-bottom: 32px;
-}
 
-.newsletter-form {
-  max-width: 475px;
-  margin: 0 auto;
-}
-
-@media (min-width: 641px) {
-  .newsletter .section-inner {
-    padding-bottom: 120px;
-  }
-  .newsletter .section-paragraph {
-    margin-bottom: 40px;
-    padding-left: 72px;
-    padding-right: 72px;
-  }
-}
 /*--------------------------------------------------------------
 # Site content
 --------------------------------------------------------------*/

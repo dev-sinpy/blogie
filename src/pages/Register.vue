@@ -5,14 +5,13 @@
       v-model="step"
       ref="stepper"
       color="primary"
-      animated
-    >
+      animated>
+      
       <q-step
         :name="1"
         title="Registration"
         icon="mail"
-        :done="step > 1"
-      >
+        :done="step > 1">
       <q-card>
         <q-banner v-if="error" inline-actions class="text-white bg-negative">
           {{error}}
@@ -20,29 +19,20 @@
         <q-card-section q-pa-md>
         <div class="q-pa-sm">
           <div class="text-h6 text-primary">Signup with email</div>
-          <q-form
-          @submit="onSubmit"
-          class="q-gutter-md q-pt-lg"
-        >
-          <q-input
-            type="email"
-            v-model="email"
-            label="Email"
-            lazy-rules
-            :rules="[ val => val && val.length > 0 || 'Please enter valid email']"
-          />
-
-          <q-input
-            type="password"
-            v-model="password"
-            label="Password"
-            lazy-rules
-            :rules="[ val => val.length > 6 || 'Your password is too short']"
-          />
-          <div class="row justify-end">
-            <q-btn label="Submit" type="submit" color="blue"/>
+          <div style="width: 50%; margin: auto;">
+            <div class="q-mb-lg">
+            <q-btn @click="oauthGoogle" icon="ion-logo-google" label="Continue with Google" />
+            </div>
+            
+            <div class="q-mb-lg">
+            <q-btn @click="oauthGithub" icon="ion-logo-github" color="black" label="Continue with Github" />
+            </div>
+            
+            <div class="q-mb-lg">
+            <q-btn @click="oauthTwitter" icon="ion-logo-twitter" color="blue" label="Continue with Twitter" />
+            </div>
+            
           </div>
-        </q-form>
         </div>
         </q-card-section>
         </q-card>
@@ -51,37 +41,6 @@
 
       <q-step
         :name="2"
-        title="Verification"
-        icon="verification"
-        :done="step > 2"
-      >
-      <q-banner v-if="error" inline-actions class="text-white bg-negative">
-          {{error}}
-        </q-banner>
-          <q-img src="statics/signed_up.png" :ratio="16/5" />
-          <div class="q-pa-md text-h4 text-center text-bold">
-            Welcome Aboard!
-            </div>
-          <q-separator />
-          <div class="q-pa-md text-h6 text-center">
-            We've sent you a confirmation email.
-          </div>
-          <!--
-          <q-separator />
-          <div class="q-pb-md">
-            To help reduce spam we need to verify your email address.
-          </div>
-          <div>
-            Please follow the instructions given in the email and then come back to continue registration process.
-          </div>
-          -->
-          <div class="row justify-center">
-            <q-btn label="resend email" color="blue" @click="resendEmail" />
-          </div>
-      </q-step>
-
-      <q-step
-        :name="3"
         title="Preferences"
         icon="settings"
       >
@@ -124,9 +83,9 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex'
-  import firebase from 'firebase'
-  import { AUTH } from '../plugins/firebase'
+import { mapState } from 'vuex'
+import firebase from 'firebase'
+import { AUTH } from '../plugins/firebase'
 export default {
   // name: 'PageName',
   components: {
@@ -139,6 +98,7 @@ export default {
   data () {
     return {
       step: 1,
+      blocked: true,
       email: null,
       password: null,
       error: null
@@ -149,43 +109,100 @@ export default {
     redirect: function() {
       this.$router.push('/');
     },
-    
-    resendEmail: function() {
-      let user = AUTH.currentUser;
-      if (user.emailVerified == false) {
-        user.sendEmailVerification().then(function() {
-        }).catch(function(error) {
-          this.error = 'An error occured while sending email please try again later.';
-          console.log('error occured while sending email.');
-        });
-      } else {
-        this.error = 'Email is already verified, please continue with registration process'
-      }
-    },
-    onSubmit: async function () {
-      try {
-        const user = await AUTH.createUserWithEmailAndPassword(this.email, this.password);
-        
-        const currentUser = AUTH.currentUser
-        currentUser.sendEmailVerification().then(function() {
-        }).catch(function(error) {
+
+    oauthGoogle: async function () {
+      //try {
+        let provider = new firebase.auth.GoogleAuthProvider();
+        AUTH.signInWithPopup(provider).then((result) => {
+          // This gives you a Google Access Token. You can use it to access the Google API.
+          var token = result.credential.accessToken;
+          // The signed-in user info.
+          var user = result.user;
+          // ...
+          
+          console.log(user)
+          this.$store.dispatch('articles/fetchUser', user)
+          fetch('https://blogie.now.sh/api/setuser/?email='+user.email)
+          .then((response) => {
+            return response.json()
+            })
+          .then(data => console.log('success'));
+          
+          this.step = 2;
+        }).catch((error) => {
+          // Handle Errors here.
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          // The email of the user's account used.
+          var email = error.email;
+          // The firebase.auth.AuthCredential type that was used.
+          var credential = error.credential;
           this.error = 'Unknown error occured, please try again later';
-          console.log('error occured while sending email.');
+          this.step = 1;
         });
-        this.$store.dispatch('articles/fetchUser', currentUser)
-        
-        fetch('https://blogie-api.web.app/api/v1/setuser/'+currentUser.email)
-        .then((response) => {
-          return response.json()
-          })
-        .then(data => console.log('success'));
-        
-        this.step = 2;
-      } catch (error) {
-        this.error = 'A user with this email already exists';
-        this.step = 1;
-      }
-    }
+    },
+    oauthGithub: async function () {
+      //try {
+        let provider = new firebase.auth.GithubAuthProvider();
+        AUTH.signInWithPopup(provider).then((result) => {
+          // This gives you a Google Access Token. You can use it to access the Google API.
+          var token = result.credential.accessToken;
+          // The signed-in user info.
+          var user = result.user;
+          // ...
+          console.log(user)
+          this.$store.dispatch('articles/fetchUser', user)
+          fetch('https://blogie.now.sh/api/setuser/?email='+user.email)
+          .then((response) => {
+            return response.json()
+            })
+          .then(data => console.log('success'));
+          
+          this.step = 2;
+        }).catch((error) => {
+          // Handle Errors here.
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          console.log(errorMessage)
+          // The email of the user's account used.
+          var email = error.email;
+          // The firebase.auth.AuthCredential type that was used.
+          var credential = error.credential;
+          this.error = 'Unknown error occured, please try again later';
+          this.step = 1;
+        });
+    },
+    oauthTwitter: async function () {
+      //try {
+        let provider = new firebase.auth.TwitterAuthProvider();
+        AUTH.signInWithPopup(provider).then((result) => {
+          // This gives you a Google Access Token. You can use it to access the Google API.
+          var token = result.credential.accessToken;
+          // The signed-in user info.
+          var user = result.user;
+          // ...
+          console.log(user)
+          this.$store.dispatch('articles/fetchUser', user)
+          fetch('https://blogie.now.sh/api/setuser/?email='+user.email)
+          .then((response) => {
+            return response.json()
+            })
+          .then(data => console.log('success'));
+          
+          this.step = 2;
+        }).catch((error) => {
+          // Handle Errors here.
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          console.log(errorMessage)
+          // The email of the user's account used.
+          var email = error.email;
+          // The firebase.auth.AuthCredential type that was used.
+          var credential = error.credential;
+          this.error = 'Unknown error occured, please try again later';
+          this.step = 1;
+        });
     },
   }
+}
 </script>
