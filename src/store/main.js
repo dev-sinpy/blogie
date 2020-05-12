@@ -46,6 +46,7 @@ const state = {
     articles: null,
     status: null,
     darkMode: true,
+    defaultTags: null
     }
 
 const mutations = {
@@ -60,6 +61,10 @@ const mutations = {
     
     SET_TAGS(state, tags) {
       state.tags = tags;
+    },
+    
+    SET_DEFAULT_TAGS(state, tags) {
+      state.defaultTags = tags;
     },
     
     SET_DARK_MODE(state, darkMode) {
@@ -126,6 +131,17 @@ const actions = {
           LocalStorage.set('tags', response.data.data.preferences)
           })
       }
+    },
+    
+    fetchDefaultTags({ commit, getters}, payload) {
+      console.log('fetching default tags');
+      commit("SET_STATUS", 'loading');
+      axios
+      .get(`http://192.168.1.100:8000/api/tags/`)
+      .then((response) => {
+        commit("SET_DEFAULT_TAGS", response.data.data.tags);
+        commit("SET_STATUS", 'loaded');
+        })
     },
     
     fetchFeed({ commit, getters }, payload) {
@@ -214,6 +230,10 @@ const getters = {
       tags.push(val.tag);
     });
       return tags
+    },
+    
+  getDefaultTags: state => {
+    return state.defaultTags
     },
     
   status: state => {

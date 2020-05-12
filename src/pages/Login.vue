@@ -11,15 +11,11 @@
         <div class="text-h6 text-primary">Login</div>
           <div style="width: 30%; margin: auto;">
             <div class="q-mb-lg">
-            <q-btn @click="oauthGoogle" icon="ion-logo-google" label="Continue with Google" />
+            <q-btn @click="login('google')" icon="fab fa-google" label="Continue with Google" />
             </div>
             
             <div class="q-mb-lg">
-            <q-btn @click="oauthGithub" icon="ion-logo-github" color="black" label="Continue with Github" />
-            </div>
-            
-            <div class="q-mb-lg">
-            <q-btn @click="oauthTwitter" icon="ion-logo-twitter" color="blue" label="Continue with Twitter" />
+            <q-btn @click="login('github')" icon="fab fa-github" color="black" label="Continue with Github" />
             </div>
             
           </div>
@@ -29,15 +25,11 @@
         <div class="q-mb-lg text-h6 text-primary text-center">Login</div>
           <div style="width: 70%; margin: auto;">
             <div class="q-mb-lg">
-            <q-btn @click="oauthGoogle" icon="ion-logo-google" label="Continue with Google" />
+            <q-btn @click="login('google')" icon="fab fa-google" label="Continue with Google" />
             </div>
             
             <div class="q-mb-lg">
-            <q-btn @click="oauthGithub" icon="ion-logo-github" color="black" label="Continue with Github" />
-            </div>
-            
-            <div class="q-mb-lg">
-            <q-btn @click="oauthTwitter" icon="ion-logo-twitter" color="blue" label="Continue with Twitter" />
+            <q-btn @click="login('github')" icon="fab fa-github" color="black" label="Continue with Github" />
             </div>
             
           </div>
@@ -51,6 +43,7 @@
 
 <script>
   import firebase from 'firebase'
+  import axios from 'axios'
   import { AUTH } from '../plugins/firebase'
 export default {
   // name: 'ComponentName',
@@ -64,75 +57,30 @@ export default {
   
   methods: {
     
-    oauthGoogle: async function () {
-      //try {
+    login: async function (val) {
+      try {
         let provider = new firebase.auth.GoogleAuthProvider();
-        AUTH.signInWithPopup(provider).then((result) => {
-          // This gives you a Google Access Token. You can use it to access the Google API.
-          var token = result.credential.accessToken;
-          // The signed-in user info.
-          var user = result.user;
-          console.log(user)
+        if (val == 'google') {
+          provider = new firebase.auth.GoogleAuthProvider();
+        } else {
+          provider = new firebase.auth.GithubAuthProvider();
+        }
+        let result = await AUTH.signInWithPopup(provider)
+
+        // The signed-in user info.
+        let user = result.user;
+        let response = await axios.get(`https://blogie.now.sh/api/user/?email=${user.email}`, { validateStatus: false })
+        if (response.data.status != 'ok') {
+          this.error = 'Your account is not registered, please sign up first';
+          await user.delete()
+        } else {
           this.$store.dispatch('articles/fetchUser', user)
           window.location.href = '/dashboard';
-        }).catch((error) => {
-          // Handle Errors here.
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          console.log(errorMessage)
-          // The email of the user's account used.
-          var email = error.email;
-          // The firebase.auth.AuthCredential type that was used.
-          var credential = error.credential;
-          this.error = 'Unknown error occured';
-        });
-    },
-    oauthGithub: async function () {
-      //try {
-        let provider = new firebase.auth.GithubAuthProvider();
-        AUTH.signInWithPopup(provider).then((result) => {
-          // This gives you a Google Access Token. You can use it to access the Google API.
-          var token = result.credential.accessToken;
-          // The signed-in user info.
-          var user = result.user;
-          this.$store.dispatch('articles/fetchUser', user)
-          window.location.href = '/dashboard';
-        }).catch((error) => {
-          // Handle Errors here.
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          console.log(errorMessage)
-          // The email of the user's account used.
-          var email = error.email;
-          // The firebase.auth.AuthCredential type that was used.
-          var credential = error.credential;
-          this.error = 'Unknown error occured';
-        });
-    },
-    oauthTwitter: async function () {
-      //try {
-        let provider = new firebase.auth.TwitterAuthProvider();
-        AUTH.signInWithPopup(provider).then((result) => {
-          // This gives you a Google Access Token. You can use it to access the Google API.
-          var token = result.credential.accessToken;
-          // The signed-in user info.
-          var user = result.user;
-          // ...
-          console.log(user)
-          this.$store.dispatch('articles/fetchUser', user)
-          window.location.href = '/dashboard';
-        }).catch((error) => {
-          // Handle Errors here.
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          console.log(errorMessage)
-          // The email of the user's account used.
-          var email = error.email;
-          // The firebase.auth.AuthCredential type that was used.
-          var credential = error.credential;
-          this.error = 'Unknown error occured';
-        });
-      },
+        }
+      } catch(error) {
+        this.error = 'Unknown error occured';
+      }
+    }
   }
 }
 </script>
