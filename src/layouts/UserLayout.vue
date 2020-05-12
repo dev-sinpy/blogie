@@ -14,14 +14,15 @@
           <q-fab flat
             label="Menu"
             vertical-actions-align="left"
-            color="white"
+            :color="isDarkMode ? white : black"
             icon="none"
             direction="down"
             
           >
-            <q-fab-action to="/" color="primary" icon="home" label="Home" />
+            <q-fab-action to="/" color="primary" icon="fas fa-home" label="Home" />
             <q-fab-action v-if="!isAuthenticated" to="/register" color="primary" icon="mail" label="Signup" />
             <q-fab-action v-if="!isAuthenticated" to="/login" color="primary" icon="login" label="Login" />
+            <q-fab-action to="/settings" v-if="isAuthenticated" color="primary" icon="fas fa-cog" label="Settings" />
             <q-fab-action v-if="isAuthenticated" @click="logout" color="primary" icon="logout" label="Logout" />
             
           </q-fab>
@@ -42,10 +43,11 @@
         content-class="accent"
       >
       <q-scroll-area class="fit">
-      
+
       <q-list 
       bordered 
-      class="rounded-borders q-mt-md">
+      class="rounded-borders q-mt-md" 
+      v-if="status == 'loaded'">
         
         <q-expansion-item
         switch-toggle-side
@@ -64,12 +66,16 @@
         
         
       </q-list>
-
+      
+      <div v-else>
+        <q-skeleton square />
+        </div>
+      
       <q-list bordered class="rounded-borders">
         <q-expansion-item
           switch-toggle-side
           expand-separator
-          icon="settings"
+          icon="fas fa-cog"
           label="Preferences"
         >
           <q-item 
@@ -158,6 +164,7 @@ export default {
   computed: {
     ...mapGetters('articles', ['Tags']),
     ...mapGetters('articles', ['isAuthenticated']),
+    ...mapGetters('articles', ['status']),
     ...mapGetters('articles', ['isDarkMode']),
     dark: {
       get() {

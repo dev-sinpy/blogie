@@ -149,7 +149,7 @@ export default {
     deleteAccount: async function() {
       let email = this.$store.getters['articles/user'];
       console.log(email)
-      await axios.post(`http://192.168.1.100:8000/api/removeuser/?email=${email}`)
+      await axios.post(`http://blogie.now.sh/api/removeuser/?email=${email}`)
       let user = AUTH.currentUser;
 
       user.delete().then(function() {

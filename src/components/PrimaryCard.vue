@@ -35,11 +35,9 @@
       </q-badge>
       
       <q-space />
-    <a :href="article.url" :target="target">
-    <q-btn outline rounded color="accent" size="sm">
+    <q-btn type="a" target="_blank" color="accent" size="sm" :href="article.url" outline rounded>
         read more
       </q-btn>
-      </a>
       </div>
       
     </q-card-section>

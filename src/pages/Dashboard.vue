@@ -13,8 +13,9 @@
     </q-banner>
     
     <div 
-    class="q-pa-sm text-h5 text-white text-weight-bold"
-    style="border: 1px white solid; border-radius: 10px;"
+    class="q-pa-sm text-h5 text-weight-bold"
+    v-bind:class="[ isDarkMode ? text-white : text-black ]"
+    v-bind:style="{ border: `1px ${isDarkMode ? 'white' : 'black'} solid`, borderRadius: '10px' }"
     >Recommended For You</div>
     
     <!--Primary card-->
@@ -45,9 +46,15 @@
     </div>
     
     <div v-else>
-      <div class="text-h4">
-        Loading...
-        </div>
+      <div class="q-mt-lg">
+      <div class="q-gutter-md">
+        <q-skeleton type="circle" size="100px" />
+        <q-skeleton width="150px" />
+        <q-skeleton height="150px" />
+        <q-skeleton size="250px" />
+        <q-skeleton width="100%" height="100%" />
+      </div>
+    </div>
       </div>
       </q-pull-to-refresh>
         </q-page>
@@ -70,10 +77,6 @@ export default {
     });
   },
   
-  beforeDestroyed() {
-      this.unsubscribe()
-  },
-  
   components: {
     'primary-card': require('components/PrimaryCard.vue').default,
     'tiny-card': require('components/TinyCard.vue').default,
@@ -84,6 +87,7 @@ export default {
   computed: {
     ...mapGetters('articles', ['articles']),
     ...mapGetters('articles', ['status']),
+    ...mapGetters('articles', ['isDarkMode']),
     
     primaryCard() {
       return this.$store.getters['articles/articles'][0]
@@ -105,7 +109,7 @@ export default {
       this.$store.dispatch('articles/fetchFeed', {limit: limit, page: 1, reload: true})
       done()
     },
-    loadMore() {
+    loadMore () {
       this.page++;
       let tags = this.$store.getters['articles/getEnabledTags']
       const limit = tags.length ** 2;

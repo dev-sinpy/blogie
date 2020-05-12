@@ -137,7 +137,7 @@ const actions = {
       console.log('fetching default tags');
       commit("SET_STATUS", 'loading');
       axios
-      .get(`http://192.168.1.100:8000/api/tags/`)
+      .get(`https://blogie.now.sh/api/tags/`)
       .then((response) => {
         commit("SET_DEFAULT_TAGS", response.data.data.tags);
         commit("SET_STATUS", 'loaded');
@@ -191,7 +191,7 @@ const actions = {
       
     fetchMoreFeed({ commit, getters }, payload) {
       console.log('Getting more articles');
-      
+      commit("SET_STATUS", 'loading');
       let tags = getters.getEnabledTags;
       for (let i = tags.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -202,8 +202,7 @@ const actions = {
       .get(`https://blogie.now.sh/api/?q=${finalTags}&limit=${payload.limit}&page=${payload.page}`)
       .then((response) => {
         commit("SET_MORE_FEED", response.data.content);
-        //commit("SET_STATUS", 'loaded');
-        //LocalStorage.set('feed', response.data.content)
+        commit("SET_STATUS", 'loaded');
         })
       
     },

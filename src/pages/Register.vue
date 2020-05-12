@@ -34,32 +34,6 @@
             
           </div>
               
-          <q-btn label="Choose Tags" color="blue" @click="icon = true" />
-              
-          <q-dialog v-model="icon">
-            <q-card class="bg-black">
-              <q-card-section class="row items-center q-pb-none">
-                <q-space />
-                <q-btn icon="close" v-close-popup />
-              </q-card-section>
-
-              <q-card-section>
-                <div class="q-mb-md text-weight-medium text-center">Select you interests</div>
-                <div v-for="tag in tags" :key=tag.index class="q-ma-sm" style="display: inline;">
-              <span class="q-gutter-md">
-                <q-btn color="blue" :outline=true :label=tag rounded />
-                </span>
-              </div>
-              </q-card-section>
-              
-              <q-card-section class="row items-center q-ma-lg">
-                <q-btn class="full-width" color="blue" label="submit"  />
-              </q-card-section>
-              
-            </q-card>
-          </q-dialog>
-              
-              
         </div>
         </q-card-section>
         </q-card>
@@ -71,29 +45,28 @@
         title="Preferences"
         icon="fas fa-cog"
       >
-      
-      <q-card>
-        <q-card-section q-pa-md>
-        <div class="q-pa-sm">
-          <div class="text-h6 text-primary">Choose Preferences</div>
-          <div class="q-pt-sm">Don't worry you can also change these settings later</div>
-          
-          <div v-if="status == 'loaded'" class="q-mt-md">
-            
-              <div v-for="tags in getDefaultTags" :key=tags.tag class="q-ma-sm" style="display: inline;">
-                
-                <span class="q-gutter-md">
-                <q-btn @click="selectTags(tags.tag)" color="green" :label=tags.tag :outline=!tags.enabled rounded />
-                </span>
-              </div>
+      <div v-if="status == 'loaded'">
+      <div class="text-h5 text-primary">Select you interests</div>
+        <div class="text-caption text-warning text-italic">You can also change these settings later</div>
+      <q-card flat>
+          <q-card-section>
+            <div v-for="tags in getDefaultTags" :key=tags.tag class="q-ma-sm" style="display: inline;">
+              <span class="q-gutter-md">
+                <q-btn @click="selectTags(tags.tag)" color="blue" :label=tags.tag :outline=!tags.enabled rounded />
+              </span>
             </div>
+          </q-card-section>
+                
+          <q-card-section class="row items-center q-ma-lg">
+            <q-btn @click="submitInterests" class="full-width" color="blue" label="submit" />
+          </q-card-section>
           
           <div class="row justify-end">
             <q-btn @click="redirect" label="Finish" color="blue"/>
           </div>
+          
+          </q-card>
         </div>
-        </q-card-section>
-        </q-card>
       
       </q-step>
       
@@ -113,24 +86,28 @@ import { mapState } from 'vuex'
 import { mapGetters } from 'vuex'
 import firebase from 'firebase'
 import { AUTH } from '../plugins/firebase'
+import axios from 'axios'
+
 export default {
   // name: 'PageName',
   
   computed: {
     ...mapGetters('articles', ['getDefaultTags']),
+    ...mapGetters('articles', ['user']),
     ...mapGetters('articles', ['status'])
   },
+  preFetch ({ store, currentRoute, previousRoute, redirect, ssrContext }) {
+    store.dispatch('articles/fetchDefaultTags')
+  },
+  
   data () {
     return {
       step: 1,
       blocked: true,
       email: null,
       password: null,
-      selectedTags: [],
+      selectedTags: this.$store.getters['articles/getEnabledTags'],
       error: null,
-      icon: false,
-      f: 'dark',
-      tags: ['android', 'android', 'android', 'android', 'android', 'android', 'android', 'android', 'android', ]
     }
   },
   
@@ -202,14 +179,17 @@ export default {
           }
         }))
       }
-      
-    }
+    },
+    
+    submitInterests: async function() {
+      let tags = this.selectedTags.join();
+      let email = this.$store.getters['articles/user'];
+      await axios.post(`https://blogie.now.sh/api/setuser/?email=${email}&tags=${tags}`)
+      window.location.href = '/dashboard'
+    },
   }
 }
 </script>
 <style lang="css">
   
-.tags {
-  display: flex;
-}
   </style>

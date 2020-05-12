@@ -46,11 +46,9 @@
             
             <q-space />
             
-            <a :href="article.url" :target="target">
-            <q-btn outline color="accent" size="sm" rounded>
+            <q-btn type="a" target="_blank" color="accent" size="sm" :href="article.url" outline rounded>
               read more
             </q-btn>
-            </a>
           </div>
           
       </q-card-section>
