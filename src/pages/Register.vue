@@ -1,81 +1,28 @@
 <template>
   <q-page-container>
   <q-page padding>
-    <q-stepper
-      v-model="step"
-      ref="stepper"
-      color="primary"
-      animated>
-      
-      <q-step
-        :name="1"
-        title="Registration"
-        icon="fas fa-user-plus"
-        :done="step > 1">
-      <q-card>
-        <q-banner v-if="error" inline-actions class="text-white bg-negative">
-          {{error}}
-        </q-banner>
-        <q-card-section q-pa-md>
-        <div class="q-pa-sm">
-          <div class="text-h6 text-primary">Signup</div>
-          <div style="width: 50%; margin: auto;">
-            <div class="q-mb-lg">
-            <q-btn @click="register('google')" icon="fab fa-google" label="Continue with Google" />
-            </div>
-            
-            <div class="q-mb-lg">
-            <q-btn @click="register('github')" icon="fab fa-github" color="black" label="Continue with Github" />
-            </div>
-            
-            <div class="q-mb-lg">
-            <q-btn @click="register('twitter')" icon="fab fa-twitter" color="blue" label="Continue with Twitter" />
-            </div>
-            
-          </div>
-              
-        </div>
-        </q-card-section>
-        </q-card>
-    
-      </q-step>
 
-      <q-step
-        :name="2"
-        title="Preferences"
-        icon="fas fa-cog"
-      >
-      <div v-if="status == 'loaded'">
-      <div class="text-h5 text-primary">Select you interests</div>
-        <div class="text-caption text-warning text-italic">You can also change these settings later</div>
-      <q-card flat>
-          <q-card-section>
-            <div v-for="tags in getDefaultTags" :key=tags.tag class="q-ma-sm" style="display: inline;">
-              <span class="q-gutter-md">
-                <q-btn @click="selectTags(tags.tag)" color="blue" :label=tags.tag :outline=!tags.enabled rounded />
-              </span>
-            </div>
-          </q-card-section>
-                
-          <q-card-section class="row items-center q-ma-lg">
-            <q-btn @click="submitInterests" class="full-width" color="blue" label="submit" />
-          </q-card-section>
-          
-          <div class="row justify-end">
-            <q-btn @click="redirect" label="Finish" color="blue"/>
+    <q-card style="height: 100vh">
+      <q-banner v-if="error" inline-actions class="text-white bg-negative">
+        {{error}}
+      </q-banner>
+      <q-card-section q-pa-md>
+      <div class="q-pa-sm">
+        <div class="text-h6 text-primary">Signup</div>
+        <div style="width: 50%; margin: auto;">
+          <div class="q-mb-lg">
+          <q-btn @click="register('google')" icon="fab fa-google" label="Continue with Google" />
           </div>
           
-          </q-card>
+          <div class="q-mb-lg">
+          <q-btn @click="register('github')" icon="fab fa-github" color="black" label="Continue with Github" />
+          </div>
+          
         </div>
-      
-      </q-step>
-      
-      <template v-slot:navigation>
-        <q-stepper-navigation>
-          <q-btn @click="$refs.stepper.next()" color="primary" :label="step === 3 ? 'Skip' : 'Continue'" />
-        </q-stepper-navigation>
-      </template>
-    </q-stepper>
+            
+      </div>
+      </q-card-section>
+      </q-card>
       
   </q-page>
   </q-page-container>
@@ -121,10 +68,8 @@ export default {
         let provider;
         if (val == 'google') {
           provider = new firebase.auth.GoogleAuthProvider();
-        } else if (val == 'github') {
-          provider = new firebase.auth.GithubAuthProvider();
         } else {
-          provider = new firebase.auth.TwitterAuthProvider();
+          provider = new firebase.auth.GithubAuthProvider();
         }
         
         AUTH.signInWithPopup(provider).then((result) => {
@@ -185,7 +130,7 @@ export default {
       let tags = this.selectedTags.join();
       let email = this.$store.getters['articles/user'];
       await axios.post(`https://blogie.now.sh/api/setuser/?email=${email}&tags=${tags}`)
-      window.location.href = '/dashboard'
+      window.location.href = '/dashboard/?tutorial=true'
     },
   }
 }

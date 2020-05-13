@@ -17,6 +17,9 @@
     v-bind:class="[ isDarkMode ? text-white : text-black ]"
     v-bind:style="{ border: `1px ${isDarkMode ? 'white' : 'black'} solid`, borderRadius: '10px' }"
     >Recommended For You</div>
+
+    <!-- popups-->
+    <interests-popup />
     
     <!--Primary card-->
     <div v-if="status == 'loaded'">
@@ -81,6 +84,7 @@ export default {
     'primary-card': require('components/PrimaryCard.vue').default,
     'tiny-card': require('components/TinyCard.vue').default,
     'sub-card': require('components/SubCard.vue').default,
+    'interests-popup': require('components/Interests.vue').default,
   },
   props: ['success', 'error'],
   

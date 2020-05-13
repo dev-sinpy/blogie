@@ -1,77 +1,31 @@
 <template>
   <q-layout class="is-boxed has-animations">
     <div class="body-wrap boxed-container">
-        <header class="site-header">
-            <div class="container">
-                <div class="site-header-inner">
-                    <div class="row brand header-brand">
-                        <h2 class="logo-text m-0">
-                            Blogie
-                        </h2>
-                        <q-space />
-                        <div class="absolute-right">
-                        <div class="row justify-around">
-          <q-btn flat v-if="isAuthenticated" @click="toDashboard" color="blue" label="Dashboard"/>
-          <q-btn flat v-if="!isAuthenticated" to="/register" color="blue" label="signup"/>
-          <q-btn flat v-if="!isAuthenticated" to="/login" color="blue" label="login"/>
-          <q-btn flat v-if="isAuthenticated" @click="logout" color="blue" label="logout"/>
-        </div>
-        </div>
-                    </div>
-                </div>
+      <header class="site-header">
+        <div class="container">
+          <div class="site-header-inner">
+            <div class="row brand header-brand">
+              <h2 class="logo-text m-0">
+                  Blogie
+              </h2>
+              <q-space />
+              <div class="absolute-right">
+              <div class="row justify-around">
+<q-btn flat v-if="isAuthenticated" @click="toDashboard" color="blue" label="Dashboard"/>
+<q-btn flat v-if="!isAuthenticated" @click="displayPopup('registerPopup')" color="blue" label="signup"/>
+<q-btn flat v-if="!isAuthenticated" @click="displayPopup('loginPopup')" color="blue" label="login"/>
+<q-btn flat v-if="isAuthenticated" @click="logout" color="blue" label="logout"/>
+</div>
+</div>
             </div>
-        </header>
+          </div>
+        </div>
+      </header>
 
         
     </div>
         <router-view />
   </q-layout>
-        <!-- 
-        
-    <q-header reveal class="bg-primary text-white">
-      <q-toolbar>
-
-        <q-toolbar-title>
-          <q-avatar>
-            <img src="https://images.squarespace-cdn.com/content/v1/5d00e59cf3f45f000162fad9/1562184215451-X3J758ZQL2C4LGSXKL6G/ke17ZwdGBToddI8pDm48kCEA1nBJzP4FOBvoBELJrQlZw-zPPgdn4jUwVcJE1ZvWEtT5uBSRWt4vQZAgTJucoTqqXjS3CfNDSuuf31e0tVFZY8DXNV7-oU5O43wWp7txWipamTyyf6T6SNuHokS9tSb8BodarTVrzIWCp72ioWw/placeholder-logo-2.png?format=750w">
-          </q-avatar>
-        </q-toolbar-title>
-        
-        <div class="desktop-hide">
-          <q-fab flat 
-            label="Menu"
-            vertical-actions-align="left"
-            color="white"
-            icon="none"
-            direction="down"
-            
-          >
-            <q-fab-action to="/" color="primary" label="Home" />
-            
-            <q-fab-action v-if="!isAuthenticated" to="/register" color="primary" label="Signup" />
-            
-            <q-fab-action v-if="!isAuthenticated" to="/login" color="primary" label="Login" />
-            
-            <q-fab-action v-if="isAuthenticated" @click="toDashboard" color="primary" label="Dashboard" />
-            
-            <q-fab-action color="primary" label="Github" />
-            
-            <q-fab-action v-if="isAuthenticated" @click="logout" color="primary" label="Logout" />
-            
-          </q-fab>
-        </div>
-        <div class="mobile-hide row justify-around">
-          <q-btn flat v-if="isAuthenticated" to="/dashboard" color="blue" label="Dashboard"/>
-          <q-btn flat v-if="!isAuthenticated" to="/register" color="blue" label="signup"/>
-          <q-btn flat v-if="!isAuthenticated" to="/login" color="blue" label="login"/>
-          <q-btn flat v-if="isAuthenticated" @click="logout" color="blue" label="logout"/>
-        </div>
-
-      </q-toolbar>
-    </q-header>
-    <router-view />
-  </q-layout>
-  -->
 </template>
 
 <script>
@@ -92,6 +46,10 @@ export default {
   methods: {
     toDashboard() {
       window.location.href = '/dashboard'
+    },
+    
+    displayPopup(popup) {
+      this.$store.commit('articles/SET_POPUP', {popup: popup, flag: true})
     },
     
     logout () {

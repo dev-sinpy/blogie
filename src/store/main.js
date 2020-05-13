@@ -4,6 +4,9 @@ import { AUTH } from '../plugins/firebase'
 import { Dark } from 'quasar'
 
 const state = {
+  loginPopup: false,
+  registerPopup: false,
+  interestsPopup: false,
   tags: [
     {
       tag: 'android',
@@ -45,6 +48,7 @@ const state = {
     isAuthenticated: false,
     articles: null,
     status: null,
+    loadingButton: false,
     darkMode: true,
     defaultTags: null
     }
@@ -52,11 +56,14 @@ const state = {
 const mutations = {
       
     SET_USER(state, user) {
-      
       state.isAuthenticated = true;
       state.user.email = user.email;
       state.user.verified = user.emailVerified;
 
+    },
+    
+    SET_POPUP(state, payload) {
+      state[`${payload.popup}`] = payload.flag;
     },
     
     SET_TAGS(state, tags) {
@@ -80,6 +87,10 @@ const mutations = {
     },
     
     SET_STATUS(state, status) {
+      state.status = status;
+    },
+    
+    SET_LOADING(state, status) {
       state.status = status;
     },
       
@@ -218,6 +229,10 @@ const getters = {
       return state.tags.filter(tag => tag.enabled)
     },
     
+  loadingButton: state => {
+      return state.loadingButton
+    },
+    
   isDarkMode: state => {
       return state.darkMode
     },
@@ -246,6 +261,18 @@ const getters = {
   user: state => {
       return state.user.email
     },
+    
+  login: state => {
+      return state.loginPopup
+  },
+    
+  register: state => {
+      return state.registerPopup
+  },
+    
+  interests: state => {
+      return state.interestsPopup
+  },
     
   isAuthenticated: state => {
     return !!state.user.email

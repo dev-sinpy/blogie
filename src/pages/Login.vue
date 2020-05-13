@@ -1,6 +1,7 @@
 <template>
   <q-page-container>
   <q-page padding>
+<!--
     <q-card>
     <q-banner v-if="error" inline-actions class="text-white bg-negative">
       {{error}}
@@ -37,6 +38,10 @@
           
     </q-card-section>
     </q-card>
+    -->
+  
+  
+  
   </q-page>
   </q-page-container>
 </template>
@@ -46,7 +51,8 @@
   import axios from 'axios'
   import { AUTH } from '../plugins/firebase'
 export default {
-  // name: 'ComponentName',
+  //name: 'Login',
+  props: ['login'],
   data() {
     return {
       email: null,

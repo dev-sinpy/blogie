@@ -1,6 +1,7 @@
 <template>
   <q-page-container>
-    
+    <login-popup />
+    <register-popup />
     <main>
             <section class="hero text-center">
                 <div class="container-sm">
@@ -244,6 +245,10 @@ export default {
   computed: {
     ...mapGetters('articles', ['isAuthenticated']),
     ...mapGetters('articles', ['user']),
+  },
+  components: {
+    'register-popup': require('components/Register.vue').default,
+    'login-popup': require('components/Login.vue').default,
   },
   created()  {
     AOS.init()

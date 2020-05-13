@@ -1,6 +1,4 @@
 <template>
-
-
     <q-layout view="lHh Lpr lff" class="shadow-2">
 
       <q-toolbar>
@@ -75,8 +73,27 @@
         <q-expansion-item
           switch-toggle-side
           expand-separator
+          icon="fas fa-user-circle"
+          label="Account"
+        >
+          <q-item 
+          v-ripple
+          clickable>
+            
+            <q-item-section>
+              <q-btn :loading="loadingButton" @click="interestsPopup" class="q-ma-md" label="Edit Preferences" color="blue" />
+            </q-item-section>
+            
+            </q-item>
+          </q-expansion-item>
+          </q-list>
+      
+      <q-list bordered class="rounded-borders">
+        <q-expansion-item
+          switch-toggle-side
+          expand-separator
           icon="fas fa-cog"
-          label="Preferences"
+          label="Settings"
         >
           <q-item 
           v-ripple
@@ -132,6 +149,17 @@ export default {
   },
   
   methods: {
+    displayPopup(popup) {
+      this.$store.commit('articles/SET_POPUP', {popup: popup, flag: true})
+    },
+    
+    interestsPopup() {
+      this.$store.commit('articles/SET_LOADING', true)
+      this.$store.dispatch('articles/fetchDefaultTags')
+      this.$store.commit('articles/SET_POPUP', {popup: 'interestsPopup', flag: true})
+      this.$store.commit('articles/SET_LOADING', false)
+    },
+    
     darkMode() {
       this.$q.dark.toggle()
       this.$store.dispatch('articles/setDarkMode')
@@ -165,6 +193,7 @@ export default {
     ...mapGetters('articles', ['Tags']),
     ...mapGetters('articles', ['isAuthenticated']),
     ...mapGetters('articles', ['status']),
+    ...mapGetters('articles', ['loadingButton']),
     ...mapGetters('articles', ['isDarkMode']),
     dark: {
       get() {
@@ -182,13 +211,7 @@ export default {
       success: null,
       error: null,
       popup: false,
-      
-      settings: [
-      {
-        label: 'Enable Dark Theme'
-      },
-      ],
-
+      settings: [{label: 'Enable Dark Theme'}],
       drawer: false
     }
     

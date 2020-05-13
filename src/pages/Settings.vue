@@ -142,7 +142,7 @@ export default {
     submitInterests: async function() {
       let tags = this.selectedTags.join();
       let email = this.$store.getters['articles/user'];
-      await axios.post(`https://blogie.now.sh/api/setuser/?email=${email}&tags=${tags}`)
+      await axios.post(`https://blogie.now.sh/api/updateuser/?email=${email}&tags=${tags}`)
       this.success = 'Updated your preferences'
     },
     
