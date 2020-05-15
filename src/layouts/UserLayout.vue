@@ -20,7 +20,6 @@
             <q-fab-action to="/" color="primary" icon="fas fa-home" label="Home" />
             <q-fab-action v-if="!isAuthenticated" to="/register" color="primary" icon="mail" label="Signup" />
             <q-fab-action v-if="!isAuthenticated" to="/login" color="primary" icon="login" label="Login" />
-            <q-fab-action to="/settings" v-if="isAuthenticated" color="primary" icon="fas fa-cog" label="Settings" />
             <q-fab-action v-if="isAuthenticated" @click="logout" color="primary" icon="logout" label="Logout" />
             
           </q-fab>
@@ -66,7 +65,7 @@
       </q-list>
       
       <div v-else>
-        <q-skeleton square />
+        <q-skeleton square height="20em" />
         </div>
       
       <q-list bordered class="rounded-borders">
@@ -82,6 +81,7 @@
             
             <q-item-section>
               <q-btn :loading="loadingButton" @click="interestsPopup" class="q-ma-md" label="Edit Preferences" color="blue" />
+              <q-btn class="q-ma-md" label="Delete Account" color="negative" />
             </q-item-section>
             
             </q-item>

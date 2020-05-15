@@ -25,18 +25,6 @@ export default function ({ store, ssrContext }) {
     mode: process.env.VUE_ROUTER_MODE,
     base: process.env.VUE_ROUTER_BASE
   })
-  //~ AUTH.onAuthStateChanged(user => {
-      //~ if (user) {
-        //~ // Signed in. Let Vuex know.
-        //~ console.log('user is logged in');
-        //~ console.log(user);
-        //~ store.dispatch('articles/fetchTags', user)
-        
-      //~ } else {
-        //~ // Signed out. Let Vuex know.
-        //~ store.commit('articles/RESET_USER')
-      //~ }
-    //~ })
 
   return Router
 }

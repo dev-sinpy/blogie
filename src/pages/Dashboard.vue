@@ -71,6 +71,13 @@ export default {
   name: 'PageIndex',
   
   preFetch ({ store, currentRoute, previousRoute, redirect, ssrContext }) {
+    //~ if (!store.getters['articles/user']) {
+      //~ redirect('/'+ store.getters['articles/user'])
+    //~ }
+    if (currentRoute.query.tutorial) {
+      store.dispatch('articles/fetchDefaultTags')
+      store.commit('articles/SET_POPUP', {popup: 'interestsPopup', flag: true})
+    }
     store.subscribe((mutation, state) => {
       if (mutation.type === 'articles/SET_TAGS') {
         let tags = store.getters['articles/getEnabledTags']

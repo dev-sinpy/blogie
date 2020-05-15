@@ -16,7 +16,7 @@
                                 <a class="button button-primary button-block button-shadow" @click="toDashboard">Get early access</a>
                             </div>
                             
-                            <div class="control mobile-hide" style="margin-left: 150px;">
+                            <div class="control mobile-hide" style="width: 20%; margin: 0 auto;">
                                 <a class="button button-primary button-block button-shadow" @click="toDashboard">Get early access</a>
                             </div>
                         </div>

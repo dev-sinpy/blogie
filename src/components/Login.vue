@@ -1,18 +1,28 @@
 <template>
   <q-dialog v-model="login">
-    <q-card>
+    <q-card style="height: 230px; width: 400px;">
       <q-card-section class="row items-center q-pb-none">
+        <div class="text-h6 text-black">Login</div>
         <q-space />
         <q-btn flat dense @click="closePopup" icon="close" />
       </q-card-section>
+      <q-banner v-if="error" class="text-white bg-negative">
+        {{error}}
+      </q-banner>
       
-      <q-card-section>
-        <div class="q-mb-lg">
-          <q-btn @click="signin('google')" icon="fab fa-google" label="Continue with Google" />
+      <q-card-section v-if="status == 'loading'" class="q-pa-lg absolute-center">
+        <q-spinner-puff color="deep-orange" size="50px" />
+      </q-card-section>
+      
+      <q-card-section v-else class="q-pa-lg text-center">
+        <div>
+          <q-btn @click="signin('google')" icon="fab fa-google" label="Login with Google" />
         </div>
-          
-        <div class="q-mb-lg">
-          <q-btn @click="signin('github')" icon="fab fa-github" color="black" label="Continue with Github" />
+        
+        <div id="or">OR</div>
+        
+        <div>
+          <q-btn @click="signin('github')" icon="fab fa-github" color="black" label="Login with Github" />
         </div>
       </q-card-section>
       
@@ -28,6 +38,7 @@
 export default {
   // name: 'ComponentName',
   computed: {
+    ...mapGetters('articles', ['status']),
     ...mapGetters('articles', ['login'])
   },
   data() {
@@ -40,6 +51,7 @@ export default {
       this.$store.commit('articles/SET_POPUP', {popup: 'loginPopup', flag: false})
     },
     signin: async function (val) {
+      this.$store.commit('articles/SET_STATUS', 'loading')
       try {
         let provider = new firebase.auth.GoogleAuthProvider();
         if (val == 'google') {
@@ -61,8 +73,42 @@ export default {
         }
       } catch(error) {
         this.error = 'Unknown error occured';
+      } finally {
+        this.$store.commit('articles/SET_STATUS', 'loaded')
       }
     }
   }
 }
 </script>
+
+<style lang="css">
+#or {
+  position: relative;
+  width: 300px;
+  height: 40px;
+  
+  line-height: 50px;
+  text-align: center;
+}
+
+#or::before,
+#or::after {
+  position: absolute;
+  width: 130px;
+  height: 1px;
+  
+  top: 24px;
+  
+  background-color: #aaa;
+  
+  content: '';
+}
+
+#or::before {
+  left: 0;
+}
+
+#or::after {
+  right: 0;
+}
+</style>

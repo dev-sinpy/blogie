@@ -6,7 +6,9 @@
         <q-space />
         <q-btn @click="closePopup" icon="close" v-close-popup />
       </q-card-section>
-
+      <q-banner v-if="success" class="text-white bg-positive">
+        {{success}}
+      </q-banner>
       <q-card-section>
         <div class="q-mb-md text-weight-medium text-center">Select you interests</div>
         <div v-for="tags in getDefaultTags" :key=tags.tag class="q-ma-sm" style="display: inline;">
@@ -67,7 +69,7 @@ export default {
     },
     submitInterests: async function() {
       let tags = this.selectedTags.join();
-      let email = this.$store.getters['articles/user'];
+      let email = this.user;
       await axios.post(`https://blogie.now.sh/api/updateuser/?email=${email}&tags=${tags}`)
       this.success = 'Updated your preferences'
     },
