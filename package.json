@@ -9,7 +9,9 @@
   "private": true,
   "scripts": {
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore ./",
-    "test": "echo \"No test specified\" && exit 0"
+    "test": "echo \"No test specified\" && exit 0",
+    "build": "quasar build",
+    "deploy": "now"
   },
   "dependencies": {
     "@quasar/extras": "^1.8.1",

@@ -44,7 +44,7 @@ export default {
     },
     
     selectTags(tag) {
-      console.log(this.selectedTags)
+      this.success = ''
       let found = this.selectedTags.find(val => val == tag)
       if (!found) {
         this.selectedTags.push(tag);
@@ -71,6 +71,10 @@ export default {
       let tags = this.selectedTags.join();
       let email = this.user;
       await axios.post(`https://blogie.now.sh/api/updateuser/?email=${email}&tags=${tags}`)
+      this.$store.dispatch('articles/fetchTags', {reload: true})
+      let enabledTags = this.$store.getters['articles/getEnabledTags']
+      const limit = enabledTags.length ** 2;
+      this.$store.dispatch('articles/fetchFeed', {limit: limit, page: 1, reload: true})
       this.success = 'Updated your preferences'
     },
   },
