@@ -7,6 +7,7 @@ const state = {
   loginPopup: false,
   registerPopup: false,
   interestsPopup: false,
+  initialPopup: false,
   tags: [
     {
       tag: 'android',
@@ -127,7 +128,18 @@ const actions = {
     fetchTags({ commit, getters}, payload) {
       console.log('fetching tags');
       let hasTags = LocalStorage.has('tags');
-      if (hasTags) {
+      
+      if (payload.reload) {
+        console.log('refreshing tags');
+        let email = getters.user;
+        axios
+        .get(`https://blogie.now.sh/api/user/?email=${email}`)
+        .then((response) => {
+          commit("SET_TAGS", response.data.data.preferences);
+          LocalStorage.set('tags', response.data.data.preferences)
+          })
+      }
+      else if (hasTags) {
         console.log('found tags in local storage');
         let tags = LocalStorage.getItem('tags');
         commit("SET_TAGS", tags)
@@ -158,6 +170,8 @@ const actions = {
     fetchFeed({ commit, getters }, payload) {
       console.log('Getting articles');
       
+      let feed = LocalStorage.has('feed');
+      
       if (payload.reload) {
         commit("SET_STATUS", 'loading');
         let tags = getters.getEnabledTags;
@@ -174,9 +188,7 @@ const actions = {
           LocalStorage.set('feed', response.data.content)
           })
       }
-      
-      let feed = LocalStorage.has('feed');
-      if (feed && !payload.reload) {
+      else if (feed) {
         console.log('using local storage');
         const data = LocalStorage.getItem('feed');
         commit("SET_FEED", data);
@@ -272,6 +284,10 @@ const getters = {
     
   interests: state => {
       return state.interestsPopup
+  },
+    
+  initialSetup: state => {
+      return state.initialPopup
   },
     
   isAuthenticated: state => {

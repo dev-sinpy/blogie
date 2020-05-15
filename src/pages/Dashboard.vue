@@ -19,6 +19,8 @@
     >Recommended For You</div>
 
     <!-- popups-->
+    <initial-popup />
+    
     <interests-popup />
     
     <!--Primary card-->
@@ -76,7 +78,7 @@ export default {
     //~ }
     if (currentRoute.query.tutorial) {
       store.dispatch('articles/fetchDefaultTags')
-      store.commit('articles/SET_POPUP', {popup: 'interestsPopup', flag: true})
+      store.commit('articles/SET_POPUP', {popup: 'initialPopup', flag: true})
     }
     store.subscribe((mutation, state) => {
       if (mutation.type === 'articles/SET_TAGS') {
@@ -92,6 +94,7 @@ export default {
     'tiny-card': require('components/TinyCard.vue').default,
     'sub-card': require('components/SubCard.vue').default,
     'interests-popup': require('components/Interests.vue').default,
+    'initial-popup': require('components/InitialSetup.vue').default,
   },
   props: ['success', 'error'],
   

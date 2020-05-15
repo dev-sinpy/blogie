@@ -143,7 +143,7 @@ export default {
   preFetch ({ store, currentRoute, previousRoute, redirect, ssrContext }) {
     store.subscribe((mutation, state) => {
       if (mutation.type === 'articles/SET_USER') {
-        store.dispatch('articles/fetchTags')
+        store.dispatch('articles/fetchTags', {reload: false})
       }
     });
   },
