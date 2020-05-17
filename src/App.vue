@@ -4,10 +4,9 @@
   </div>
 </template>
 
-<script >
+<script>
 export default {
-  name: 'App',
-  preFetch ({ store, currentRoute, previousRoute, redirect, ssrContext }) {
-  },
-}
+  name: "App",
+  preFetch({ store, currentRoute, previousRoute, redirect, ssrContext }) {},
+};
 </script>

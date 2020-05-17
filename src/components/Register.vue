@@ -7,85 +7,101 @@
         <q-btn flat dense @click="closePopup" icon="close" v-close-popup />
       </q-card-section>
       <q-banner v-if="error" class="text-white bg-negative">
-        {{error}}
+        {{ error }}
       </q-banner>
-      
-      <q-card-section v-if="status == 'loading'" class="q-pa-lg absolute-center">
+
+      <q-card-section
+        v-if="status == 'loading'"
+        class="q-pa-lg absolute-center"
+      >
         <q-spinner-puff color="deep-orange" size="50px" />
       </q-card-section>
-      
+
       <q-card-section v-else class="q-pa-lg text-center">
         <div>
-          <q-btn @click="signup('google')" icon="fab fa-google" label="Continue with Google" />
+          <q-btn
+            @click="signup('google')"
+            icon="fab fa-google"
+            label="Continue with Google"
+          />
         </div>
-          
-          <div id="or">OR</div>
-          
+
+        <div id="or">OR</div>
+
         <div>
-          <q-btn @click="signup('github')" icon="fab fa-github" color="black" label="Continue with Github" />
+          <q-btn
+            @click="signup('github')"
+            icon="fab fa-github"
+            color="black"
+            label="Continue with Github"
+          />
         </div>
       </q-card-section>
-      
     </q-card>
   </q-dialog>
 </template>
 
 <script>
-  import firebase from 'firebase'
-  import axios from 'axios'
-  import { AUTH } from '../plugins/firebase'
-  import { mapGetters } from 'vuex'
-  
+import firebase from "firebase";
+import axios from "axios";
+import { AUTH } from "../plugins/firebase";
+import { mapGetters } from "vuex";
+
 export default {
   //name: 'Register',
   computed: {
-    ...mapGetters('articles', ['register']),
-    ...mapGetters('articles', ['status'])
+    ...mapGetters("articles", ["register"]),
+    ...mapGetters("articles", ["status"]),
   },
-  
-  data () {
+
+  data() {
     return {
-      error: '',
-    }
+      error: "",
+    };
   },
-  
+
   methods: {
     closePopup() {
-      this.$store.commit('articles/SET_POPUP', {popup: 'registerPopup', flag: false})
+      this.$store.commit("articles/SET_POPUP", {
+        popup: "registerPopup",
+        flag: false,
+      });
     },
-    
+
     signup: async function (val) {
-      this.$store.commit('articles/SET_STATUS', 'loading')
-      
+      this.$store.commit("articles/SET_STATUS", "loading");
+
       try {
         let provider;
-        if (val == 'google') {
+        if (val == "google") {
           provider = new firebase.auth.GoogleAuthProvider();
         } else {
           provider = new firebase.auth.GithubAuthProvider();
         }
-        let result = await AUTH.signInWithPopup(provider)
-        let user = result.user
-          
-        let response = await axios.get(`https://blogie.now.sh/api/setuser/?email=${user.email}`, { validateStatus: false })
-        if (response.data.status != 'ok') {
+        let result = await AUTH.signInWithPopup(provider);
+        let user = result.user;
+
+        let response = await axios.get(
+          `https://blogie-api.now.sh/api/setuser/?email=${user.email}`,
+          { validateStatus: false }
+        );
+        if (response.data.status != "ok") {
           this.error = response.data.message;
-          await AUTH.signOut()
+          await AUTH.signOut();
         } else {
-          this.$store.dispatch('articles/fetchUser', user)
-          this.$store.dispatch('articles/fetchDefaultTags')
-          window.location.href = '/dashboard/?tutorial=true';
+          this.$store.dispatch("articles/fetchUser", user);
+          this.$store.dispatch("articles/fetchDefaultTags");
+          window.location.href = "/dashboard/?tutorial=true";
         }
-      } catch(err) {
+      } catch (err) {
         this.error = err;
-        await AUTH.signOut()
+        await AUTH.signOut();
       } finally {
-        this.$store.commit('articles/SET_STATUS', 'loaded')
+        this.$store.commit("articles/SET_STATUS", "loaded");
       }
     },
-  }
-}
-
+  },
+};
 </script>
 
 <style lang="css">
@@ -93,7 +109,7 @@ export default {
   position: relative;
   width: 300px;
   height: 40px;
-  
+
   line-height: 50px;
   text-align: center;
 }
@@ -103,12 +119,12 @@ export default {
   position: absolute;
   width: 130px;
   height: 1px;
-  
+
   top: 24px;
-  
+
   background-color: #aaa;
-  
-  content: '';
+
+  content: "";
 }
 
 #or::before {

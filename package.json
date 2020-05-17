@@ -1,7 +1,7 @@
 {
-  "name": "blogie",
+  "name": "Blogie",
   "version": "0.0.1",
-  "description": "Article recommendation site",
+  "description": "Discover the best articles from the Internet",
   "productName": "blogie",
   "cordovaId": "org.cordova.quasar.app",
   "capacitorId": "",

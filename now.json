@@ -1,20 +1,6 @@
 {
-  "version": 2,
-  "builds": [{"src": "public/**", "use": "@now/static"}, { "src": "blogie-server/index.js", "use": "@now/node-server" }],
   "routes": [
     { "handle": "filesystem" },
-    { "src": "/", "dest": "/public/index.html" },
-    { "src": "/dashboard/", "dest": "/public/index.html" },
-    {
-      "src": "/api/(.*)",
-      "methods": ["GET", "POST"],
-      "headers": {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept",
-        "Access-Control-Allow-Credentials": "true"
-      },
-      "continue": true,
-      "dest": "/blogie-server/index.js"
-    }
+    { "src": "/.*", "dest": "/index.html" }
   ]
 }
