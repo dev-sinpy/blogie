@@ -50,7 +50,6 @@ const state = {
     preferences: null,
   },
   isAuthenticated: false,
-  articles: null,
   status: null,
   loadingButton: false,
   darkMode: true,
@@ -78,14 +77,6 @@ const mutations = {
 
   SET_DARK_MODE(state, darkMode) {
     state.darkMode = !state.darkMode;
-  },
-
-  SET_FEED(state, data) {
-    state.articles = data;
-  },
-
-  SET_MORE_FEED(state, data) {
-    state.articles.push(...data);
   },
 
   SET_STATUS(state, status) {
@@ -159,71 +150,6 @@ const actions = {
     });
   },
 
-  fetchFeed({ commit, getters }, payload) {
-    console.log("Getting articles");
-
-    let feed = LocalStorage.has("feed");
-
-    if (payload.reload) {
-      commit("SET_STATUS", "loading");
-      let tags = getters.getEnabledTags;
-      for (let i = tags.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [tags[i], tags[j]] = [tags[j], tags[i]];
-      }
-      let finalTags = tags.join();
-      API
-        .get(
-          `?q=${finalTags}&limit=${payload.limit}&page=${payload.page}`
-        )
-        .then((response) => {
-          commit("SET_FEED", response.data.content);
-          commit("SET_STATUS", "loaded");
-          LocalStorage.set("feed", response.data.content);
-        });
-    } else if (feed) {
-      console.log("using local storage");
-      const data = LocalStorage.getItem("feed");
-      commit("SET_FEED", data);
-      commit("SET_STATUS", "loaded");
-    } else {
-      console.log("not using local storage");
-      let tags = getters.getEnabledTags;
-      for (let i = tags.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [tags[i], tags[j]] = [tags[j], tags[i]];
-      }
-      let finalTags = tags.join();
-      API
-        .get(
-          `?q=${finalTags}&limit=${payload.limit}&page=${payload.page}`
-        )
-        .then((response) => {
-          commit("SET_FEED", response.data.content);
-          commit("SET_STATUS", "loaded");
-          LocalStorage.set("feed", response.data.content);
-        });
-    }
-  },
-
-  fetchMoreFeed({ commit, getters }, payload) {
-    console.log("Getting more articles");
-    commit("SET_STATUS", "loading");
-    let tags = getters.getEnabledTags;
-    for (let i = tags.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [tags[i], tags[j]] = [tags[j], tags[i]];
-    }
-    let finalTags = tags.join();
-    API
-      .get(
-        `?q=${finalTags}&limit=${payload.limit}&page=${payload.page}`
-      )
-      .then((response) => {
-        commit("SET_MORE_FEED", response.data.content);
-        commit("SET_STATUS", "loaded");
-      });
-  },
 
   setDarkMode({ commit }, payload) {
     commit("SET_DARK_MODE", payload);
@@ -286,26 +212,6 @@ const getters = {
 
   isAuthenticated: (state) => {
     return !!state.user.email;
-  },
-
-  feed: (state, getters) => {
-    let tags = Array();
-    getters.enabledTags.forEach((val) => {
-      tags.push(val.tag);
-    });
-
-    return state.articles.filter((article) => tags.includes(article.tags));
-  },
-
-  articles: (state, getters) => {
-    let tags = Array();
-    getters.enabledTags.forEach((val) => {
-      tags.push(val.tag);
-    });
-
-    return state.articles.filter((article) =>
-      tags.includes(article.searched_for)
-    );
   },
 };
 

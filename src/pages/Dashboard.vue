@@ -52,17 +52,17 @@ export default {
       store.dispatch("articles/fetchDefaultTags");
       store.commit("articles/SET_POPUP", { popup: "initialPopup", flag: true });
     }
-    store.subscribe((mutation, state) => {
-      if (mutation.type === "articles/SET_TAGS") {
-        let tags = store.getters["articles/getEnabledTags"];
-        const limit = tags.length ** 2;
-        store.dispatch("articles/fetchFeed", {
-          limit: limit,
-          page: 1,
-          reload: false,
-        });
-      }
-    });
+    //store.subscribe((mutation, state) => {
+      //if (mutation.type === "articles/SET_TAGS") {
+        //let tags = store.getters["articles/getEnabledTags"];
+        //const limit = tags.length ** 2;
+        //store.dispatch("articles/fetchFeed", {
+          //limit: limit,
+          //page: 1,
+          //reload: false,
+        //});
+      //}
+    //});
   },
 
   components: {
@@ -72,7 +72,12 @@ export default {
     "delete-user-popup": require("components/DeleteAccount.vue").default,
   },
   props: ["success", "error", "deleteUser"],
-
+  
+  computed: {
+    ...mapGetters("articles", ["status"]),
+    ...mapGetters("articles", ["isDarkMode"])
+  },
+  
   methods: {
     refresh(done) {
       let tags = this.$store.getters["articles/getEnabledTags"];
