@@ -22,7 +22,7 @@
               <div class="control desktop-hide">
                 <a
                   class="button button-primary button-block button-shadow"
-                  @click="toDashboard"
+                  @click="displayPopup('registerPopup')"
                   >Get early access</a
                 >
               </div>
@@ -450,7 +450,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { AUTH } from "../plugins/firebase";
+import { AUTH } from "../boot/firebase";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
@@ -470,6 +470,10 @@ export default {
   methods: {
     toDashboard() {
       window.location.href = "/dashboard";
+    },
+    
+    displayPopup(popup) {
+      this.$store.commit("articles/SET_POPUP", { popup: popup, flag: true });
     },
 
     logout() {

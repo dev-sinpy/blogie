@@ -1,9 +1,10 @@
-import axios from "axios";
+//import axios from "axios";
 import { LocalStorage } from "quasar";
-import { AUTH } from "../plugins/firebase";
+import { AUTH } from "../boot/firebase";
+import { API } from "../boot/axios";
 import { Dark } from "quasar";
 
-let domain = "https://blogie-api.now.sh/api";
+//let domain = "https://blogie-api.now.sh/api";
 
 const state = {
   loginPopup: false,
@@ -131,7 +132,7 @@ const actions = {
     if (payload.reload) {
       console.log("refreshing tags");
       let email = getters.user;
-      axios.get(`${domain}user/?email=${email}`).then((response) => {
+      API.get(`user/?email=${email}`).then((response) => {
         commit("SET_TAGS", response.data.data.preferences);
         LocalStorage.set("tags", response.data.data.preferences);
       });
@@ -142,7 +143,7 @@ const actions = {
     } else {
       console.log("did not find tags in local storage");
       let email = getters.user;
-      axios.get(`${domain}/user/?email=${email}`).then((response) => {
+      API.get(`user/?email=${email}`).then((response) => {
         commit("SET_TAGS", response.data.data.preferences);
         LocalStorage.set("tags", response.data.data.preferences);
       });
@@ -152,7 +153,7 @@ const actions = {
   fetchDefaultTags({ commit, getters }, payload) {
     console.log("fetching default tags");
     commit("SET_STATUS", "loading");
-    axios.get(`${domain}/tags/`).then((response) => {
+    API.get(`tags/`).then((response) => {
       commit("SET_DEFAULT_TAGS", response.data.data.tags);
       commit("SET_STATUS", "loaded");
     });
@@ -171,9 +172,9 @@ const actions = {
         [tags[i], tags[j]] = [tags[j], tags[i]];
       }
       let finalTags = tags.join();
-      axios
+      API
         .get(
-          `${domain}/?q=${finalTags}&limit=${payload.limit}&page=${payload.page}`
+          `?q=${finalTags}&limit=${payload.limit}&page=${payload.page}`
         )
         .then((response) => {
           commit("SET_FEED", response.data.content);
@@ -193,9 +194,9 @@ const actions = {
         [tags[i], tags[j]] = [tags[j], tags[i]];
       }
       let finalTags = tags.join();
-      axios
+      API
         .get(
-          `${domain}/?q=${finalTags}&limit=${payload.limit}&page=${payload.page}`
+          `?q=${finalTags}&limit=${payload.limit}&page=${payload.page}`
         )
         .then((response) => {
           commit("SET_FEED", response.data.content);
@@ -214,9 +215,9 @@ const actions = {
       [tags[i], tags[j]] = [tags[j], tags[i]];
     }
     let finalTags = tags.join();
-    axios
+    API
       .get(
-        `${domain}/?q=${finalTags}&limit=${payload.limit}&page=${payload.page}`
+        `?q=${finalTags}&limit=${payload.limit}&page=${payload.page}`
       )
       .then((response) => {
         commit("SET_MORE_FEED", response.data.content);

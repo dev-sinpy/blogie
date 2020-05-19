@@ -12,7 +12,20 @@ module.exports = function (/* ctx */) {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://quasar.dev/quasar-cli/cli-documentation/boot-files
-    boot: ["boot"],
+    boot: [
+    {
+      path: "boot",
+      server: false
+    },
+    {
+      path: "axios",
+      server: true
+    },
+    {
+      path: "firebase",
+      server: false,
+    },
+    ],
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
     css: ["app.css"],
@@ -124,7 +137,7 @@ module.exports = function (/* ctx */) {
       manifest: {
         name: "blogie",
         short_name: "blogie",
-        description: "Article recommendation site",
+        description: "Discover the best articles from the Internet",
         display: "standalone",
         orientation: "portrait",
         background_color: "#ffffff",

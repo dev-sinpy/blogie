@@ -1,8 +1,8 @@
 <template>
   <!--main card -->
-  <q-card flat bordered class="q-mb-sm">
+  <q-card flat bordered class="q-mb-md">
     <q-img
-      style="height: 175px; width: 100%; overflow: hidden;"
+      style="height: 200px; width: 100%; overflow: hidden;"
       :src="article.thumbnail"
     />
 
@@ -16,18 +16,15 @@
           <q-badge outline class="q-mr-lg text-bold" color="orange">{{
             article.publish_date
           }}</q-badge>
-          <q-btn dense color="orange" round flat icon="favorite_border">
-            <q-badge color="red" floating transparent>
-              4
-            </q-badge>
+          <q-btn class="q-mr-sm" dense round flat icon="fas fa-map-pin">
           </q-btn>
-          <q-btn dense round flat icon="share"> </q-btn>
+          <q-btn @click="share" class="q-mr-sm" dense round flat icon="far fa-share-square"> </q-btn>
         </div>
       </div>
 
       <div class="text-h5 q-mt-sm q-mb-xs">{{ article.title }}</div>
       <div class="text-caption text-grey">
-        {{ article.content | truncate(120, "...") }}
+        {{ article.content | truncate(240, "...") }}
       </div>
 
       <div class="row q-mt-sm">
@@ -61,10 +58,21 @@ export default {
       return text.substring(0, length) + suffix;
     },
   },
+  methods: {
+    share() {
+      if (navigator.share) {
+        navigator.share({
+            title: 'blogie.now.sh',
+            text: 'Checkout this awesome article!',
+            url: this.article.url,
+          })
+          .then(() => console.log('Successful share'))
+          .catch((error) => console.log('Error sharing', error));
+      }
+    }
+  },
   data() {
-    return {
-      target: "_blank",
-    };
+    return {};
   },
 };
 </script>

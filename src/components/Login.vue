@@ -43,8 +43,6 @@
 
 <script>
 import firebase from "firebase";
-import axios from "axios";
-import { AUTH } from "../plugins/firebase";
 import { mapGetters } from "vuex";
 export default {
   // name: 'ComponentName',
@@ -54,7 +52,7 @@ export default {
   },
   data() {
     return {
-      errors: "",
+      error: "",
     };
   },
   methods: {
@@ -67,18 +65,18 @@ export default {
     signin: async function (val) {
       this.$store.commit("articles/SET_STATUS", "loading");
       try {
-        let provider = new firebase.auth.GoogleAuthProvider();
+        let provider;
         if (val == "google") {
           provider = new firebase.auth.GoogleAuthProvider();
         } else {
           provider = new firebase.auth.GithubAuthProvider();
         }
-        let result = await AUTH.signInWithPopup(provider);
+        let result = await this.$auth.signInWithPopup(provider);
 
         // The signed-in user info.
         let user = result.user;
-        let response = await axios.get(
-          `https://blogie-api.now.sh/api/user/?email=${user.email}`,
+        let response = await this.$api.get(
+          `user/?email=${user.email}`,
           { validateStatus: false }
         );
         if (response.data.status != "ok") {

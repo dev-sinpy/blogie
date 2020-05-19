@@ -1,7 +1,7 @@
 <template>
   <div v-if="status == 'loaded'">
     <q-dialog v-model="interests">
-      <q-card class="bg-black" style="height: 60rem; width: 50rem;">
+      <q-card class="bg-black" style="height: 400px; width: 50rem;">
         <q-card-section class="row items-center q-pb-none">
           <q-space />
           <q-btn @click="closePopup" icon="close" v-close-popup />
@@ -58,8 +58,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { AUTH } from "../plugins/firebase";
-import axios from "axios";
+
 export default {
   name: "Interests",
   computed: {
@@ -105,8 +104,8 @@ export default {
       this.$store.commit("articles/SET_STATUS", "loading");
       let tags = this.selectedTags.join();
       let email = this.user;
-      await axios.post(
-        `https://blogie-api.now.sh/api/updateuser/?email=${email}&tags=${tags}`
+      await this.$api.post(
+        `updateuser/?email=${email}&tags=${tags}`
       );
       this.$store.dispatch("articles/fetchTags", { reload: true });
       let enabledTags = this.$store.getters["articles/getEnabledTags"];

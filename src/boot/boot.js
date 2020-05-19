@@ -1,6 +1,8 @@
-import { AUTH } from "../plugins/firebase";
+import { AUTH } from "./firebase";
 
-export default ({ app, router, Vue, store }) => {
+export default ({ app, router, Vue, store, urlPath, redirect }) => {
+  //console.log(urlPath);
+  //console.log(store.getters["articles/isAuthenticated"]);
   store.dispatch("articles/fetchUser");
   //~ router.beforeEach((to, from, next) => {
   //~ // Check to see if the route has the meta field "authRequired" set to true

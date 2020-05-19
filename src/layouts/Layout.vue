@@ -52,7 +52,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { AUTH } from "../plugins/firebase";
+import { AUTH } from "../boot/firebase";
 
 export default {
   name: "Layout",
@@ -84,7 +84,7 @@ export default {
           //
         })
         .onOk(() => {
-          AUTH.signOut()
+          this.$auth.signOut()
             .then(() => {
               this.success = "Logged out successfully";
               this.$store.dispatch("articles/fetchUser");

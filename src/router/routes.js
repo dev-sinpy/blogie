@@ -1,4 +1,10 @@
 const routes = [
+  //{
+    //path: '*',
+    //name: 'maintenancePage',
+    //component: () => import("layouts/Maintenance.vue"),
+  //},
+  
   {
     path: "/",
     component: () => import("layouts/Layout.vue"),
@@ -8,11 +14,11 @@ const routes = [
   },
 
   {
-    path: "",
+    path: "/dashboard",
     component: () => import("layouts/UserLayout.vue"),
     children: [
       {
-        path: "/dashboard",
+        path: "",
         name: "dashboard",
         meta: { authRequired: true },
         component: () => import("pages/Dashboard.vue"),

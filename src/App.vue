@@ -6,7 +6,6 @@
 
 <script>
 export default {
-  name: "App",
-  preFetch({ store, currentRoute, previousRoute, redirect, ssrContext }) {},
-};
+  name: "App"
+}
 </script>

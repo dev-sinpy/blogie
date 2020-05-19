@@ -80,7 +80,7 @@
             icon="fas fa-user-circle"
             label="Account"
           >
-            <q-item v-ripple clickable>
+            <q-item>
               <q-item-section>
                 <q-btn
                   :outline="true"
@@ -138,7 +138,7 @@
 <script>
 import { mapGetters } from "vuex";
 import { mapState } from "vuex";
-import { AUTH } from "../plugins/firebase";
+import { AUTH } from "../boot/firebase";
 
 export default {
   name: "Layout",

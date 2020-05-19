@@ -48,8 +48,8 @@ export default {
       this.$store.commit("articles/SET_STATUS", "loading");
       let email = this.$store.getters['articles/user'];
       console.log(email)
-      await axios.post(`http://blogie-api.now.sh/api/removeuser/?email=${email}`)
-      let user = AUTH.currentUser;
+      await this.$api.post(`removeuser/?email=${email}`)
+      let user = this.$auth.currentUser;
 
       user.delete().then(function() {
         this.$store.commit("articles/SET_STATUS", "loaded");
