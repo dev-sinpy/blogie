@@ -9,6 +9,10 @@
         <q-btn icon="close" v-close-popup />
       </q-card-section>
       
+      <q-banner v-if="error" class="text-white bg-negative">
+        {{ error }}
+      </q-banner>
+      
       <q-card-section
         v-if="status == 'loading'"
         class="q-pa-lg absolute-center"
@@ -41,22 +45,25 @@ export default {
   // name: 'ComponentName',
   props: ["deleteUser"],
   computed: {
-    ...mapGetters("articles", ["status"])
+    ...mapGetters("articles", ["status"]),
+    ...mapGetters("articles", ["user"])
   },
   methods: {
     deleteAccount: async function() {
       this.$store.commit("articles/SET_STATUS", "loading");
-      let email = this.$store.getters['articles/user'];
-      console.log(email)
-      await this.$api.post(`removeuser/?email=${email}`)
-      let user = this.$auth.currentUser;
+      
+      try {
+        let email = this.user;
+        await this.$api.post(`removeuser/?email=${email}`)
+        let user = this.$auth.currentUser;
 
-      user.delete().then(function() {
+        await user.delete()
         this.$store.commit("articles/SET_STATUS", "loaded");
-        window.location.href = '/';
-      }).catch(function(error) {
-        // An error happened.
-      });
+        window.location.href = "/";
+      } catch(error) {
+        this.$store.commit("articles/SET_STATUS", "loaded");
+        this.error = error
+      }
     }
   },
 

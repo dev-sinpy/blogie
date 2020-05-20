@@ -12,7 +12,7 @@
 
         <div
           class="q-pa-sm text-h5 text-weight-bold"
-          v-bind:class="[isDarkMode ? text - white : text - black]"
+          v-bind:class="[isDarkMode ? 'text-white' : 'text-black']"
           v-bind:style="{
             border: `1px ${isDarkMode ? 'white' : 'black'} solid`,
             borderRadius: '10px',

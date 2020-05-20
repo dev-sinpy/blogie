@@ -11,38 +11,39 @@ const state = {
   registerPopup: false,
   interestsPopup: false,
   initialPopup: false,
-  tags: [
-    {
-      tag: "android",
-      popularity: 1,
-      enabled: true,
-    },
-    {
-      tag: "ios",
-      popularity: 1,
-      enabled: true,
-    },
-    {
-      tag: "windows",
-      popularity: 1,
-      enabled: true,
-    },
-    {
-      tag: "programming",
-      popularity: 1,
-      enabled: true,
-    },
-    {
-      tag: "news",
-      popularity: 1,
-      enabled: true,
-    },
-    {
-      tag: "random",
-      popularity: 1,
-      enabled: false,
-    },
-  ],
+  tags: null,
+  //[
+    //{
+      //tag: "android",
+      //popularity: 1,
+      //enabled: true,
+    //},
+    //{
+      //tag: "ios",
+      //popularity: 1,
+      //enabled: true,
+    //},
+    //{
+      //tag: "windows",
+      //popularity: 1,
+      //enabled: true,
+    //},
+    //{
+      //tag: "programming",
+      //popularity: 1,
+      //enabled: true,
+    //},
+    //{
+      //tag: "news",
+      //popularity: 1,
+      //enabled: true,
+    //},
+    //{
+      //tag: "random",
+      //popularity: 1,
+      //enabled: false,
+    //},
+  //],
 
   user: {
     email: null,
@@ -50,7 +51,14 @@ const state = {
     preferences: null,
   },
   isAuthenticated: false,
-  status: null,
+  status: {
+    loading: false,
+    tags_loading: false,
+    feed_loading: false,
+    popup_loading: false,
+    data_posting: false,
+    
+  },
   loadingButton: false,
   darkMode: true,
   defaultTags: null,
@@ -79,16 +87,11 @@ const mutations = {
     state.darkMode = !state.darkMode;
   },
 
-  SET_STATUS(state, status) {
-    state.status = status;
-  },
-
-  SET_LOADING(state, status) {
-    state.status = status;
+  SET_STATUS(state, payload) {
+    state.status[`${payload.status}`] = payload.flag;
   },
 
   RESET_USER(state) {
-    state.status = "user not found";
     state.user.email = null;
     state.user.verified = null;
     state.user.preferences = null;
@@ -109,8 +112,8 @@ const actions = {
         } else {
           // Signed out. Let Vuex know.
           commit("RESET_USER");
-          LocalStorage.remove("tags");
-          LocalStorage.remove("feed");
+          //LocalStorage.remove("tags");
+          //LocalStorage.remove("feed");
         }
       });
     }
@@ -120,33 +123,38 @@ const actions = {
     console.log("fetching tags");
     let hasTags = LocalStorage.has("tags");
 
+    commit("SET_STATUS", {status: 'tags_loading', flag: true});
     if (payload.reload) {
       console.log("refreshing tags");
+      
       let email = getters.user;
       API.get(`user/?email=${email}`).then((response) => {
         commit("SET_TAGS", response.data.data.preferences);
         LocalStorage.set("tags", response.data.data.preferences);
+        commit("SET_STATUS", {status: 'tags_loading', flag: false});
       });
     } else if (hasTags) {
       console.log("found tags in local storage");
       let tags = LocalStorage.getItem("tags");
       commit("SET_TAGS", tags);
+      commit("SET_STATUS", {status: 'tags_loading', flag: false});
     } else {
       console.log("did not find tags in local storage");
       let email = getters.user;
       API.get(`user/?email=${email}`).then((response) => {
         commit("SET_TAGS", response.data.data.preferences);
         LocalStorage.set("tags", response.data.data.preferences);
+        commit("SET_STATUS", {status: 'tags_loading', flag: false});
       });
     }
   },
 
   fetchDefaultTags({ commit, getters }, payload) {
     console.log("fetching default tags");
-    commit("SET_STATUS", "loading");
+    commit("SET_STATUS", {status: 'tags_loading', flag: true});
     API.get(`tags/`).then((response) => {
       commit("SET_DEFAULT_TAGS", response.data.data.tags);
-      commit("SET_STATUS", "loaded");
+      commit("SET_STATUS", {status: 'tags_loading', flag: false});
     });
   },
 

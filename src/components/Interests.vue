@@ -1,5 +1,5 @@
 <template>
-  <div v-if="status == 'loaded'">
+  <div v-if="!status.popup_loading">
     <q-dialog v-model="interests">
       <q-card class="bg-black" style="height: 400px; width: 50rem;">
         <q-card-section class="row items-center q-pb-none">
@@ -11,13 +11,13 @@
         </q-banner>
         
         <q-card-section
-          v-if="status == 'loading'"
+          v-if="status.data_posting"
           class="q-pa-lg absolute-center"
         >
           <q-spinner-puff color="deep-orange" size="50px" />
         </q-card-section>
         
-        <q-card-section v-else>
+        <q-card-section v-else-if="!status.tags_loading">
           <div class="q-mb-md text-weight-medium text-center">
             Select you interests
           </div>
@@ -101,7 +101,7 @@ export default {
       }
     },
     submitInterests: async function () {
-      this.$store.commit("articles/SET_STATUS", "loading");
+      this.$store.commit("articles/SET_STATUS", {status: 'data_posting', flag: true});
       let tags = this.selectedTags.join();
       let email = this.user;
       await this.$api.post(
@@ -110,12 +110,7 @@ export default {
       this.$store.dispatch("articles/fetchTags", { reload: true });
       let enabledTags = this.$store.getters["articles/getEnabledTags"];
       const limit = enabledTags.length ** 2;
-      this.$store.dispatch("articles/fetchFeed", {
-        limit: limit,
-        page: 1,
-        reload: true,
-      });
-      this.$store.commit("articles/SET_STATUS", "loaded");
+      this.$store.commit("articles/SET_STATUS", {status: 'data_posting', flag: false});
       this.success = "Updated your preferences";
     },
   },

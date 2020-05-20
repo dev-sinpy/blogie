@@ -19,7 +19,7 @@
           flat
           label="Menu"
           vertical-actions-align="left"
-          :color="isDarkMode ? white : black"
+          :color="isDarkMode ? 'white' : 'black'"
           icon="none"
           direction="down"
         >
@@ -55,7 +55,7 @@
         <q-list
           bordered
           class="rounded-borders q-mt-md"
-          v-if="status == 'loaded'"
+          v-if="!status.tags_loading"
         >
           <q-expansion-item
             switch-toggle-side
@@ -84,7 +84,6 @@
               <q-item-section>
                 <q-btn
                   :outline="true"
-                  :loading="status == 'loading'"
                   @click="interestsPopup"
                   class="q-ma-md"
                   label="Edit Preferences"
@@ -165,13 +164,13 @@ export default {
     },
 
     interestsPopup() {
-      this.$store.commit("articles/SET_LOADING", true);
+      this.$store.commit("articles/SET_STATUS", {status: 'popup_loading', flag: true});
       this.$store.dispatch("articles/fetchDefaultTags");
       this.$store.commit("articles/SET_POPUP", {
         popup: "interestsPopup",
         flag: true,
       });
-      this.$store.commit("articles/SET_LOADING", false);
+      this.$store.commit("articles/SET_STATUS", {status: 'popup_loading', flag: false});
     },
 
     darkMode() {

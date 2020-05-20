@@ -11,7 +11,7 @@
       </q-banner>
 
       <q-card-section
-        v-if="status == 'loading'"
+        v-if="status.data_posting"
         class="q-pa-lg absolute-center"
       >
         <q-spinner-puff color="deep-orange" size="50px" />
@@ -57,15 +57,15 @@ export default {
   },
   methods: {
     closePopup() {
+      this.$store.commit("articles/SET_STATUS", {status: 'data_posting', flag: false});
       this.error = '';
-      this.$store.commit("articles/SET_STATUS", "loaded");
       this.$store.commit("articles/SET_POPUP", {
         popup: "loginPopup",
         flag: false,
       });
     },
     signin: async function (val) {
-      this.$store.commit("articles/SET_STATUS", "loading");
+      this.$store.commit("articles/SET_STATUS", {status: 'data_posting', flag: true});
       try {
         let provider;
         if (val == "google") {
@@ -91,7 +91,7 @@ export default {
       } catch (error) {
         this.error = 'Unknown error occured, please try again.';
       } finally {
-        this.$store.commit("articles/SET_STATUS", "loaded");
+        this.$store.commit("articles/SET_STATUS", {status: 'data_posting', flag: false});
       }
     },
   },
