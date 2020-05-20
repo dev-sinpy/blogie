@@ -70,6 +70,7 @@ export default {
   },
   methods: {
     closePopup() {
+      this.success = "";
       this.$store.commit("articles/SET_POPUP", {
         popup: "interestsPopup",
         flag: false,
@@ -77,7 +78,6 @@ export default {
     },
 
     selectTags(tag) {
-      this.success = "";
       let found = this.selectedTags.find((val) => val == tag);
       if (!found) {
         this.selectedTags.push(tag);

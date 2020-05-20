@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import firebase from "firebase";
+import firebase from "firebase/app";
 import { mapGetters } from "vuex";
 
 export default {
@@ -60,6 +60,8 @@ export default {
 
   methods: {
     closePopup() {
+      this.error = '';
+      this.$store.commit("articles/SET_STATUS", "loaded");
       this.$store.commit("articles/SET_POPUP", {
         popup: "registerPopup",
         flag: false,
@@ -92,7 +94,7 @@ export default {
           window.location.href = "/dashboard/?tutorial=true";
         }
       } catch (err) {
-        this.error = err;
+        this.error = 'Unknown error occured, please try again.';
         await this.$auth.signOut();
       } finally {
         this.$store.commit("articles/SET_STATUS", "loaded");

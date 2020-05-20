@@ -70,6 +70,7 @@ export default {
   },
   methods: {
     closePopup() {
+      this.success = "";
       this.$store.commit("articles/SET_POPUP", {
         popup: "initialPopup",
         flag: false,
