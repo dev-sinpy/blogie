@@ -11,7 +11,7 @@
       </q-banner>
 
       <q-card-section
-        v-if="status.data_posting"
+        v-if="loading"
         class="q-pa-lg absolute-center"
       >
         <q-spinner-puff color="deep-orange" size="50px" />
@@ -54,13 +54,14 @@ export default {
 
   data() {
     return {
+      loading: false,
       error: "",
     };
   },
 
   methods: {
     closePopup() {
-      this.$store.commit("articles/SET_STATUS", {status: 'data_posting', flag: false});
+      this.loading = false;
       this.error = '';
       this.$store.commit("articles/SET_POPUP", {
         popup: "registerPopup",
@@ -69,7 +70,7 @@ export default {
     },
 
     signup: async function (val) {
-      this.$store.commit("articles/SET_STATUS", {status: 'data_posting', flag: true});
+      this.loading = true;
 
       try {
         let provider;
@@ -97,7 +98,7 @@ export default {
         this.error = 'Unknown error occured, please try again.';
         await this.$auth.signOut();
       } finally {
-        this.$store.commit("articles/SET_STATUS", {status: 'data_posting', flag: false});
+        this.loading = false;
       }
     },
   },

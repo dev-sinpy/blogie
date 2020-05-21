@@ -44,7 +44,7 @@ import { mapGetters } from "vuex";
 export default {
   name: "Dashboard",
 
-  preFetch({ store, currentRoute, previousRoute, redirect, ssrContext }) {
+  preFetch({ store, currentRoute, previousRoute, redirect }) {
     //if (!store.getters['articles/user']) {
       //redirect('/')
     //}

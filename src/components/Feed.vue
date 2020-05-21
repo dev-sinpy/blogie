@@ -2,7 +2,7 @@
   <div>
     
     <!--Primary card-->
-    <div v-if="!status.feed_loading">
+    <div v-if="articles">
       <primary-card class="q-mt-lg" v-bind:article="primaryCard" />
       <q-separator />
 
@@ -60,7 +60,29 @@ export default {
   },
   
   created() {
-    this.$store.subscribe((mutation, state) => {
+    this.fetchData()
+  },
+  
+  computed: {
+    ...mapGetters("articles", ["status"]),
+    ...mapGetters("articles", ["getEnabledTags"]),
+
+    primaryCard() {
+      return this.articles[0];
+    },
+
+    subCard() {
+      return this.articles.slice(1, -1);
+    },
+
+    secondaryCard() {
+      return this.articles.slice(-2);
+    },
+  },
+  
+  methods: {
+    fetchData() {
+      this.$store.subscribe((mutation, state) => {
       if (mutation.type === "articles/SET_TAGS" && !mutation.payload.flag) {
         this.$store.commit("articles/SET_STATUS", {status: 'feed_loading', flag: true});
         let tags = this.$store.getters['articles/getEnabledTags'];
@@ -82,26 +104,8 @@ export default {
           });
       }
     })
-  },
-  
-  computed: {
-    ...mapGetters("articles", ["status"]),
-    ...mapGetters("articles", ["getEnabledTags"]),
-
-    primaryCard() {
-      return this.articles[0];
     },
-
-    subCard() {
-      return this.articles.slice(1, -1);
-    },
-
-    secondaryCard() {
-      return this.articles.slice(-2);
-    },
-  },
-  
-  methods: {
+    
     refresh(done) {
       let tags = this.getEnabledTags;
       const limit = tags.length ** 2;

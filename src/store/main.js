@@ -12,39 +12,6 @@ const state = {
   interestsPopup: false,
   initialPopup: false,
   tags: null,
-  //[
-    //{
-      //tag: "android",
-      //popularity: 1,
-      //enabled: true,
-    //},
-    //{
-      //tag: "ios",
-      //popularity: 1,
-      //enabled: true,
-    //},
-    //{
-      //tag: "windows",
-      //popularity: 1,
-      //enabled: true,
-    //},
-    //{
-      //tag: "programming",
-      //popularity: 1,
-      //enabled: true,
-    //},
-    //{
-      //tag: "news",
-      //popularity: 1,
-      //enabled: true,
-    //},
-    //{
-      //tag: "random",
-      //popularity: 1,
-      //enabled: false,
-    //},
-  //],
-
   user: {
     email: null,
     verified: null,

@@ -11,13 +11,13 @@
         </q-banner>
         
         <q-card-section
-          v-if="status.data_posting"
+          v-if="loading"
           class="q-pa-lg absolute-center"
         >
           <q-spinner-puff color="deep-orange" size="50px" />
         </q-card-section>
         
-        <q-card-section v-else-if="!status.tags_loading">
+        <q-card-section v-else-if="!loading">
           <div class="q-mb-md text-weight-medium text-center">
             Select you interests
           </div>
@@ -46,11 +46,7 @@
             />
           </div>
         </q-card-section>
-<!--
-        <q-card-section class="row items-center q-ma-lg">
-          
-        </q-card-section>
--->
+        
       </q-card>
     </q-dialog>
   </div>
@@ -62,7 +58,6 @@ import { mapGetters } from "vuex";
 export default {
   name: "Interests",
   computed: {
-    ...mapGetters("articles", ["getEnabledTags"]),
     ...mapGetters("articles", ["getDefaultTags"]),
     ...mapGetters("articles", ["user"]),
     ...mapGetters("articles", ["status"]),
@@ -70,6 +65,7 @@ export default {
   },
   methods: {
     closePopup() {
+      this.loading = false;
       this.success = "";
       this.$store.commit("articles/SET_POPUP", {
         popup: "interestsPopup",
@@ -101,21 +97,20 @@ export default {
       }
     },
     submitInterests: async function () {
-      this.$store.commit("articles/SET_STATUS", {status: 'data_posting', flag: true});
+      this.loading = true;
       let tags = this.selectedTags.join();
       let email = this.user;
       await this.$api.post(
         `updateuser/?email=${email}&tags=${tags}`
       );
       this.$store.dispatch("articles/fetchTags", { reload: true });
-      let enabledTags = this.$store.getters["articles/getEnabledTags"];
-      const limit = enabledTags.length ** 2;
-      this.$store.commit("articles/SET_STATUS", {status: 'data_posting', flag: false});
+      this.loading = false;
       this.success = "Updated your preferences";
     },
   },
   data() {
     return {
+      loading: false,
       selectedTags: [],
       success: "",
     };

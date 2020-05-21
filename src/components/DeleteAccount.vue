@@ -14,7 +14,7 @@
       </q-banner>
       
       <q-card-section
-        v-if="status == 'loading'"
+        v-if="loading"
         class="q-pa-lg absolute-center"
       >
         <q-spinner-puff color="deep-orange" size="50px" />
@@ -50,7 +50,7 @@ export default {
   },
   methods: {
     deleteAccount: async function() {
-      this.$store.commit("articles/SET_STATUS", "loading");
+      this.loading = true;
       
       try {
         let email = this.user;
@@ -58,17 +58,19 @@ export default {
         let user = this.$auth.currentUser;
 
         await user.delete()
-        this.$store.commit("articles/SET_STATUS", "loaded");
         window.location.href = "/";
       } catch(error) {
-        this.$store.commit("articles/SET_STATUS", "loaded");
-        this.error = error
+        //
+      } finally {
+        this.loading = false;
+        window.location.href = "/";
       }
     }
   },
 
   data () {
     return {
+      loading: false,
       error: ''
     }
   }
