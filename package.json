@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Discover the best articles from the Internet",
   "productName": "blogie",
-  "cordovaId": "org.cordova.quasar.app",
+  "cordovaId": "org.cordova.blogie.app",
   "capacitorId": "",
   "author": "dev-sinpy <tdevyanshu9@gmail.com>",
   "private": true,

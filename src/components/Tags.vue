@@ -1,5 +1,5 @@
 <template>
-  <q-item v-ripple clickable @click="tag.enabled = !tag.enabled">
+  <q-item v-ripple clickable @click="toggleTag">
     <q-item-section side top>
       <q-checkbox keep-color color="accent" v-model="tag.enabled" />
     </q-item-section>
@@ -14,6 +14,11 @@
 export default {
   // name: 'ComponentName',
   props: ["tag"],
+  methods: {
+    toggleTag() {
+      this.tag.enabled = !this.tag.enabled
+    }
+  },
   data() {
     return {};
   },

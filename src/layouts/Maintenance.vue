@@ -1,3 +1,10 @@
+<!--
+Simple maintenance page.
+
+*Styling*
+Uses quasar classes and some inline css.
+-->
+
 <template>
   <div class="wrapper">
   <h1 class="text-white">Coming soon<span class="dot">.</span></h1>

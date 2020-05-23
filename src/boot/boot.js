@@ -1,5 +1,6 @@
 import { AUTH } from "./firebase";
 
+//Main boot file for getting state of the current user
 export default ({ app, router, Vue, store, urlPath, redirect }) => {
   //console.log(urlPath);
   //console.log(store.getters["articles/isAuthenticated"]);

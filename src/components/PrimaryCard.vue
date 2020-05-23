@@ -1,6 +1,6 @@
 <template>
   <!--main card -->
-  <q-card flat bordered class="q-mb-md">
+  <q-card flat bordered class="q-mb-md" v-show="tags.includes(article.searched_for)">
     <q-img
       style="height: 200px; width: 100%; overflow: hidden;"
       :src="article.thumbnail"
@@ -52,7 +52,7 @@
 <script>
 export default {
   // name: 'ComponentName',
-  props: ["article"],
+  props: ["article", "tags"],
   filters: {
     truncate: function (text, length, suffix) {
       return text.substring(0, length) + suffix;

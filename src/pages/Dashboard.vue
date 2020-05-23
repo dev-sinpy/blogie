@@ -1,15 +1,26 @@
+<!--
+dashboard page
+
+Defines content displayed in dashboard.
+
+*Styling*
+Uses quasar classes and some inline css.
+-->
+
 <template>
   <q-page-container>
     <q-page padding>
-      <q-pull-to-refresh @refresh="refresh">
-        <q-banner v-if="success" inline-actions class="text-white bg-positive">
+      
+      <!-- banners -->
+        <q-banner v-show="success" inline-actions class="text-white bg-positive">
           {{ success }}
         </q-banner>
 
-        <q-banner v-if="error" inline-actions class="text-white bg-negative">
+        <q-banner v-show="error" inline-actions class="text-white bg-negative">
           {{ error }}
         </q-banner>
-
+      <!-- end banners -->
+        
         <div
           class="q-pa-sm text-h5 text-weight-bold"
           v-bind:class="[isDarkMode ? 'text-white' : 'text-black']"
@@ -32,8 +43,6 @@
         <!-- Feed -->
         <feed />
         <!-- End Feed -->
-        
-      </q-pull-to-refresh>
     </q-page>
   </q-page-container>
 </template>
@@ -43,26 +52,18 @@ import { mapGetters } from "vuex";
 
 export default {
   name: "Dashboard",
+  
+  props: ["success", "error", "deleteUser"],
 
   preFetch({ store, currentRoute, previousRoute, redirect }) {
     //if (!store.getters['articles/user']) {
       //redirect('/')
     //}
+    //for new user, display a popup for selecting some tags
     if (currentRoute.query.tutorial) {
       store.dispatch("articles/fetchDefaultTags");
       store.commit("articles/SET_POPUP", { popup: "initialPopup", flag: true });
     }
-    //store.subscribe((mutation, state) => {
-      //if (mutation.type === "articles/SET_TAGS") {
-        //let tags = store.getters["articles/getEnabledTags"];
-        //const limit = tags.length ** 2;
-        //store.dispatch("articles/fetchFeed", {
-          //limit: limit,
-          //page: 1,
-          //reload: false,
-        //});
-      //}
-    //});
   },
 
   components: {
@@ -71,25 +72,13 @@ export default {
     "initial-popup": require("components/InitialSetup.vue").default,
     "delete-user-popup": require("components/DeleteAccount.vue").default,
   },
-  props: ["success", "error", "deleteUser"],
   
   computed: {
-    ...mapGetters("articles", ["status"]),
+    ...mapGetters("articles", ["status"]), //status of the current state of the app
     ...mapGetters("articles", ["isDarkMode"])
   },
   
-  methods: {
-    refresh(done) {
-      let tags = this.$store.getters["articles/getEnabledTags"];
-      const limit = tags.length ** 2;
-      this.$store.dispatch("articles/fetchFeed", {
-        limit: limit,
-        page: 1,
-        reload: true,
-      });
-      done();
-    },
-  },
+  methods: {},
 
   data() {
     return {};

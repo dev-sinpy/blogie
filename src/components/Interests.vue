@@ -11,7 +11,7 @@
         </q-banner>
         
         <q-card-section
-          v-if="loading"
+          v-if="loading || status.tags_loading"
           class="q-pa-lg absolute-center"
         >
           <q-spinner-puff color="deep-orange" size="50px" />
@@ -66,6 +66,7 @@ export default {
   methods: {
     closePopup() {
       this.loading = false;
+      this.selectedTags.length = 0;
       this.success = "";
       this.$store.commit("articles/SET_POPUP", {
         popup: "interestsPopup",

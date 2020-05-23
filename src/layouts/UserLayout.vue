@@ -1,3 +1,11 @@
+<!--
+Dashboard layout
+
+Defines header and sidebar of the dashboard.
+
+*Styling*
+Uses quasar classes and some inline css.
+-->
 <template>
   <q-layout view="lHh Lpr lff" class="shadow-2">
     <q-toolbar>
@@ -13,7 +21,8 @@
       <div class="absolute-center text-h5 text-bold text-orange logo-text">
         Blogie
       </div>
-
+      
+      <!--navbar -->
       <div class="absolute-right">
         <q-fab
           flat
@@ -38,10 +47,11 @@
           />
         </q-fab>
       </div>
-
+      <!-- end navbar -->
       <q-space />
     </q-toolbar>
-
+    
+    <!-- Sidebar for dashboard. -->
     <q-drawer
       v-model="drawer"
       persistent
@@ -65,7 +75,7 @@
             label="Tags"
           >
 
-            <tags v-for="tag in Tags" v-bind:tag="tag" :key="tag.tag" />
+            <tags v-for="tag in tags" v-bind:tag="tag" :key="tag.tag" />
           </q-expansion-item>
         </q-list>
 
@@ -128,9 +138,13 @@
         </q-list>
       </q-scroll-area>
     </q-drawer>
+    <!-- end sidebar -->
+    
+    <!-- additional pages -->
     <keep-alive>
       <router-view :success="success" :error="error" :deleteUser="deleteUser"/>
     </keep-alive>
+    
   </q-layout>
 </template>
 
@@ -140,17 +154,18 @@ import { mapState } from "vuex";
 import { AUTH } from "../boot/firebase";
 
 export default {
-  name: "Layout",
+  name: "DashboardLayout",
 
   components: {
-    tags: require("components/Tags.vue").default,
+    tags: require("components/Tags.vue").default, //tags to display in sidebar
   },
 
   created() {
-    this.$q.dark.set(true);
+    this.$q.dark.set(true); //set default to dark theme
   },
 
   preFetch({ store, currentRoute, previousRoute, redirect, ssrContext }) {
+    //Prefetching interests of the current logged in user
     store.subscribe((mutation, state) => {
       if (mutation.type === "articles/SET_USER") {
         store.dispatch("articles/fetchTags", { reload: false });
@@ -160,10 +175,18 @@ export default {
 
   methods: {
     displayPopup(popup) {
+      /*
+      params: popup
+      type: String
+      */
+      
       this.$store.commit("articles/SET_POPUP", { popup: popup, flag: true });
     },
 
     interestsPopup() {
+      /*
+      Functionality: Displays a popup and fetches all the tags from the server.
+      */
       this.$store.commit("articles/SET_STATUS", {status: 'popup_loading', flag: true});
       this.$store.dispatch("articles/fetchDefaultTags");
       this.$store.commit("articles/SET_POPUP", {
@@ -174,6 +197,7 @@ export default {
     },
 
     darkMode() {
+      //functionality: Toggles theme of the website
       this.$q.dark.toggle();
       this.$store.dispatch("articles/setDarkMode");
     },
@@ -209,10 +233,9 @@ export default {
   },
 
   computed: {
-    ...mapGetters("articles", ["Tags"]),
+    ...mapState("articles", ["tags"]),
     ...mapGetters("articles", ["isAuthenticated"]),
     ...mapGetters("articles", ["status"]),
-    ...mapGetters("articles", ["loadingButton"]),
     ...mapGetters("articles", ["isDarkMode"]),
     dark: {
       get() {

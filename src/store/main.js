@@ -1,24 +1,26 @@
-//import axios from "axios";
+// Todo: add more comments and refactor all this shit
+
 import { LocalStorage } from "quasar";
 import { AUTH } from "../boot/firebase";
 import { API } from "../boot/axios";
 import { Dark } from "quasar";
 
-//let domain = "https://blogie-api.now.sh/api";
-
 const state = {
+  //popups
   loginPopup: false,
   registerPopup: false,
   interestsPopup: false,
   initialPopup: false,
-  tags: null,
+  //end poppups
+  
+  tags: null, //user tags
   user: {
     email: null,
-    verified: null,
-    preferences: null,
+    verified: null
   },
   isAuthenticated: false,
   status: {
+    //global status of the app. Change these statuses when fetching some data 
     loading: false,
     tags_loading: false,
     feed_loading: false,
@@ -26,23 +28,25 @@ const state = {
     data_posting: false,
     
   },
-  loadingButton: false,
   darkMode: true,
-  defaultTags: null,
+  defaultTags: null,// default tags from the server, fetch only if used in multiple components
 };
 
 const mutations = {
   SET_USER(state, user) {
+    //Set the current logged in user
     state.isAuthenticated = true;
     state.user.email = user.email;
     state.user.verified = user.emailVerified;
   },
 
   SET_POPUP(state, payload) {
+    //For displaying popups
     state[`${payload.popup}`] = payload.flag;
   },
 
   SET_TAGS(state, tags) {
+    //Set tags of the current logged in user
     state.tags = tags;
   },
 
@@ -67,9 +71,7 @@ const mutations = {
 
 const actions = {
   fetchUser({ commit }, payload) {
-    console.log("getting user");
     if (payload) {
-      console.log("payload is provided");
       commit("SET_USER", payload);
     } else {
       AUTH.onAuthStateChanged((user) => {
@@ -79,7 +81,7 @@ const actions = {
         } else {
           // Signed out. Let Vuex know.
           commit("RESET_USER");
-          //LocalStorage.remove("tags");
+          LocalStorage.remove("tags");
           //LocalStorage.remove("feed");
         }
       });
@@ -87,7 +89,7 @@ const actions = {
   },
 
   fetchTags({ commit, getters }, payload) {
-    console.log("fetching tags");
+    //fetch tags of the current user from the API
     let hasTags = LocalStorage.has("tags");
 
     commit("SET_STATUS", {status: 'tags_loading', flag: true});
@@ -101,12 +103,11 @@ const actions = {
         commit("SET_STATUS", {status: 'tags_loading', flag: false});
       });
     } else if (hasTags) {
-      console.log("found tags in local storage");
+      //if tags are cached then use them instead
       let tags = LocalStorage.getItem("tags");
       commit("SET_TAGS", tags);
       commit("SET_STATUS", {status: 'tags_loading', flag: false});
     } else {
-      console.log("did not find tags in local storage");
       let email = getters.user;
       API.get(`user/?email=${email}`).then((response) => {
         commit("SET_TAGS", response.data.data.preferences);
@@ -117,7 +118,6 @@ const actions = {
   },
 
   fetchDefaultTags({ commit, getters }, payload) {
-    console.log("fetching default tags");
     commit("SET_STATUS", {status: 'tags_loading', flag: true});
     API.get(`tags/`).then((response) => {
       commit("SET_DEFAULT_TAGS", response.data.data.tags);
@@ -134,10 +134,6 @@ const actions = {
 const getters = {
   enabledTags: (state) => {
     return state.tags.filter((tag) => tag.enabled);
-  },
-
-  loadingButton: (state) => {
-    return state.loadingButton;
   },
 
   isDarkMode: (state) => {

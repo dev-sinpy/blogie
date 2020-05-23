@@ -1,7 +1,7 @@
+// DO NOT TOUCH THIS FOR NOW. 
+
 import Vue from "vue";
 import Vuex from "vuex";
-
-// we first import the module
 import articles from "./main";
 
 Vue.use(Vuex);
@@ -9,7 +9,6 @@ Vue.use(Vuex);
 export default function (/* { ssrContext } */) {
   const Store = new Vuex.Store({
     modules: {
-      // then we reference it
       articles,
     },
 

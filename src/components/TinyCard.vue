@@ -1,5 +1,5 @@
 <template>
-  <q-card flat bordered class="q-mb-md">
+  <q-card flat bordered class="q-mb-md" v-show="tags.includes(article.searched_for)">
     <q-card-section>
       <div class="row">
         <div class="text-overline text-orange">{{ article.website_name }}</div>
@@ -43,9 +43,10 @@
 </template>
 
 <script>
+  
 export default {
   // name: 'ComponentName',
-  props: ["article"],
+  props: ["article", 'tags'],
   filters: {
     truncate: function (text, length, suffix) {
       return text.substring(0, length) + suffix;

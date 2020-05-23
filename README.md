@@ -1,6 +1,8 @@
 # Blogie
 
-## Install the dependencies
+## Get started
+
+### Install the dependencies
 
 ```bash
 npm install
