@@ -16,8 +16,8 @@ export default {
   props: ["tag"],
   methods: {
     toggleTag() {
-      this.tag.enabled = !this.tag.enabled
-    }
+      this.tag.enabled = !this.tag.enabled;
+    },
   },
   data() {
     return {};

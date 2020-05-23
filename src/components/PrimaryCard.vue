@@ -1,6 +1,11 @@
 <template>
   <!--main card -->
-  <q-card flat bordered class="q-mb-md" v-show="tags.includes(article.searched_for)">
+  <q-card
+    flat
+    bordered
+    class="q-mb-md"
+    v-show="tags.includes(article.searched_for)"
+  >
     <q-img
       style="height: 200px; width: 100%; overflow: hidden;"
       :src="article.thumbnail"
@@ -18,7 +23,15 @@
           }}</q-badge>
           <q-btn class="q-mr-sm" dense round flat icon="fas fa-map-pin">
           </q-btn>
-          <q-btn @click="share" class="q-mr-sm" dense round flat icon="far fa-share-square"> </q-btn>
+          <q-btn
+            @click="share"
+            class="q-mr-sm"
+            dense
+            round
+            flat
+            icon="far fa-share-square"
+          >
+          </q-btn>
         </div>
       </div>
 
@@ -61,15 +74,16 @@ export default {
   methods: {
     share() {
       if (navigator.share) {
-        navigator.share({
-            title: 'blogie.now.sh',
-            text: 'Checkout this awesome article!',
+        navigator
+          .share({
+            title: "blogie.now.sh",
+            text: "Checkout this awesome article!",
             url: this.article.url,
           })
-          .then(() => console.log('Successful share'))
-          .catch((error) => console.log('Error sharing', error));
+          .then(() => console.log("Successful share"))
+          .catch((error) => console.log("Error sharing", error));
       }
-    }
+    },
   },
   data() {
     return {};

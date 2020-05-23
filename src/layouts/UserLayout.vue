@@ -21,7 +21,7 @@ Uses quasar classes and some inline css.
       <div class="absolute-center text-h5 text-bold text-orange logo-text">
         Blogie
       </div>
-      
+
       <!--navbar -->
       <div class="absolute-right">
         <q-fab
@@ -38,7 +38,7 @@ Uses quasar classes and some inline css.
             icon="fas fa-home"
             label="Home"
           />
-          
+
           <q-fab-action
             @click="logout"
             color="primary"
@@ -50,7 +50,7 @@ Uses quasar classes and some inline css.
       <!-- end navbar -->
       <q-space />
     </q-toolbar>
-    
+
     <!-- Sidebar for dashboard. -->
     <q-drawer
       v-model="drawer"
@@ -74,7 +74,6 @@ Uses quasar classes and some inline css.
             icon="fas fa-hashtag"
             label="Tags"
           >
-
             <tags v-for="tag in tags" v-bind:tag="tag" :key="tag.tag" />
           </q-expansion-item>
         </q-list>
@@ -99,7 +98,7 @@ Uses quasar classes and some inline css.
                   label="Edit Preferences"
                   color="blue"
                 />
-                
+
                 <q-btn
                   :outline="true"
                   @click="deleteUser = !deleteUser"
@@ -139,12 +138,11 @@ Uses quasar classes and some inline css.
       </q-scroll-area>
     </q-drawer>
     <!-- end sidebar -->
-    
+
     <!-- additional pages -->
     <keep-alive>
-      <router-view :success="success" :error="error" :deleteUser="deleteUser"/>
+      <router-view :success="success" :error="error" :deleteUser="deleteUser" />
     </keep-alive>
-    
   </q-layout>
 </template>
 
@@ -179,7 +177,7 @@ export default {
       params: popup
       type: String
       */
-      
+
       this.$store.commit("articles/SET_POPUP", { popup: popup, flag: true });
     },
 
@@ -187,13 +185,19 @@ export default {
       /*
       Functionality: Displays a popup and fetches all the tags from the server.
       */
-      this.$store.commit("articles/SET_STATUS", {status: 'popup_loading', flag: true});
+      this.$store.commit("articles/SET_STATUS", {
+        status: "popup_loading",
+        flag: true,
+      });
       this.$store.dispatch("articles/fetchDefaultTags");
       this.$store.commit("articles/SET_POPUP", {
         popup: "interestsPopup",
         flag: true,
       });
-      this.$store.commit("articles/SET_STATUS", {status: 'popup_loading', flag: false});
+      this.$store.commit("articles/SET_STATUS", {
+        status: "popup_loading",
+        flag: false,
+      });
     },
 
     darkMode() {
@@ -254,7 +258,7 @@ export default {
       popup: false,
       settings: [{ label: "Enable Dark Theme" }],
       drawer: false,
-      deleteUser: false
+      deleteUser: false,
     };
   },
 };

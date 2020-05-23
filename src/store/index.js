@@ -1,4 +1,4 @@
-// DO NOT TOUCH THIS FOR NOW. 
+// DO NOT TOUCH THIS FOR NOW.
 
 import Vue from "vue";
 import Vuex from "vuex";

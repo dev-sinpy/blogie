@@ -2,7 +2,7 @@
   "name": "Blogie",
   "version": "0.0.1",
   "description": "Discover the best articles from the Internet",
-  "productName": "blogie",
+  "productName": "Blogie",
   "cordovaId": "org.cordova.blogie.app",
   "capacitorId": "",
   "author": "dev-sinpy <tdevyanshu9@gmail.com>",

@@ -1,5 +1,10 @@
 <template>
-  <q-card flat bordered class="q-mb-md" v-show="tags.includes(article.searched_for)">
+  <q-card
+    flat
+    bordered
+    class="q-mb-md"
+    v-show="tags.includes(article.searched_for)"
+  >
     <q-card-section>
       <div class="row">
         <div class="text-overline text-orange">{{ article.website_name }}</div>
@@ -11,7 +16,14 @@
             article.publish_date
           }}</q-badge>
           <q-btn class="q-mr-sm" dense round flat icon="fas fa-map-pin" />
-          <q-btn @click="share" class="q-mr-sm" dense round flat icon="far fa-share-square" />
+          <q-btn
+            @click="share"
+            class="q-mr-sm"
+            dense
+            round
+            flat
+            icon="far fa-share-square"
+          />
         </div>
       </div>
 
@@ -63,15 +75,16 @@ export default {
   methods: {
     share() {
       if (navigator.share) {
-        navigator.share({
-            title: 'blogie.now.sh',
-            text: 'Checkout this awesome article!',
+        navigator
+          .share({
+            title: "blogie.now.sh",
+            text: "Checkout this awesome article!",
             url: this.article.url,
           })
-          .then(() => console.log('Successful share'))
-          .catch((error) => console.log('Error sharing', error));
+          .then(() => console.log("Successful share"))
+          .catch((error) => console.log("Error sharing", error));
       }
-    }
+    },
   },
   data() {
     return {

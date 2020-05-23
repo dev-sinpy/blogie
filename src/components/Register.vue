@@ -10,10 +10,7 @@
         {{ error }}
       </q-banner>
 
-      <q-card-section
-        v-if="loading"
-        class="q-pa-lg absolute-center"
-      >
+      <q-card-section v-if="loading" class="q-pa-lg absolute-center">
         <q-spinner-puff color="deep-orange" size="50px" />
       </q-card-section>
 
@@ -62,7 +59,7 @@ export default {
   methods: {
     closePopup() {
       this.loading = false;
-      this.error = '';
+      this.error = "";
       this.$store.commit("articles/SET_POPUP", {
         popup: "registerPopup",
         flag: false,
@@ -82,10 +79,9 @@ export default {
         let result = await this.$auth.signInWithPopup(provider);
         let user = result.user;
 
-        let response = await this.$api.get(
-          `setuser/?email=${user.email}`,
-          { validateStatus: false }
-        );
+        let response = await this.$api.get(`setuser/?email=${user.email}`, {
+          validateStatus: false,
+        });
         if (response.data.status != "ok") {
           this.error = response.data.message;
           await this.$auth.signOut();
@@ -95,7 +91,7 @@ export default {
           window.location.href = "/dashboard/?tutorial=true";
         }
       } catch (err) {
-        this.error = 'Unknown error occured, please try again.';
+        this.error = "Unknown error occured, please try again.";
         await this.$auth.signOut();
       } finally {
         this.loading = false;

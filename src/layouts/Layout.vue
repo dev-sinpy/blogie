@@ -57,7 +57,7 @@ Uses additional global css defined in src/css folder.
     </div>
     <!-- additional router pages defined in src/pages folder -->
     <router-view />
-    
+
     <!-- footer -->
     <footer class="site-footer text-light">
       <div class="container">
@@ -105,7 +105,6 @@ Uses additional global css defined in src/css folder.
       </div>
     </footer>
     <!--end footer -->
-    
   </q-layout>
 </template>
 
@@ -128,7 +127,7 @@ export default {
       params: popup
       type: String
       */
-      
+
       this.$store.commit("articles/SET_POPUP", { popup: popup, flag: true });
     },
 
@@ -144,7 +143,8 @@ export default {
           //
         })
         .onOk(() => {
-          this.$auth.signOut()
+          this.$auth
+            .signOut()
             .then(() => {
               this.success = "Logged out successfully";
               this.$store.dispatch("articles/fetchUser");

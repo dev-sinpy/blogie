@@ -1,10 +1,10 @@
 const routes = [
   //{
-    //path: '*',
-    //name: 'maintenancePage',
-    //component: () => import("layouts/Maintenance.vue"),
+  //path: '*',
+  //name: 'maintenancePage',
+  //component: () => import("layouts/Maintenance.vue"),
   //},
-  
+
   {
     path: "/",
     component: () => import("layouts/Layout.vue"),

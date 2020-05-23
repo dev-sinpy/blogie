@@ -9,12 +9,11 @@ Uses quasar classes and global css defined in src/css folder.
 
 <template>
   <q-page-container>
-    
     <!-- popups-->
     <login-popup />
     <register-popup />
     <!-- end popups-->
-    
+
     <main>
       <section class="hero text-center">
         <div class="container-sm">
@@ -45,7 +44,7 @@ Uses quasar classes and global css defined in src/css folder.
                 style="width: 20%; margin: 0 auto;"
               >
                 <a
-                  class="button button-primary button-block button-shadow" 
+                  class="button button-primary button-block button-shadow"
                   @click="displayPopup('registerPopup')"
                   >Get early access</a
                 >
@@ -438,7 +437,7 @@ export default {
     toDashboard() {
       window.location.href = "/dashboard";
     },
-    
+
     displayPopup(popup) {
       this.$store.commit("articles/SET_POPUP", { popup: popup, flag: true });
     },

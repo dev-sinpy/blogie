@@ -4,7 +4,7 @@
       <q-card class="bg-black" style="height: 400px; width: 50rem;">
         <q-card-section class="row items-center q-pb-none">
           <q-space />
-<!--
+          <!--
           <q-btn
             v-if="selectedTags.length >= 1"
             @click="closePopup"
@@ -16,14 +16,14 @@
         <q-banner v-if="success" class="text-white bg-positive">
           {{ success }}
         </q-banner>
-        
+
         <q-card-section
           v-if="loading || status.tags_enabled"
           class="q-pa-lg absolute-center"
         >
           <q-spinner-puff color="deep-orange" size="50px" />
         </q-card-section>
-        
+
         <q-card-section v-else-if="!loading">
           <div class="q-mb-md text-weight-medium text-center">
             Select you interests
@@ -108,14 +108,12 @@ export default {
       this.loading = true;
       let tags = this.selectedTags.join();
       let email = this.user;
-      await this.$api.post(
-        `updateuser/?email=${email}&tags=${tags}`
-      );
+      await this.$api.post(`updateuser/?email=${email}&tags=${tags}`);
       this.$store.dispatch("articles/fetchTags", { reload: true });
       this.loading = false;
       this.success = "Updated your preferences";
-      this.closePopup()
-      this.$router.replace('/dashboard')
+      this.closePopup();
+      this.$router.replace("/dashboard");
     },
   },
   data() {

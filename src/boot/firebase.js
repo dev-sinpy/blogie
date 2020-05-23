@@ -1,4 +1,4 @@
-import Vue from 'vue';
+import Vue from "vue";
 import firebase from "firebase/app";
 import "firebase/auth";
 
@@ -14,7 +14,7 @@ var config = {
   measurementId: "G-V8LDN6G0SC",
 };
 
-if (firebase.apps.length === 0){
+if (firebase.apps.length === 0) {
   firebase.initializeApp(config);
   var AUTH = firebase.auth();
 }
@@ -22,4 +22,4 @@ if (firebase.apps.length === 0){
 //firebase auth instance for authenicating users. To use in .vue files use 'this.$auth' syntax.
 Vue.prototype.$auth = AUTH;
 
-export { AUTH }
+export { AUTH };

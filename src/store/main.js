@@ -12,24 +12,23 @@ const state = {
   interestsPopup: false,
   initialPopup: false,
   //end poppups
-  
+
   tags: null, //user tags
   user: {
     email: null,
-    verified: null
+    verified: null,
   },
   isAuthenticated: false,
   status: {
-    //global status of the app. Change these statuses when fetching some data 
+    //global status of the app. Change these statuses when fetching some data
     loading: false,
     tags_loading: false,
     feed_loading: false,
     popup_loading: false,
     data_posting: false,
-    
   },
   darkMode: true,
-  defaultTags: null,// default tags from the server, fetch only if used in multiple components
+  defaultTags: null, // default tags from the server, fetch only if used in multiple components
 };
 
 const mutations = {
@@ -92,39 +91,38 @@ const actions = {
     //fetch tags of the current user from the API
     let hasTags = LocalStorage.has("tags");
 
-    commit("SET_STATUS", {status: 'tags_loading', flag: true});
+    commit("SET_STATUS", { status: "tags_loading", flag: true });
     if (payload.reload) {
       console.log("refreshing tags");
-      
+
       let email = getters.user;
       API.get(`user/?email=${email}`).then((response) => {
         commit("SET_TAGS", response.data.data.preferences);
         LocalStorage.set("tags", response.data.data.preferences);
-        commit("SET_STATUS", {status: 'tags_loading', flag: false});
+        commit("SET_STATUS", { status: "tags_loading", flag: false });
       });
     } else if (hasTags) {
       //if tags are cached then use them instead
       let tags = LocalStorage.getItem("tags");
       commit("SET_TAGS", tags);
-      commit("SET_STATUS", {status: 'tags_loading', flag: false});
+      commit("SET_STATUS", { status: "tags_loading", flag: false });
     } else {
       let email = getters.user;
       API.get(`user/?email=${email}`).then((response) => {
         commit("SET_TAGS", response.data.data.preferences);
         LocalStorage.set("tags", response.data.data.preferences);
-        commit("SET_STATUS", {status: 'tags_loading', flag: false});
+        commit("SET_STATUS", { status: "tags_loading", flag: false });
       });
     }
   },
 
   fetchDefaultTags({ commit, getters }, payload) {
-    commit("SET_STATUS", {status: 'tags_loading', flag: true});
+    commit("SET_STATUS", { status: "tags_loading", flag: true });
     API.get(`tags/`).then((response) => {
       commit("SET_DEFAULT_TAGS", response.data.data.tags);
-      commit("SET_STATUS", {status: 'tags_loading', flag: false});
+      commit("SET_STATUS", { status: "tags_loading", flag: false });
     });
   },
-
 
   setDarkMode({ commit }, payload) {
     commit("SET_DARK_MODE", payload);

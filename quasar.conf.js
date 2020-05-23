@@ -13,18 +13,18 @@ module.exports = function (/* ctx */) {
     // --> boot files are part of "main.js"
     // https://quasar.dev/quasar-cli/cli-documentation/boot-files
     boot: [
-    {
-      path: "boot",
-      server: false
-    },
-    {
-      path: "axios",
-      server: true
-    },
-    {
-      path: "firebase",
-      server: false,
-    },
+      {
+        path: "boot",
+        server: false,
+      },
+      {
+        path: "axios",
+        server: true,
+      },
+      {
+        path: "firebase",
+        server: false,
+      },
     ],
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
@@ -93,7 +93,7 @@ module.exports = function (/* ctx */) {
       distDir: "public",
       // rtl: false, // https://quasar.dev/options/rtl-support
       // showProgress: false,
-      // gzip: true,
+      gzip: true,
       // analyze: true,
 
       // Options below are automatically set depending on the env, set them if you want to override
