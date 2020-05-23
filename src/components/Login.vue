@@ -23,7 +23,7 @@
           />
         </div>
 
-        <div id="or">OR</div>
+        <div id="or" :style="{ marginLeft: $q.platform.is.desktop ? '20px' : '0px' }">OR</div>
 
         <div>
           <q-btn
@@ -112,7 +112,6 @@ export default {
   height: 1px;
 
   top: 24px;
-
   background-color: #aaa;
 
   content: "";

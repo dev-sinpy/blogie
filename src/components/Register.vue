@@ -23,7 +23,7 @@
           />
         </div>
 
-        <div id="or">OR</div>
+        <div id="or" :style="{ marginLeft: $q.platform.is.desktop ? '20px' : '0px' }">OR</div>
 
         <div>
           <q-btn
