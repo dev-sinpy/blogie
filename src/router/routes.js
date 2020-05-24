@@ -1,3 +1,5 @@
+// Define your routes in this filee
+
 const routes = [
   //{
   //path: '*',

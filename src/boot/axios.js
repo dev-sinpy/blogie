@@ -7,7 +7,7 @@ const API = axios.create({
   baseURL: "https://blogie-api.now.sh/api/",
 });
 
-// for use inside Vue files through this.$axios
+// for using inside Vue files through this.$axios
 Vue.prototype.$api = API;
 
 // Here we define a named export

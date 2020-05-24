@@ -1,3 +1,5 @@
+// ignore this file
+
 import { AUTH } from "./firebase";
 
 //Main boot file for getting state of the current user

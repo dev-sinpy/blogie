@@ -1,3 +1,6 @@
+// firebase instance for using plugins from firebase.
+// Currently only using authentication plugin
+
 import Vue from "vue";
 import firebase from "firebase/app";
 import "firebase/auth";
