@@ -40,13 +40,19 @@
       </div>
 
       <div v-else>
+        <!-- show only if fecthing data -->
         <div class="q-mt-lg">
-          <div class="q-gutter-md">
-            <q-skeleton type="circle" size="100px" />
-            <q-skeleton width="150px" />
+          <div class="q-gutter-md q-mt-lg">
             <q-skeleton height="150px" />
-            <q-skeleton size="250px" />
-            <q-skeleton width="100%" height="100%" />
+            <q-skeleton height="150px" />
+            <q-skeleton height="150px" />
+            <q-skeleton height="150px" />
+            <q-skeleton height="150px" />
+            <q-skeleton height="150px" />
+            <q-skeleton height="150px" />
+            <q-skeleton height="150px" />
+            <q-skeleton height="150px" />
+            <q-skeleton height="150px" />
           </div>
         </div>
       </div>
