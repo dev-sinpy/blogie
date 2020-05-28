@@ -88,6 +88,7 @@ export default {
         } else {
           this.$store.dispatch("articles/fetchUser", user);
           this.$store.dispatch("articles/fetchDefaultTags");
+          this.$q.localStorage.set('savedData', [])
           window.location.href = "/dashboard/?tutorial=true";
         }
       } catch (err) {

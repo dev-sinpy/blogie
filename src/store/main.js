@@ -29,11 +29,23 @@ const state = {
   },
   darkMode: true,
   defaultTags: null, // default tags from the server, fetch only if used in multiple components
+  savedData: [],
 };
 
 const mutations = {
+  
+  SAVE_DATA(state, data) {
+    state.savedData.push(data)
+  },
+  
   SET_USER(state, user) {
     //Set the current logged in user
+    let hasSavedData = LocalStorage.has('savedData')
+    if (!hasSavedData) {
+      LocalStorage.set('savedData', [])
+    }
+    let savedData = LocalStorage.getItem('savedData')
+    state.savedData = savedData
     state.isAuthenticated = true;
     state.user.email = user.email;
     state.user.verified = user.emailVerified;

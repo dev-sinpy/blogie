@@ -42,7 +42,7 @@ Uses quasar classes and some inline css.
           <q-fab-action
             @click="logout"
             color="primary"
-            icon="fas fa-sign-out-alt"
+            icon="logout"
             label="Logout"
           />
         </q-fab>
@@ -56,12 +56,14 @@ Uses quasar classes and some inline css.
       v-model="drawer"
       persistent
       show-if-above
-      :width="275"
+      :width="300"
       :breakpoint="500"
       bordered
       content-class="accent"
     >
       <q-scroll-area class="fit">
+        
+        <!-- tags-section -->
         <q-list
           bordered
           class="rounded-borders q-mt-md"
@@ -81,7 +83,28 @@ Uses quasar classes and some inline css.
         <div v-else>
           <q-skeleton square height="20em" />
         </div>
-
+        <!-- end tags-section -->
+        
+        <!-- saved-articles-section -->
+        <q-list bordered class="rounded-borders">
+          <q-expansion-item
+            switch-toggle-side
+            expand-separator
+            icon="far fa-bookmark"
+            label="Saved content"
+          >
+          <div v-if="savedData">
+            <saved-content 
+              v-for="article in savedData"
+              :key="article.url"
+              :article="article" 
+            />
+          </div>
+          </q-expansion-item>
+        </q-list>
+        <!-- end saved-articles-section -->
+        
+        <!-- account-section -->
         <q-list bordered class="rounded-borders">
           <q-expansion-item
             switch-toggle-side
@@ -110,6 +133,7 @@ Uses quasar classes and some inline css.
             </q-item>
           </q-expansion-item>
         </q-list>
+        <!-- end account-section -->
 
         <q-list bordered class="rounded-borders">
           <q-expansion-item
@@ -156,6 +180,7 @@ export default {
 
   components: {
     tags: require("components/Tags.vue").default, //tags to display in sidebar
+    "saved-content": require("components/SavedContent.vue").default, //tags to display in sidebar
   },
 
   created() {
@@ -238,6 +263,7 @@ export default {
 
   computed: {
     ...mapState("articles", ["tags"]),
+    ...mapState("articles", ["savedData"]),
     ...mapGetters("articles", ["isAuthenticated"]),
     ...mapGetters("articles", ["status"]),
     ...mapGetters("articles", ["isDarkMode"]),

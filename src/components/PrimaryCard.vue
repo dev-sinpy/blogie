@@ -21,17 +21,23 @@
           <q-badge outline class="q-mr-lg text-bold" color="orange">{{
             article.publish_date
           }}</q-badge>
-          <q-btn class="q-mr-sm" dense round flat icon="fas fa-map-pin">
-          </q-btn>
+          
+          <q-btn class="q-mr-sm" 
+            @click="saveData"
+            dense 
+            round 
+            flat 
+            :icon="isSaved() ? 'fas fa-bookmark' : 'far fa-bookmark'" 
+          />
+          
           <q-btn
             @click="share"
             class="q-mr-sm"
             dense
             round
             flat
-            icon="far fa-share-square"
-          >
-          </q-btn>
+            icon="fas fa-share"
+          />
         </div>
       </div>
 
@@ -63,15 +69,39 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   // name: 'ComponentName',
   props: ["article", "tags"],
+  computed: {
+    ...mapState("articles", ["savedData"]),
+  },
   filters: {
     truncate: function (text, length, suffix) {
       return text.substring(0, length) + suffix;
     },
   },
   methods: {
+    saveData() {
+      if (!this.isSaved()) {
+        this.$store.commit('articles/SAVE_DATA', this.article)
+        this.$q.localStorage.set('savedData', this.savedData)
+      } else {
+        let index = this.savedData.findIndex((val) => val.url == this.article.url)
+        this.savedData.splice(index, 1)
+        this.$q.localStorage.set('savedData', this.savedData)
+      }
+    },
+    
+    isSaved() {
+      for (let val of this.savedData) {
+        if (val.url == this.article.url) {
+          return true
+        }
+      }
+    },
+    
     share() {
       if (navigator.share) {
         navigator
