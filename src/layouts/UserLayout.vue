@@ -23,30 +23,7 @@ Uses quasar classes and some inline css.
       </div>
 
       <!--navbar -->
-      <div class="absolute-right">
-        <q-fab
-          flat
-          label="Menu"
-          vertical-actions-align="left"
-          :color="isDarkMode ? 'white' : 'black'"
-          icon="none"
-          direction="down"
-        >
-          <q-fab-action
-            to="/"
-            color="primary"
-            icon="fas fa-home"
-            label="Home"
-          />
-
-          <q-fab-action
-            @click="logout"
-            color="primary"
-            icon="logout"
-            label="Logout"
-          />
-        </q-fab>
-      </div>
+        <nav-menu />
       <!-- end navbar -->
       <q-space />
     </q-toolbar>
@@ -56,53 +33,79 @@ Uses quasar classes and some inline css.
       v-model="drawer"
       persistent
       show-if-above
-      :width="300"
+      :width="350"
       :breakpoint="500"
       bordered
       content-class="accent"
     >
       <q-scroll-area class="fit">
         
+        <!-- primary buttons -->
+        <q-list padding class="text-primary">
+          <q-item 
+            clickable
+            v-ripple
+            to="/dashboard"
+            :active="link === 'inbox'"
+            @click="link = 'inbox'"
+            active-class="my-menu-link"
+          >
+            <q-item-section avatar>
+              <q-icon name="dashboard" />
+            </q-item-section>
+
+            <q-item-section>Dashboard</q-item-section>
+          </q-item>
+
+          <q-item
+            clickable
+            v-ripple
+            to="/saved"
+            :active="link === 'outbox'"
+            @click="link = 'outbox'"
+            active-class="my-menu-link"
+          >
+            <q-item-section avatar>
+              <q-icon name="bookmarks" />
+            </q-item-section>
+
+            <q-item-section>Saved</q-item-section>
+          </q-item>
+
+        </q-list>
+        
         <!-- tags-section -->
-        <q-list
-          bordered
-          class="rounded-borders q-mt-md"
+        <q-list 
           v-if="!status.tags_loading"
         >
-          <q-expansion-item
-            switch-toggle-side
-            expand-separator
-            default-opened
-            icon="fas fa-hashtag"
-            label="Tags"
-          >
-            <tags v-for="tag in tags" v-bind:tag="tag" :key="tag.tag" />
-          </q-expansion-item>
-        </q-list>
+          <q-item>
+            <q-item-section top>
+              <q-item-label lines="1">
+                <span class="text-weight-medium">Tags</span>
+              </q-item-label>
+            </q-item-section>
 
+            <q-item-section top side>
+              <div class="text-grey-8 q-gutter-xs">
+                <q-btn 
+                @click="interestsPopup()"
+                  size="16px" 
+                  flat 
+                  dense 
+                  round 
+                  icon="edit" 
+                />
+              </div>
+            </q-item-section>
+          </q-item>
+          
+          <tags v-for="tag in tags" v-bind:tag="tag" :key="tag.tag" />
+        </q-list>
+        
         <div v-else>
           <q-skeleton square height="20em" />
         </div>
-        <!-- end tags-section -->
-        
-        <!-- saved-articles-section -->
-        <q-list bordered class="rounded-borders">
-          <q-expansion-item
-            switch-toggle-side
-            expand-separator
-            icon="far fa-bookmark"
-            label="Saved content"
-          >
-          <div v-if="savedData">
-            <saved-content 
-              v-for="article in savedData"
-              :key="article.url"
-              :article="article" 
-            />
-          </div>
-          </q-expansion-item>
-        </q-list>
-        <!-- end saved-articles-section -->
+        <!--end tags-section -->
         
         <!-- account-section -->
         <q-list bordered class="rounded-borders">
@@ -114,14 +117,6 @@ Uses quasar classes and some inline css.
           >
             <q-item>
               <q-item-section>
-                <q-btn
-                  :outline="true"
-                  @click="interestsPopup"
-                  class="q-ma-md"
-                  label="Edit Preferences"
-                  color="blue"
-                />
-
                 <q-btn
                   :outline="true"
                   @click="deleteUser = !deleteUser"
@@ -138,10 +133,12 @@ Uses quasar classes and some inline css.
         <q-list bordered class="rounded-borders">
           <q-expansion-item
             switch-toggle-side
-            expand-separator
+            expand-separator 
+            default-opened
             icon="fas fa-cog"
-            label="Settings"
-          >
+            label="Additional"
+          > 
+          
             <q-item
               v-ripple
               clickable
@@ -180,7 +177,7 @@ export default {
 
   components: {
     tags: require("components/Tags.vue").default, //tags to display in sidebar
-    "saved-content": require("components/SavedContent.vue").default, //tags to display in sidebar
+    'nav-menu': require("components/menu/Menu.vue").default, //tags to display in sidebar
   },
 
   created() {
@@ -214,7 +211,7 @@ export default {
         status: "popup_loading",
         flag: true,
       });
-      this.$store.dispatch("articles/fetchDefaultTags");
+      //this.$store.dispatch("articles/fetchDefaultTags");
       this.$store.commit("articles/SET_POPUP", {
         popup: "interestsPopup",
         flag: true,
@@ -263,7 +260,6 @@ export default {
 
   computed: {
     ...mapState("articles", ["tags"]),
-    ...mapState("articles", ["savedData"]),
     ...mapGetters("articles", ["isAuthenticated"]),
     ...mapGetters("articles", ["status"]),
     ...mapGetters("articles", ["isDarkMode"]),
@@ -295,5 +291,10 @@ export default {
 
 .logo-text {
   font-family: "Righteous", cursive;
+}
+
+.my-menu-link {
+  color: black;
+  background: #E6F1FC;
 }
 </style>

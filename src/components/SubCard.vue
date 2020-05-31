@@ -37,7 +37,7 @@
 
       <div class="row flex q-mt-sm">
         <div class="col-8">
-          <div class="text-h5 q-mb-xs">{{ article.title }}</div>
+          <div class="text-h6 q-mb-xs">{{ article.title }}</div>
           <div class="text-caption text-grey">
             {{ article.content | truncate(120, "...") }}
           </div>

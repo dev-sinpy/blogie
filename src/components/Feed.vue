@@ -19,15 +19,6 @@
         />
         <q-separator />
 
-        <!-- secondary cards -->
-
-        <sub-card
-          v-for="article in secondaryCard"
-          :key="article.index"
-          v-bind:article="article"
-          :tags="getEnabledTags"
-        />
-
         <div class="row">
           <q-btn
             outline
@@ -69,7 +60,6 @@ export default {
   components: {
     "primary-card": require("components/PrimaryCard.vue").default,
     "tiny-card": require("components/TinyCard.vue").default,
-    "sub-card": require("components/SubCard.vue").default,
   },
 
   created() {
@@ -86,11 +76,7 @@ export default {
     },
 
     subCard() {
-      return this.articles.slice(1, -1);
-    },
-
-    secondaryCard() {
-      return this.articles.slice(-2);
+      return this.articles.slice(1);
     },
   },
   watch: {

@@ -60,7 +60,6 @@ export default {
     //}
     //for new user, display a popup for selecting some tags
     if (currentRoute.query.tutorial) {
-      store.dispatch("articles/fetchDefaultTags");
       store.commit("articles/SET_POPUP", { popup: "initialPopup", flag: true });
     }
   },

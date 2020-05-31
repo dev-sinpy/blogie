@@ -1,10 +1,13 @@
 <template>
   <div v-if="!status.popup_loading">
     <q-dialog v-model="interests">
-      <q-card class="bg-black" style="height: 400px; width: 50rem;">
+      <q-card style="height: 500px; width: 50rem;">
         <q-card-section class="row items-center q-pb-none">
+          <div class="text-weight-medium text-center">
+            Your Interests
+          </div>
           <q-space />
-          <q-btn @click="closePopup" icon="close" v-close-popup />
+          <q-btn flat @click="closePopup" icon="close" v-close-popup />
         </q-card-section>
         <q-banner v-if="success" class="text-white bg-positive">
           {{ success }}
@@ -16,28 +19,31 @@
         >
           <q-spinner-puff color="deep-orange" size="50px" />
         </q-card-section>
-
-        <q-card-section v-else-if="!loading">
-          <div class="q-mb-md text-weight-medium text-center">
-            Select you interests
+        
+        <div v-else-if="!loading">
+        <q-card-section>
+          <div>
+            <multiselect 
+              autofocus
+              v-model="value" 
+              tag-placeholder="Add this tag" 
+              placeholder="Search or add custom tags" 
+              label="name" 
+              track-by="name" 
+              :allow-empty="false" 
+              :preselect-first="true"
+              :close-on-select="false"
+              :options="options" 
+              max-height="250"
+              :multiple="true" 
+              :taggable="true" 
+              @tag="addTag">
+            </multiselect>
           </div>
-          <div
-            v-for="tags in getDefaultTags"
-            :key="tags.tag"
-            class="q-ma-sm"
-            style="display: inline;"
-          >
-            <span class="q-gutter-md">
-              <q-btn
-                @click="selectTags(tags.tag)"
-                color="blue"
-                :label="tags.tag"
-                :outline="!tags.enabled"
-                rounded
-              />
-            </span>
-          </div>
-          <div class="q-mt-lg">
+        </q-card-section>
+        
+        <q-card-section style="padding-top: 270px;">
+          <div>
             <q-btn
               @click="submitInterests"
               class="full-width"
@@ -46,6 +52,7 @@
             />
           </div>
         </q-card-section>
+        </div>
       </q-card>
     </q-dialog>
   </div>
@@ -53,19 +60,29 @@
 
 <script>
 import { mapGetters } from "vuex";
+import Multiselect from 'vue-multiselect'
 
 export default {
   name: "Interests",
+  components: { Multiselect },
   computed: {
     ...mapGetters("articles", ["getDefaultTags"]),
     ...mapGetters("articles", ["user"]),
     ...mapGetters("articles", ["status"]),
     ...mapGetters("articles", ["interests"]),
   },
+  
   methods: {
+    addTag (newTag) {
+      const tag = {
+        name: newTag,
+      }
+      this.options.push(tag)
+      this.value.push(tag)
+    },
+    
     closePopup() {
       this.loading = false;
-      this.selectedTags.length = 0;
       this.success = "";
       this.$store.commit("articles/SET_POPUP", {
         popup: "interestsPopup",
@@ -73,32 +90,9 @@ export default {
       });
     },
 
-    selectTags(tag) {
-      let found = this.selectedTags.find((val) => val == tag);
-      if (!found) {
-        this.selectedTags.push(tag);
-        this.getDefaultTags.forEach((val) => {
-          if (val.tag == tag) {
-            val.enabled = true;
-          }
-        });
-      } else {
-        this.selectedTags.forEach((val, index) => {
-          if (val == tag) {
-            this.selectedTags.splice(index, 1);
-          }
-        });
-
-        this.getDefaultTags.forEach((val) => {
-          if (val.tag == tag) {
-            val.enabled = false;
-          }
-        });
-      }
-    },
     submitInterests: async function () {
       this.loading = true;
-      let tags = this.selectedTags.join();
+      let tags = this.value.map(val => val.name.toLowerCase().trim()).join()
       let email = this.user;
       await this.$api.post(`updateuser/?email=${email}&tags=${tags}`);
       this.$store.dispatch("articles/fetchTags", { reload: true });
@@ -108,10 +102,27 @@ export default {
   },
   data() {
     return {
+      value: [
+      ],
+      options: [
+        { name: 'android' },
+        { name: 'ios' },
+        { name: 'windows'},
+        { name: 'linux'},
+        { name: 'cryptocurrency'},
+        { name: 'blockchain'},
+        { name: 'cybersecurity'},
+        { name: 'hacking'},
+        { name: 'programming'},
+        { name: 'gaming'},
+        { name: 'digital art'},
+        { name: 'hacking'},
+      ],
       loading: false,
-      selectedTags: [],
       success: "",
     };
   },
 };
 </script>
+
+<style src="vue-multiselect/dist/vue-multiselect.min.css" lang="css"></style>

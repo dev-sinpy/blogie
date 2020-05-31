@@ -26,6 +26,12 @@ const routes = [
         component: () => import("pages/Dashboard.vue"),
         props: (route) => ({ query: route.query.tutorial }),
       },
+      {
+        path: "/saved",
+        name: "saved",
+        meta: { authRequired: true },
+        component: () => import("pages/SavedContent.vue"),
+      },
     ],
   },
 ];

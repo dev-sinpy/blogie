@@ -15,7 +15,9 @@ const state = {
 
   tags: null, //user tags
   user: {
+    avatar: null,
     email: null,
+    name: null,
     verified: null,
   },
   isAuthenticated: false,
@@ -47,7 +49,9 @@ const mutations = {
     let savedData = LocalStorage.getItem('savedData')
     state.savedData = savedData
     state.isAuthenticated = true;
+    state.user.avatar = user.photoURL;
     state.user.email = user.email;
+    state.user.name = user.displayName;
     state.user.verified = user.emailVerified;
   },
 
@@ -161,6 +165,10 @@ const getters = {
 
   getDefaultTags: (state) => {
     return state.defaultTags;
+  },
+
+  getUser: (state) => {
+    return state.user;
   },
 
   status: (state) => {

@@ -7,7 +7,7 @@
     v-show="tags.includes(article.searched_for)"
   >
     <q-img
-      style="height: 200px; width: 100%; overflow: hidden;"
+      style="height: 150px; width: 100%; overflow: hidden;"
       :src="article.thumbnail"
     />
 
@@ -41,9 +41,9 @@
         </div>
       </div>
 
-      <div class="text-h5 q-mt-sm q-mb-xs">{{ article.title }}</div>
+      <div class="text-h6 q-mt-sm q-mb-xs">{{ article.title }}</div>
       <div class="text-caption text-grey">
-        {{ article.content | truncate(240, "...") }}
+        {{ article.content | truncate(150, "...") }}
       </div>
 
       <div class="row q-mt-sm">

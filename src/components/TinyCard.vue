@@ -35,7 +35,7 @@
         </div>
       </div>
 
-      <div class="text-h5 q-mt-sm q-mb-xs">{{ article.title }}</div>
+      <div class="text-h6 q-mt-sm">{{ article.title }}</div>
       <div class="text-caption text-grey">
         {{ article.content | truncate(360, "...") }}
       </div>
