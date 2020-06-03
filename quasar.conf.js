@@ -7,7 +7,7 @@
 // https://quasar.dev/quasar-cli/quasar-conf-js
 /* eslint-env node */
 
-module.exports = function (/* ctx */) {
+module.exports = function(/* ctx */) {
   return {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
@@ -93,7 +93,7 @@ module.exports = function (/* ctx */) {
       distDir: "public",
       // rtl: false, // https://quasar.dev/options/rtl-support
       // showProgress: false,
-      // gzip: true,
+      gzip: true,
       // analyze: true,
 
       // Options below are automatically set depending on the env, set them if you want to override
@@ -143,31 +143,31 @@ module.exports = function (/* ctx */) {
         background_color: "#ffffff",
         theme_color: "#027be3",
         //icons: [
-          //{
-            //src: "statics/icons/icon-128x128.png",
-            //sizes: "128x128",
-            //type: "image/png",
-          //},
-          //{
-            //src: "statics/icons/icon-192x192.png",
-            //sizes: "192x192",
-            //type: "image/png",
-          //},
-          //{
-            //src: "statics/icons/icon-256x256.png",
-            //sizes: "256x256",
-            //type: "image/png",
-          //},
-          //{
-            //src: "statics/icons/icon-384x384.png",
-            //sizes: "384x384",
-            //type: "image/png",
-          //},
-          //{
-            //src: "statics/icons/icon-512x512.png",
-            //sizes: "512x512",
-            //type: "image/png",
-          //},
+        //{
+        //src: "statics/icons/icon-128x128.png",
+        //sizes: "128x128",
+        //type: "image/png",
+        //},
+        //{
+        //src: "statics/icons/icon-192x192.png",
+        //sizes: "192x192",
+        //type: "image/png",
+        //},
+        //{
+        //src: "statics/icons/icon-256x256.png",
+        //sizes: "256x256",
+        //type: "image/png",
+        //},
+        //{
+        //src: "statics/icons/icon-384x384.png",
+        //sizes: "384x384",
+        //type: "image/png",
+        //},
+        //{
+        //src: "statics/icons/icon-512x512.png",
+        //sizes: "512x512",
+        //type: "image/png",
+        //},
         //],
       },
     },

@@ -11,6 +11,7 @@ const state = {
   registerPopup: false,
   interestsPopup: false,
   initialPopup: false,
+  deleteAccountPopup: false,
   //end poppups
 
   tags: null, //user tags
@@ -18,7 +19,7 @@ const state = {
     avatar: null,
     email: null,
     name: null,
-    verified: null,
+    verified: null
   },
   isAuthenticated: false,
   status: {
@@ -27,27 +28,26 @@ const state = {
     tags_loading: false,
     feed_loading: false,
     popup_loading: false,
-    data_posting: false,
+    data_posting: false
   },
   darkMode: true,
   defaultTags: null, // default tags from the server, fetch only if used in multiple components
-  savedData: [],
+  savedData: []
 };
 
 const mutations = {
-  
   SAVE_DATA(state, data) {
-    state.savedData.push(data)
+    state.savedData.push(data);
   },
-  
+
   SET_USER(state, user) {
     //Set the current logged in user
-    let hasSavedData = LocalStorage.has('savedData')
+    let hasSavedData = LocalStorage.has("savedData");
     if (!hasSavedData) {
-      LocalStorage.set('savedData', [])
+      LocalStorage.set("savedData", []);
     }
-    let savedData = LocalStorage.getItem('savedData')
-    state.savedData = savedData
+    let savedData = LocalStorage.getItem("savedData");
+    state.savedData = savedData;
     state.isAuthenticated = true;
     state.user.avatar = user.photoURL;
     state.user.email = user.email;
@@ -81,7 +81,7 @@ const mutations = {
     state.user.email = null;
     state.user.verified = null;
     state.user.preferences = null;
-  },
+  }
 };
 
 const actions = {
@@ -89,7 +89,7 @@ const actions = {
     if (payload) {
       commit("SET_USER", payload);
     } else {
-      AUTH.onAuthStateChanged((user) => {
+      AUTH.onAuthStateChanged(user => {
         if (user) {
           // Signed in. Let Vuex know.
           commit("SET_USER", user);
@@ -112,7 +112,7 @@ const actions = {
       console.log("refreshing tags");
 
       let email = getters.user;
-      API.get(`user/?email=${email}`).then((response) => {
+      API.get(`user/?email=${email}`).then(response => {
         commit("SET_TAGS", response.data.data.preferences);
         LocalStorage.set("tags", response.data.data.preferences);
         commit("SET_STATUS", { status: "tags_loading", flag: false });
@@ -124,7 +124,7 @@ const actions = {
       commit("SET_STATUS", { status: "tags_loading", flag: false });
     } else {
       let email = getters.user;
-      API.get(`user/?email=${email}`).then((response) => {
+      API.get(`user/?email=${email}`).then(response => {
         commit("SET_TAGS", response.data.data.preferences);
         LocalStorage.set("tags", response.data.data.preferences);
         commit("SET_STATUS", { status: "tags_loading", flag: false });
@@ -134,7 +134,7 @@ const actions = {
 
   fetchDefaultTags({ commit, getters }, payload) {
     commit("SET_STATUS", { status: "tags_loading", flag: true });
-    API.get(`tags/`).then((response) => {
+    API.get(`tags/`).then(response => {
       commit("SET_DEFAULT_TAGS", response.data.data.tags);
       commit("SET_STATUS", { status: "tags_loading", flag: false });
     });
@@ -142,66 +142,66 @@ const actions = {
 
   setDarkMode({ commit }, payload) {
     commit("SET_DARK_MODE", payload);
-  },
+  }
 };
 
 const getters = {
-  enabledTags: (state) => {
-    return state.tags.filter((tag) => tag.enabled);
+  enabledTags: state => {
+    return state.tags.filter(tag => tag.enabled);
   },
 
-  isDarkMode: (state) => {
+  isDarkMode: state => {
     return state.darkMode;
   },
 
-  getEnabledTags: (state) => {
+  getEnabledTags: state => {
     let tags = Array();
-    let enabledTags = state.tags.filter((tag) => tag.enabled);
-    enabledTags.forEach((val) => {
+    let enabledTags = state.tags.filter(tag => tag.enabled);
+    enabledTags.forEach(val => {
       tags.push(val.tag);
     });
     return tags;
   },
 
-  getDefaultTags: (state) => {
+  getDefaultTags: state => {
     return state.defaultTags;
   },
 
-  getUser: (state) => {
+  getUser: state => {
     return state.user;
   },
 
-  status: (state) => {
+  status: state => {
     return state.status;
   },
 
-  Tags: (state) => {
+  Tags: state => {
     return state.tags;
   },
 
-  user: (state) => {
+  user: state => {
     return state.user.email;
   },
 
-  login: (state) => {
+  login: state => {
     return state.loginPopup;
   },
 
-  register: (state) => {
+  register: state => {
     return state.registerPopup;
   },
 
-  interests: (state) => {
+  interests: state => {
     return state.interestsPopup;
   },
 
-  initialSetup: (state) => {
+  initialSetup: state => {
     return state.initialPopup;
   },
 
-  isAuthenticated: (state) => {
+  isAuthenticated: state => {
     return !!state.user.email;
-  },
+  }
 };
 
 export default {
@@ -209,5 +209,5 @@ export default {
   state,
   mutations,
   actions,
-  getters,
+  getters
 };

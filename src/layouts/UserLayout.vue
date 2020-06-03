@@ -7,158 +7,81 @@ Defines header and sidebar of the dashboard.
 Uses quasar classes and some inline css.
 -->
 <template>
-  <q-layout view="lHh Lpr lff" class="shadow-2">
-    <q-toolbar>
-      <q-btn
-        flat
-        class="desktop-hide"
-        @click="drawer = !drawer"
-        round
-        dense
-        icon="linear_scale"
-      />
+  <q-layout view="lhh LpR fFf" class="shadow-2">
+    <q-header>
+      <q-toolbar>
+        <q-btn
+          flat
+          class="desktop-hide"
+          @click="drawer = !drawer"
+          round
+          dense
+          icon="linear_scale"
+        />
 
-      <div class="absolute-center text-h5 text-bold text-orange logo-text">
-        Blogie
-      </div>
+        <div class="text-h5 text-bold text-orange logo-text">
+          Blogie
+        </div>
 
-      <!--navbar -->
+        <!--navbar -->
         <nav-menu />
-      <!-- end navbar -->
-      <q-space />
-    </q-toolbar>
+        <!-- end navbar -->
+        <q-space />
+      </q-toolbar>
+    </q-header>
 
     <!-- Sidebar for dashboard. -->
     <q-drawer
       v-model="drawer"
       persistent
       show-if-above
-      :width="350"
+      side="left"
+      :width="300"
       :breakpoint="500"
       bordered
       content-class="accent"
     >
       <q-scroll-area class="fit">
-        
-        <!-- primary buttons -->
-        <q-list padding class="text-primary">
-          <q-item 
-            clickable
-            v-ripple
-            to="/dashboard"
-            :active="link === 'inbox'"
-            @click="link = 'inbox'"
-            active-class="my-menu-link"
-          >
-            <q-item-section avatar>
-              <q-icon name="dashboard" />
-            </q-item-section>
-
-            <q-item-section>Dashboard</q-item-section>
-          </q-item>
-
-          <q-item
-            clickable
-            v-ripple
-            to="/saved"
-            :active="link === 'outbox'"
-            @click="link = 'outbox'"
-            active-class="my-menu-link"
-          >
-            <q-item-section avatar>
-              <q-icon name="bookmarks" />
-            </q-item-section>
-
-            <q-item-section>Saved</q-item-section>
-          </q-item>
-
-        </q-list>
-        
         <!-- tags-section -->
-        <q-list 
-          v-if="!status.tags_loading"
-        >
+        <q-list v-if="!status.tags_loading">
           <q-item>
-            <q-item-section top>
+            <q-item-section>
               <q-item-label lines="1">
-                <span class="text-weight-medium">Tags</span>
+                <span class="text-bold">Tags</span>
               </q-item-label>
             </q-item-section>
 
             <q-item-section top side>
               <div class="text-grey-8 q-gutter-xs">
-                <q-btn 
-                @click="interestsPopup()"
-                  size="16px" 
-                  flat 
-                  dense 
-                  round 
-                  icon="edit" 
+                <q-btn
+                  @click="interestsPopup()"
+                  size="16px"
+                  flat
+                  dense
+                  round
+                  icon="edit"
                 />
               </div>
             </q-item-section>
           </q-item>
-          
+
           <tags v-for="tag in tags" v-bind:tag="tag" :key="tag.tag" />
         </q-list>
-        
+
         <div v-else>
           <q-skeleton square height="20em" />
         </div>
         <!--end tags-section -->
-        
-        <!-- account-section -->
-        <q-list bordered class="rounded-borders">
-          <q-expansion-item
-            switch-toggle-side
-            expand-separator
-            icon="fas fa-user-circle"
-            label="Account"
-          >
-            <q-item>
-              <q-item-section>
-                <q-btn
-                  :outline="true"
-                  @click="deleteUser = !deleteUser"
-                  class="q-ma-md"
-                  label="Delete Account"
-                  color="negative"
-                />
-              </q-item-section>
-            </q-item>
-          </q-expansion-item>
-        </q-list>
-        <!-- end account-section -->
 
-        <q-list bordered class="rounded-borders">
-          <q-expansion-item
-            switch-toggle-side
-            expand-separator 
-            default-opened
-            icon="fas fa-cog"
-            label="Additional"
-          > 
-          
-            <q-item
-              v-ripple
-              clickable
-              v-for="setting in settings"
-              :key="setting.label"
-              @click="darkMode"
-            >
-              <q-item-section side top>
-                <q-checkbox keep-color color="accent" v-model="dark" />
-              </q-item-section>
-
-              <q-item-section>
-                <q-item-label>{{ setting.label }}</q-item-label>
-              </q-item-section>
-            </q-item>
-          </q-expansion-item>
-        </q-list>
+        <q-card class="q-ma-sm" style="height: 300px; background: #3D3D3D;">
+        </q-card>
       </q-scroll-area>
     </q-drawer>
-    <!-- end sidebar -->
+    <!-- end left sidebar -->
+
+    <!-- right sidebar -->
+    <right-sidebar />
+    <!-- end right sidebar -->
 
     <!-- additional pages -->
     <keep-alive>
@@ -177,7 +100,8 @@ export default {
 
   components: {
     tags: require("components/Tags.vue").default, //tags to display in sidebar
-    'nav-menu': require("components/menu/Menu.vue").default, //tags to display in sidebar
+    "nav-menu": require("components/menu/Menu.vue").default, //tags to display in sidebar
+    "right-sidebar": require("components/RightSidebar.vue").default, //tags to display in sidebar
   },
 
   created() {
@@ -295,6 +219,6 @@ export default {
 
 .my-menu-link {
   color: black;
-  background: #E6F1FC;
+  background: #e6f1fc;
 }
 </style>

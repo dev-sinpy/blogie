@@ -1,12 +1,12 @@
 <template>
-  <q-dialog v-model="deleteUser">
+  <q-dialog v-model="deleteAccountPopup">
     <q-card class="bg-black" style="height: 220px; width: 450px;">
       <q-card-section class="row items-center q-pb-none">
         <div class="text-weight-medium text-negative text-center">
           Delete your account
         </div>
         <q-space />
-        <q-btn icon="close" v-close-popup />
+        <q-btn @click="close" icon="close" />
       </q-card-section>
 
       <q-banner v-if="error" class="text-white bg-negative">
@@ -38,16 +38,24 @@
 
 <script>
 import { mapGetters } from "vuex";
+import { mapState } from "vuex";
 
 export default {
   // name: 'ComponentName',
-  props: ["deleteUser"],
   computed: {
+    ...mapState("articles", ["deleteAccountPopup"]),
     ...mapGetters("articles", ["status"]),
     ...mapGetters("articles", ["user"]),
   },
   methods: {
-    deleteAccount: async function () {
+    close() {
+      this.$store.commit("articles/SET_POPUP", {
+        popup: "deleteAccountPopup",
+        flag: false,
+      });
+    },
+
+    deleteAccount: async function() {
       this.loading = true;
 
       try {
