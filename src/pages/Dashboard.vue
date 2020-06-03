@@ -9,7 +9,7 @@ Uses quasar classes and some inline css.
 
 <template>
   <q-page-container>
-    <q-page padding>
+    <q-page class="q-pa-sm">
       <!-- banners -->
       <q-banner v-show="success" inline-actions class="text-white bg-positive">
         {{ success }}
