@@ -23,7 +23,12 @@
           />
         </div>
 
-        <div id="or" :style="{ marginLeft: $q.platform.is.desktop ? '20px' : '0px' }">OR</div>
+        <div
+          id="or"
+          :style="{ marginLeft: $q.platform.is.desktop ? '20px' : '0px' }"
+        >
+          OR
+        </div>
 
         <div>
           <q-btn
@@ -62,7 +67,7 @@ export default {
         flag: false,
       });
     },
-    signin: async function (val) {
+    signin: async function(val) {
       this.loading = true;
       try {
         let provider;
@@ -86,7 +91,8 @@ export default {
           window.location.href = "/dashboard";
         }
       } catch (error) {
-        this.error = "Unknown error occured, please try again.";
+        // this.error = "Unknown error occured, please try again.";
+        this.error = error;
       } finally {
         this.loading = false;
       }

@@ -8,20 +8,14 @@ Uses quasar classes and some inline css.
 -->
 <template>
   <q-layout view="lhh LpR fFf" class="shadow-2">
-    <q-header>
+    <q-header reveal>
       <q-toolbar>
-        <q-btn
-          flat
-          class="desktop-hide"
-          @click="drawer = !drawer"
-          round
-          dense
-          icon="linear_scale"
-        />
-
+        <q-btn flat @click="drawer = !drawer" round dense icon="linear_scale" />
+        <q-space />
         <div class="text-h5 text-bold text-orange logo-text">
           Blogie
         </div>
+        <q-space />
 
         <!--navbar -->
         <nav-menu />
@@ -50,7 +44,6 @@ Uses quasar classes and some inline css.
                 <span class="text-bold">Tags</span>
               </q-item-label>
             </q-item-section>
-
             <q-item-section top side>
               <div class="text-grey-8 q-gutter-xs">
                 <q-btn
@@ -64,7 +57,7 @@ Uses quasar classes and some inline css.
               </div>
             </q-item-section>
           </q-item>
-
+          <q-separator />
           <tags v-for="tag in tags" v-bind:tag="tag" :key="tag.tag" />
         </q-list>
 
@@ -74,6 +67,9 @@ Uses quasar classes and some inline css.
         <!--end tags-section -->
 
         <q-card class="q-ma-sm" style="height: 300px; background: #3D3D3D;">
+          <q-img
+            src="https://dab1nmslvvntp.cloudfront.net/wp-content/uploads/2016/06/1466072832text_banner.png"
+          />
         </q-card>
       </q-scroll-area>
     </q-drawer>
