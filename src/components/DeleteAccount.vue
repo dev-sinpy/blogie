@@ -43,13 +43,13 @@ import { mapState } from "vuex";
 export default {
   // name: 'ComponentName',
   computed: {
-    ...mapState("articles", ["deleteAccountPopup"]),
-    ...mapGetters("articles", ["status"]),
-    ...mapGetters("articles", ["user"]),
+    ...mapState("main", ["deleteAccountPopup"]),
+    ...mapGetters("main", ["status"]),
+    ...mapGetters("main", ["user"]),
   },
   methods: {
     close() {
-      this.$store.commit("articles/SET_POPUP", {
+      this.$store.commit("main/SET_POPUP", {
         popup: "deleteAccountPopup",
         flag: false,
       });

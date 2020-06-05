@@ -55,12 +55,12 @@ export default {
   props: ["success", "error", "deleteUser"],
 
   preFetch({ store, currentRoute, previousRoute, redirect }) {
-    //if (!store.getters['articles/user']) {
+    //if (!store.getters['main/user']) {
     //redirect('/')
     //}
     //for new user, display a popup for selecting some tags
     if (currentRoute.query.tutorial) {
-      store.commit("articles/SET_POPUP", { popup: "initialPopup", flag: true });
+      store.commit("main/SET_POPUP", { popup: "initialPopup", flag: true });
     }
   },
 
@@ -72,8 +72,8 @@ export default {
   },
 
   computed: {
-    ...mapGetters("articles", ["status"]), //status of the current state of the app
-    ...mapGetters("articles", ["isDarkMode"]),
+    ...mapGetters("main", ["status"]), //status of the current state of the app
+    ...mapGetters("main", ["isDarkMode"]),
   },
 
   methods: {},

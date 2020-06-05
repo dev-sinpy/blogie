@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <q-btn class="q-ma-sm" @click="closeMenu" flat dense label="Menu" />
+      <q-btn class="q-ma-sm" icon="menu" @click="closeMenu" flat dense />
       <q-menu v-model="opened" no-parent-event>
         <q-card flat style="height: 400px; width: 350px;">
           <q-card-section class="row flex-center">
@@ -113,10 +113,10 @@ export default {
       .default,
   },
   computed: {
-    ...mapGetters("articles", ["getUser"]),
-    ...mapGetters("articles", ["isDarkMode"]),
+    ...mapGetters("main", ["getUser"]),
+    ...mapGetters("main", ["isDarkMode"]),
     savedDataLength() {
-      return this.$store.state.articles.savedData.length;
+      return this.$store.state.main.savedData.length;
       //return 0
     },
   },
@@ -143,7 +143,7 @@ export default {
     darkMode() {
       //functionality: Toggles theme of the website
       this.$q.dark.toggle();
-      this.$store.dispatch("articles/setDarkMode");
+      this.$store.dispatch("main/setDarkMode");
     },
     logout() {
       this.$q
@@ -160,7 +160,7 @@ export default {
           AUTH.signOut()
             .then(() => {
               this.success = "Logged out successfully";
-              this.$store.dispatch("articles/fetchUser");
+              this.$store.dispatch("main/fetchUser");
               window.location.href = "/";
             })
             .catch((error) => {

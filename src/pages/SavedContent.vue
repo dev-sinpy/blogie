@@ -1,15 +1,14 @@
 <template>
   <q-page-container>
     <q-page padding>
-      
       <!-- popups-->
-        <initial-popup />
+      <initial-popup />
 
-        <interests-popup />
+      <interests-popup />
 
-        <delete-user-popup :deleteUser="deleteUser" />
+      <delete-user-popup :deleteUser="deleteUser" />
       <!-- End popups -->
-      
+
       <div
         class="q-pa-sm text-h6 text-weight-bold"
         v-bind:class="[isDarkMode ? 'text-white' : 'text-black']"
@@ -20,7 +19,7 @@
       >
         Saved Content
       </div>
-      
+
       <div v-if="savedData" class="q-mt-lg">
         <sub-card
           v-for="article in savedData"
@@ -29,13 +28,12 @@
           :tags="getEnabledTags"
         />
       </div>
-      
+
       <div v-show="savedData" class="q-ma-lg text-weight-medium text-center">
         <div class="text-weight-medium">
           Nothing to see here....
         </div>
       </div>
-        
     </q-page>
   </q-page-container>
 </template>
@@ -51,12 +49,11 @@ export default {
     "interests-popup": require("components/Interests.vue").default,
     "delete-user-popup": require("components/DeleteAccount.vue").default,
   },
-  
-  computed: {
-    ...mapState("articles", ["savedData"]),
-    ...mapGetters("articles", ["isDarkMode"]),
-    ...mapGetters("articles", ["getEnabledTags"]),
-  },
 
-}
+  computed: {
+    ...mapState("main", ["savedData"]),
+    ...mapGetters("main", ["isDarkMode"]),
+    ...mapGetters("main", ["getEnabledTags"]),
+  },
+};
 </script>

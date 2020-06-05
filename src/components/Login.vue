@@ -49,8 +49,8 @@ import { mapGetters } from "vuex";
 export default {
   // name: 'ComponentName',
   computed: {
-    ...mapGetters("articles", ["status"]),
-    ...mapGetters("articles", ["login"]),
+    ...mapGetters("main", ["status"]),
+    ...mapGetters("main", ["login"]),
   },
   data() {
     return {
@@ -62,7 +62,7 @@ export default {
     closePopup() {
       this.loading = false;
       this.error = "";
-      this.$store.commit("articles/SET_POPUP", {
+      this.$store.commit("main/SET_POPUP", {
         popup: "loginPopup",
         flag: false,
       });
@@ -87,7 +87,7 @@ export default {
           this.error = "Your account is not registered, please sign up first";
           await user.delete();
         } else {
-          this.$store.dispatch("articles/fetchUser", user);
+          this.$store.dispatch("main/fetchUser", user);
           window.location.href = "/dashboard";
         }
       } catch (error) {

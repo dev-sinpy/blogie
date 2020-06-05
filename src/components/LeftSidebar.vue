@@ -66,23 +66,23 @@ export default {
       type: String
       */
 
-      this.$store.commit("articles/SET_POPUP", { popup: popup, flag: true });
+      this.$store.commit("main/SET_POPUP", { popup: popup, flag: true });
     },
 
     interestsPopup() {
       /*
       Functionality: Displays a popup and fetches all the tags from the server.
       */
-      this.$store.commit("articles/SET_STATUS", {
+      this.$store.commit("main/SET_STATUS", {
         status: "popup_loading",
         flag: true,
       });
-      //this.$store.dispatch("articles/fetchDefaultTags");
-      this.$store.commit("articles/SET_POPUP", {
+      //this.$store.dispatch("main/fetchDefaultTags");
+      this.$store.commit("main/SET_POPUP", {
         popup: "interestsPopup",
         flag: true,
       });
-      this.$store.commit("articles/SET_STATUS", {
+      this.$store.commit("main/SET_STATUS", {
         status: "popup_loading",
         flag: false,
       });
@@ -91,7 +91,7 @@ export default {
     darkMode() {
       //functionality: Toggles theme of the website
       this.$q.dark.toggle();
-      this.$store.dispatch("articles/setDarkMode");
+      this.$store.dispatch("main/setDarkMode");
     },
     logout() {
       this.$q
@@ -108,7 +108,7 @@ export default {
           AUTH.signOut()
             .then(() => {
               this.success = "Logged out successfully";
-              this.$store.dispatch("articles/fetchUser");
+              this.$store.dispatch("main/fetchUser");
               window.location.href = "/";
             })
             .catch((error) => {
@@ -125,17 +125,17 @@ export default {
   },
 
   computed: {
-    ...mapState("articles", ["tags"]),
-    ...mapGetters("articles", ["isAuthenticated"]),
-    ...mapGetters("articles", ["status"]),
-    ...mapGetters("articles", ["isDarkMode"]),
+    ...mapState("main", ["tags"]),
+    ...mapGetters("main", ["isAuthenticated"]),
+    ...mapGetters("main", ["status"]),
+    ...mapGetters("main", ["isDarkMode"]),
     dark: {
       get() {
         return this.isDarkMode;
       },
       set(val) {
         this.$q.dark.toggle();
-        this.$store.dispatch("articles/setDarkMode");
+        this.$store.dispatch("main/setDarkMode");
       },
     },
   },
@@ -144,7 +144,6 @@ export default {
       success: null,
       error: null,
       popup: false,
-      settings: [{ label: "Enable Dark Theme" }],
     };
   },
 };

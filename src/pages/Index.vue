@@ -423,7 +423,7 @@ import "aos/dist/aos.css";
 export default {
   name: "PageIndex",
   computed: {
-    ...mapGetters("articles", ["isAuthenticated"]),
+    ...mapGetters("main", ["isAuthenticated"]),
   },
   components: {
     "register-popup": require("components/Register.vue").default,
@@ -439,7 +439,7 @@ export default {
     },
 
     displayPopup(popup) {
-      this.$store.commit("articles/SET_POPUP", { popup: popup, flag: true });
+      this.$store.commit("main/SET_POPUP", { popup: popup, flag: true });
     },
 
     logout() {
@@ -457,7 +457,7 @@ export default {
           AUTH.signOut()
             .then(() => {
               this.success = "Logged out successfully";
-              this.$store.dispatch("articles/fetchUser");
+              this.$store.dispatch("main/fetchUser");
               this.$router.push("/");
             })
             .catch((error) => {

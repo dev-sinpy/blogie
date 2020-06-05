@@ -89,7 +89,7 @@ export default {
   methods: {},
 
   computed: {
-    ...mapGetters("articles", ["isDarkMode"]),
+    ...mapGetters("main", ["isDarkMode"]),
   },
   data() {
     return {};

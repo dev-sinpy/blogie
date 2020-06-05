@@ -67,9 +67,9 @@ export default {
   },
 
   computed: {
-    ...mapGetters("articles", ["status"]),
-    ...mapGetters("articles", ["getEnabledTags"]),
-    ...mapState("articles", ["tags"]),
+    ...mapGetters("main", ["status"]),
+    ...mapGetters("main", ["getEnabledTags"]),
+    ...mapState("main", ["tags"]),
 
     primaryCard() {
       return this.articles[0];
@@ -88,8 +88,8 @@ export default {
   methods: {
     fetchData() {
       this.$store.subscribe((mutation, state) => {
-        if (mutation.type === "articles/SET_TAGS" && !mutation.payload.flag) {
-          this.$store.commit("articles/SET_STATUS", {
+        if (mutation.type === "main/SET_TAGS" && !mutation.payload.flag) {
+          this.$store.commit("main/SET_STATUS", {
             status: "feed_loading",
             flag: true,
           });
@@ -106,7 +106,7 @@ export default {
             .get(`?q=${finalTags}&limit=${limit}&page=${1}`)
             .then((response) => {
               this.articles = response.data.content;
-              this.$store.commit("articles/SET_STATUS", {
+              this.$store.commit("main/SET_STATUS", {
                 status: "feed_loading",
                 flag: false,
               });
@@ -117,7 +117,7 @@ export default {
     },
 
     refresh(done) {
-      this.$store.commit("articles/SET_STATUS", {
+      this.$store.commit("main/SET_STATUS", {
         status: "feed_loading",
         flag: true,
       });
@@ -132,7 +132,7 @@ export default {
         .get(`?q=${finalTags}&limit=${limit}&page=${1}`)
         .then((response) => {
           this.articles = response.data.content;
-          this.$store.commit("articles/SET_STATUS", {
+          this.$store.commit("main/SET_STATUS", {
             status: "feed_loading",
             flag: false,
           });
@@ -141,7 +141,7 @@ export default {
         });
     },
     loadMore() {
-      this.$store.commit("articles/SET_STATUS", {
+      this.$store.commit("main/SET_STATUS", {
         status: "feed_loading",
         flag: true,
       });
@@ -157,7 +157,7 @@ export default {
         .get(`?q=${finalTags}&limit=${limit}&page=${this.page}`)
         .then((response) => {
           this.articles.push(...response.data.content);
-          this.$store.commit("articles/SET_STATUS", {
+          this.$store.commit("main/SET_STATUS", {
             status: "feed_loading",
             flag: false,
           });

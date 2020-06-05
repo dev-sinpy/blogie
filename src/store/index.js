@@ -2,14 +2,14 @@
 
 import Vue from "vue";
 import Vuex from "vuex";
-import articles from "./main";
+import main from "./main";
 
 Vue.use(Vuex);
 
 export default function(/* { ssrContext } */) {
   const Store = new Vuex.Store({
     modules: {
-      articles,
+      main,
     },
 
     // enable strict mode (adds overhead!)
@@ -27,7 +27,7 @@ export default function(/* { ssrContext } */) {
   if (process.env.DEV && module.hot) {
     module.hot.accept(["./main"], () => {
       const newShowcase = require("./main").default;
-      Store.hotUpdate({ modules: { articles: newArticles } });
+      Store.hotUpdate({ modules: { main: newMain } });
     });
   }
 

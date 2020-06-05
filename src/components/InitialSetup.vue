@@ -7,7 +7,6 @@
             Choose your interests
           </div>
           <q-space />
-          
         </q-card-section>
         <q-banner v-if="success" class="text-white bg-positive">
           {{ success }}
@@ -20,38 +19,39 @@
           <q-spinner-puff color="deep-orange" size="50px" />
         </q-card-section>
 
-                <div v-else-if="!loading">
-        <q-card-section>
-          <div>
-            <multiselect 
-              autofocus
-              v-model="value" 
-              tag-placeholder="Add this tag" 
-              placeholder="Search or add custom tags" 
-              label="name" 
-              track-by="name" 
-              :allow-empty="false" 
-              :preselect-first="true"
-              :close-on-select="false"
-              :options="options" 
-              max-height="250"
-              :multiple="true" 
-              :taggable="true" 
-              @tag="addTag">
-            </multiselect>
-          </div>
-        </q-card-section>
-        
-        <q-card-section style="padding-top: 270px;">
-          <div>
-            <q-btn
-              @click="submitInterests"
-              class="full-width"
-              color="blue"
-              label="update"
-            />
-          </div>
-        </q-card-section>
+        <div v-else-if="!loading">
+          <q-card-section>
+            <div>
+              <multiselect
+                autofocus
+                v-model="value"
+                tag-placeholder="Add this tag"
+                placeholder="Search or add custom tags"
+                label="name"
+                track-by="name"
+                :allow-empty="false"
+                :preselect-first="true"
+                :close-on-select="false"
+                :options="options"
+                max-height="250"
+                :multiple="true"
+                :taggable="true"
+                @tag="addTag"
+              >
+              </multiselect>
+            </div>
+          </q-card-section>
+
+          <q-card-section style="padding-top: 270px;">
+            <div>
+              <q-btn
+                @click="submitInterests"
+                class="full-width"
+                color="blue"
+                label="update"
+              />
+            </div>
+          </q-card-section>
         </div>
       </q-card>
     </q-dialog>
@@ -60,42 +60,42 @@
 
 <script>
 import { mapGetters } from "vuex";
-import Multiselect from 'vue-multiselect'
+import Multiselect from "vue-multiselect";
 
 export default {
   name: "InitialPopup",
   components: { Multiselect },
   computed: {
-    ...mapGetters("articles", ["getEnabledTags"]),
-    ...mapGetters("articles", ["getDefaultTags"]),
-    ...mapGetters("articles", ["user"]),
-    ...mapGetters("articles", ["status"]),
-    ...mapGetters("articles", ["initialSetup"]),
+    ...mapGetters("main", ["getEnabledTags"]),
+    ...mapGetters("main", ["getDefaultTags"]),
+    ...mapGetters("main", ["user"]),
+    ...mapGetters("main", ["status"]),
+    ...mapGetters("main", ["initialSetup"]),
   },
   methods: {
     closePopup() {
       this.loading = false;
       this.success = "";
-      this.$store.commit("articles/SET_POPUP", {
+      this.$store.commit("main/SET_POPUP", {
         popup: "initialPopup",
         flag: false,
       });
     },
-    
-    addTag (newTag) {
+
+    addTag(newTag) {
       const tag = {
         name: newTag,
-      }
-      this.options.push(tag)
-      this.value.push(tag)
+      };
+      this.options.push(tag);
+      this.value.push(tag);
     },
-    
-    submitInterests: async function () {
+
+    submitInterests: async function() {
       this.loading = true;
-      let tags = this.value.map(val => val.name.toLowerCase().trim()).join()
+      let tags = this.value.map((val) => val.name.toLowerCase().trim()).join();
       let email = this.user;
       await this.$api.post(`updateuser/?email=${email}&tags=${tags}`);
-      this.$store.dispatch("articles/fetchTags", { reload: true });
+      this.$store.dispatch("main/fetchTags", { reload: true });
       this.loading = false;
       this.success = "Updated your preferences";
       this.closePopup();
@@ -104,21 +104,20 @@ export default {
   },
   data() {
     return {
-      value: [
-      ],
+      value: [],
       options: [
-        { name: 'android' },
-        { name: 'ios' },
-        { name: 'windows'},
-        { name: 'linux'},
-        { name: 'cryptocurrency'},
-        { name: 'blockchain'},
-        { name: 'cybersecurity'},
-        { name: 'hacking'},
-        { name: 'programming'},
-        { name: 'gaming'},
-        { name: 'digital art'},
-        { name: 'hacking'},
+        { name: "android" },
+        { name: "ios" },
+        { name: "windows" },
+        { name: "linux" },
+        { name: "cryptocurrency" },
+        { name: "blockchain" },
+        { name: "cybersecurity" },
+        { name: "hacking" },
+        { name: "programming" },
+        { name: "gaming" },
+        { name: "digital art" },
+        { name: "hacking" },
       ],
       loading: false,
       success: "",

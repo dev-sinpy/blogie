@@ -43,7 +43,7 @@ export default {
     "delete-account-popup": require("components/DeleteAccount.vue").default,
   },
   computed: {
-    ...mapGetters("articles", ["getUser"]),
+    ...mapGetters("main", ["getUser"]),
   },
   data() {
     return {
@@ -58,7 +58,7 @@ export default {
       type: String
       */
 
-      this.$store.commit("articles/SET_POPUP", { popup: popup, flag: true });
+      this.$store.commit("main/SET_POPUP", { popup: popup, flag: true });
     },
     goBack() {
       this.$emit("goBack");

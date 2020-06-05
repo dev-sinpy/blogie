@@ -128,7 +128,7 @@ export default {
       type: String
       */
 
-      this.$store.commit("articles/SET_POPUP", { popup: popup, flag: true });
+      this.$store.commit("main/SET_POPUP", { popup: popup, flag: true });
     },
 
     logout() {
@@ -147,7 +147,7 @@ export default {
             .signOut()
             .then(() => {
               this.success = "Logged out successfully";
-              this.$store.dispatch("articles/fetchUser");
+              this.$store.dispatch("main/fetchUser");
               window.location.href = "/";
             })
             .catch((error) => {
@@ -164,7 +164,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters("articles", ["isAuthenticated"]),
+    ...mapGetters("main", ["isAuthenticated"]),
   },
   data() {
     return {

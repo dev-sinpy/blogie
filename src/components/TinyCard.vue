@@ -4,7 +4,7 @@
     bordered
     class="q-mb-md"
     v-show="tags.includes(article.searched_for)"
-    :style="{ background: isDarkMode ? '#FAFAFA' : '' }"
+    :style="{ background: isDarkMode ? '' : '#FAFAFA' }"
   >
     <q-card-section>
       <div class="row">
@@ -66,13 +66,14 @@
 
 <script>
 import { mapState } from "vuex";
+import { mapGetters } from "vuex";
 
 export default {
   // name: 'ComponentName',
   props: ["article", "tags"],
   computed: {
-    ...mapState("articles", ["savedData"]),
-    ...mapState("articles", ["isDarkMode"]),
+    ...mapState("main", ["savedData"]),
+    ...mapGetters("main", ["isDarkMode"]),
   },
   filters: {
     truncate: function(text, length, suffix) {
@@ -82,7 +83,7 @@ export default {
   methods: {
     saveData() {
       if (!this.isSaved()) {
-        this.$store.commit("articles/SAVE_DATA", this.article);
+        this.$store.commit("main/SAVE_DATA", this.article);
         this.$q.localStorage.set("savedData", this.savedData);
       } else {
         let index = this.savedData.findIndex(
