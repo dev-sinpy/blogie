@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="absolute-right">
+    <div>
       <q-btn class="q-ma-sm" @click="closeMenu" flat dense label="Menu" />
       <q-menu v-model="opened" no-parent-event>
         <q-card flat style="height: 400px; width: 350px;">

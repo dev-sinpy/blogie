@@ -79,7 +79,7 @@ import { mapState } from "vuex";
 
 export default {
   name: "RightSidebar",
-
+  props: ["show"],
   components: {},
 
   created() {},
@@ -92,9 +92,7 @@ export default {
     ...mapGetters("articles", ["isDarkMode"]),
   },
   data() {
-    return {
-      show: true,
-    };
+    return {};
   },
 };
 </script>

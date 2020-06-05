@@ -5,7 +5,7 @@
     bordered
     class="q-mb-md"
     v-show="tags.includes(article.searched_for)"
-    :style="{ background: isDarkMode ? '#FAFAFA' : '' }"
+    :style="{ background: isDarkMode ? '#1D1D1D' : '#FAFAFA' }"
   >
     <q-img
       style="height: 150px; width: 100%; overflow: hidden;"

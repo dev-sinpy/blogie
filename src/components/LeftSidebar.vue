@@ -1,83 +1,62 @@
-<!--
-Dashboard layout
-
-Defines header and sidebar of the dashboard.
-
-*Styling*
-Uses quasar classes and some inline css.
--->
 <template>
-  <q-layout view="lhh LpR fFf" class="shadow-2">
-    <q-header reveal>
-      <q-toolbar>
-        <q-btn
-          flat
-          @click="showLeftSidebar = !showLeftSidebar"
-          round
-          dense
-          icon="linear_scale"
-        />
-        <q-space />
-        <div class="text-h5 text-bold text-orange logo-text">
-          Blogie
-        </div>
-        <q-space />
+  <!-- Sidebar for dashboard. -->
+  <q-drawer
+    v-model="show"
+    persistent
+    show-if-above
+    side="left"
+    :width="220"
+    :breakpoint="500"
+    bordered
+    content-class="accent"
+  >
+    <q-scroll-area class="fit">
+      <!-- tags-section -->
+      <q-list v-if="!status.tags_loading">
+        <q-item>
+          <q-item-section>
+            <q-item-label>
+              <span class="text-bold">Tags</span>
+            </q-item-label>
+          </q-item-section>
+          <q-item-section top side>
+            <div>
+              <q-btn
+                @click="interestsPopup()"
+                size="16px"
+                flat
+                dense
+                round
+                icon="edit"
+              />
+            </div>
+          </q-item-section>
+        </q-item>
+        <q-separator />
+        <tags v-for="tag in tags" v-bind:tag="tag" :key="tag.tag" />
+      </q-list>
 
-        <!--navbar -->
-        <nav-menu />
-        <!-- end navbar -->
-
-        <q-btn
-          flat
-          @click="showRightSidebar = !showRightSidebar"
-          round
-          dense
-          icon="linear_scale"
-        />
-      </q-toolbar>
-    </q-header>
-
-    <!-- right sidebar -->
-    <left-sidebar :show="showLeftSidebar" />
-    <!-- end right sidebar -->
-
-    <!-- right sidebar -->
-    <right-sidebar :show="showRightSidebar" />
-    <!-- end right sidebar -->
-
-    <!-- additional pages -->
-    <keep-alive>
-      <router-view :success="success" :error="error" :deleteUser="deleteUser" />
-    </keep-alive>
-  </q-layout>
+      <div v-else>
+        <q-skeleton square height="20em" />
+      </div>
+      <!--end tags-section -->
+    </q-scroll-area>
+  </q-drawer>
+  <!-- end left sidebar -->
 </template>
 
 <script>
 import { mapGetters } from "vuex";
 import { mapState } from "vuex";
-import { AUTH } from "../boot/firebase";
 
 export default {
-  name: "DashboardLayout",
-
+  name: "LeftSidebar",
+  props: ["show"],
   components: {
-    //tags: require("components/Tags.vue").default, //tags to display in sidebar
-    "nav-menu": require("components/menu/Menu.vue").default, //tags to display in sidebar
-    "left-sidebar": require("components/LeftSidebar.vue").default, //tags to display in sidebar
-    "right-sidebar": require("components/RightSidebar.vue").default, //tags to display in sidebar
+    tags: require("components/Tags.vue").default, //tags to display in sidebar
   },
-
   created() {
     this.$q.dark.set(true); //set default to dark theme
-  },
-
-  preFetch({ store, currentRoute, previousRoute, redirect, ssrContext }) {
-    //Prefetching interests of the current logged in user
-    store.subscribe((mutation, state) => {
-      if (mutation.type === "articles/SET_USER") {
-        store.dispatch("articles/fetchTags", { reload: false });
-      }
-    });
   },
 
   methods: {
@@ -146,7 +125,7 @@ export default {
   },
 
   computed: {
-    //...mapState("articles", ["tags"]),
+    ...mapState("articles", ["tags"]),
     ...mapGetters("articles", ["isAuthenticated"]),
     ...mapGetters("articles", ["status"]),
     ...mapGetters("articles", ["isDarkMode"]),
@@ -166,24 +145,7 @@ export default {
       error: null,
       popup: false,
       settings: [{ label: "Enable Dark Theme" }],
-      drawer: false,
-      deleteUser: false,
-      showLeftSidebar: this.$q.platform.is.mobile ? false : true,
-      showRightSidebar: this.$q.platform.is.mobile ? false : true,
     };
   },
 };
 </script>
-
-<style lang="css">
-@import url("https://fonts.googleapis.com/css2?family=Righteous&display=swap");
-
-.logo-text {
-  font-family: "Righteous", cursive;
-}
-
-.my-menu-link {
-  color: black;
-  background: #e6f1fc;
-}
-</style>
