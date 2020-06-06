@@ -23,7 +23,12 @@
           />
         </div>
 
-        <div id="or" :style="{ marginLeft: $q.platform.is.desktop ? '20px' : '0px' }">OR</div>
+        <div
+          id="or"
+          :style="{ marginLeft: $q.platform.is.desktop ? '20px' : '0px' }"
+        >
+          OR
+        </div>
 
         <div>
           <q-btn
@@ -45,8 +50,8 @@ import { mapGetters } from "vuex";
 export default {
   //name: 'Register',
   computed: {
-    ...mapGetters("articles", ["register"]),
-    ...mapGetters("articles", ["status"]),
+    ...mapGetters("main", ["register"]),
+    ...mapGetters("main", ["status"]),
   },
 
   data() {
@@ -60,13 +65,13 @@ export default {
     closePopup() {
       this.loading = false;
       this.error = "";
-      this.$store.commit("articles/SET_POPUP", {
+      this.$store.commit("main/SET_POPUP", {
         popup: "registerPopup",
         flag: false,
       });
     },
 
-    signup: async function (val) {
+    signup: async function(val) {
       this.loading = true;
 
       try {
@@ -86,9 +91,8 @@ export default {
           this.error = response.data.message;
           await this.$auth.signOut();
         } else {
-          this.$store.dispatch("articles/fetchUser", user);
-          this.$store.dispatch("articles/fetchDefaultTags");
-          this.$q.localStorage.set('savedData', [])
+          this.$store.dispatch("main/fetchUser", user);
+          this.$q.localStorage.set("savedData", []);
           window.location.href = "/dashboard/?tutorial=true";
         }
       } catch (err) {

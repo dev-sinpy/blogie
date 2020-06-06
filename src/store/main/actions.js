@@ -35,8 +35,17 @@ export function fetchTags({ commit, getters }, payload) {
 
     let email = getters.user;
     API.get(`user/?email=${email}`).then((response) => {
-      commit("SET_TAGS", response.data.data.preferences);
-      LocalStorage.set("tags", response.data.data.preferences);
+      let tags = response.data.data.preferences;
+      let newTags = Array();
+      tags.forEach((val) => {
+        newTags.push({
+          tag: val,
+          enabled: true,
+        });
+      });
+
+      commit("SET_TAGS", newTags);
+      LocalStorage.set("tags", newTags);
       commit("SET_STATUS", { status: "tags_loading", flag: false });
     });
   } else if (hasTags) {
@@ -47,8 +56,16 @@ export function fetchTags({ commit, getters }, payload) {
   } else {
     let email = getters.user;
     API.get(`user/?email=${email}`).then((response) => {
-      commit("SET_TAGS", response.data.data.preferences);
-      LocalStorage.set("tags", response.data.data.preferences);
+      let tags = response.data.data.preferences;
+      let newTags = Array();
+      tags.forEach((val) => {
+        newTags.push({
+          tag: val,
+          enabled: true,
+        });
+      });
+      commit("SET_TAGS", tags);
+      LocalStorage.set("tags", tags);
       commit("SET_STATUS", { status: "tags_loading", flag: false });
     });
   }
