@@ -27,14 +27,15 @@ export function fetchUser({ commit }, payload) {
 
 export function fetchTags({ commit, getters }, payload) {
   //fetch tags of the current user from the API
-  let hasTags = LocalStorage.has("tags");
+
+  //let hasTags = LocalStorage.has("tags");
 
   commit("SET_STATUS", { status: "tags_loading", flag: true });
   if (payload.reload) {
     console.log("refreshing tags");
 
     let email = getters.user;
-    API.get(`user/?email=${email}`).then((response) => {
+    API.get(`user/${email}`).then((response) => {
       let tags = response.data.data.preferences;
       let newTags = Array();
       tags.forEach((val) => {
@@ -48,14 +49,9 @@ export function fetchTags({ commit, getters }, payload) {
       LocalStorage.set("tags", newTags);
       commit("SET_STATUS", { status: "tags_loading", flag: false });
     });
-  } else if (hasTags) {
-    //if tags are cached then use them instead
-    let tags = LocalStorage.getItem("tags");
-    commit("SET_TAGS", tags);
-    commit("SET_STATUS", { status: "tags_loading", flag: false });
   } else {
     let email = getters.user;
-    API.get(`user/?email=${email}`).then((response) => {
+    API.get(`user/${email}`).then((response) => {
       let tags = response.data.data.preferences;
       let newTags = Array();
       tags.forEach((val) => {
@@ -64,17 +60,23 @@ export function fetchTags({ commit, getters }, payload) {
           enabled: true,
         });
       });
-      commit("SET_TAGS", tags);
-      LocalStorage.set("tags", tags);
+      commit("SET_TAGS", newTags);
+      LocalStorage.set("tags", newTags);
       commit("SET_STATUS", { status: "tags_loading", flag: false });
     });
   }
+  // else if (hasTags) {
+  //   //if tags are cached then use them instead
+  //   let tags = LocalStorage.getItem("tags");
+  //   commit("SET_TAGS", tags);
+  //   commit("SET_STATUS", { status: "tags_loading", flag: false });
+  // }
 }
 
 export function fetchDefaultTags({ commit, getters }, payload) {
   commit("SET_STATUS", { status: "tags_loading", flag: true });
   API.get(`tags/`).then((response) => {
-    commit("SET_DEFAULT_TAGS", response.data.data.tags);
+    commit("SET_DEFAULT_TAGS", response.data.data);
     commit("SET_STATUS", { status: "tags_loading", flag: false });
   });
 }

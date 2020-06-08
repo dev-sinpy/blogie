@@ -84,20 +84,21 @@ export default {
         let result = await this.$auth.signInWithPopup(provider);
         let user = result.user;
 
-        let response = await this.$api.get(`setuser/?email=${user.email}`, {
+        let response = await this.$api.post(`setuser/${user.email}`, {
           validateStatus: false,
         });
-        if (response.data.status != "ok") {
-          this.error = response.data.message;
+        this.$store.dispatch("main/fetchUser", user);
+        this.$q.localStorage.set("savedData", []);
+        window.location.href = "/dashboard/?tutorial=true";
+      } catch (err) {
+        console.log(err);
+        if (err.hasOwnProperty("response")) {
+          this.error = err.response.data.detail;
           await this.$auth.signOut();
         } else {
-          this.$store.dispatch("main/fetchUser", user);
-          this.$q.localStorage.set("savedData", []);
-          window.location.href = "/dashboard/?tutorial=true";
+          this.error = "Unknown error occured, please try again.";
+          await this.$auth.signOut();
         }
-      } catch (err) {
-        this.error = "Unknown error occured, please try again.";
-        await this.$auth.signOut();
       } finally {
         this.loading = false;
       }

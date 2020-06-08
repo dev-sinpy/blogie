@@ -105,7 +105,7 @@ export default {
           this.$api
             .get(`?q=${finalTags}&limit=${limit}&page=${1}`)
             .then((response) => {
-              this.articles = response.data.content;
+              this.articles = response.data.data;
               this.$store.commit("main/SET_STATUS", {
                 status: "feed_loading",
                 flag: false,
@@ -131,7 +131,7 @@ export default {
       this.$api
         .get(`?q=${finalTags}&limit=${limit}&page=${1}`)
         .then((response) => {
-          this.articles = response.data.content;
+          this.articles = response.data.data;
           this.$store.commit("main/SET_STATUS", {
             status: "feed_loading",
             flag: false,
@@ -156,7 +156,7 @@ export default {
       this.$api
         .get(`?q=${finalTags}&limit=${limit}&page=${this.page}`)
         .then((response) => {
-          this.articles.push(...response.data.content);
+          this.articles.push(...response.data.data);
           this.$store.commit("main/SET_STATUS", {
             status: "feed_loading",
             flag: false,

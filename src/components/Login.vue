@@ -80,19 +80,18 @@ export default {
 
         // The signed-in user info.
         let user = result.user;
-        let response = await this.$api.get(`user/?email=${user.email}`, {
-          validateStatus: false,
-        });
-        if (response.data.status != "ok") {
+        let response = await this.$api.get(`user/${user.email}`);
+        this.$store.dispatch("main/fetchUser", user);
+        window.location.href = "/dashboard";
+      } catch (err) {
+        if (err.hasOwnProperty("response")) {
           this.error = "Your account is not registered, please sign up first";
-          await user.delete();
+          await this.$auth.signOut();
         } else {
-          this.$store.dispatch("main/fetchUser", user);
-          window.location.href = "/dashboard";
+          this.error = err;
+          await this.$auth.signOut();
         }
-      } catch (error) {
         // this.error = "Unknown error occured, please try again.";
-        this.error = error;
       } finally {
         this.loading = false;
       }

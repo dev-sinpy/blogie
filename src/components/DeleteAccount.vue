@@ -60,13 +60,14 @@ export default {
 
       try {
         let email = this.user;
-        await this.$api.post(`removeuser/?email=${email}`);
+        await this.$api.post(`deleteuser/${email}`);
         let user = this.$auth.currentUser;
-
+        console.log(user);
         await user.delete();
+        await user.signOut();
         window.location.href = "/";
-      } catch (error) {
-        //
+      } catch (err) {
+        console.log(err);
       } finally {
         this.loading = false;
         window.location.href = "/";

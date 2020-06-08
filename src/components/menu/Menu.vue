@@ -101,7 +101,6 @@
 </template>
 
 <script>
-import { AUTH } from "../../boot/firebase";
 import { mapGetters } from "vuex";
 
 export default {
@@ -157,7 +156,8 @@ export default {
           //
         })
         .onOk(() => {
-          AUTH.signOut()
+          this.$auth
+            .signOut()
             .then(() => {
               this.success = "Logged out successfully";
               this.$store.dispatch("main/fetchUser");
