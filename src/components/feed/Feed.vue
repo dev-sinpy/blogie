@@ -101,7 +101,7 @@ export default {
             [tags[i], tags[j]] = [tags[j], tags[i]];
           }
           let finalTags = tags.join(); //join the randomize array
-          const limit = tags.length ** 2;
+          const limit = 40;
           this.$api
             .get(`?q=${finalTags}&limit=${limit}&page=${1}`)
             .then((response) => {
@@ -116,29 +116,34 @@ export default {
       });
     },
 
-    refresh(done) {
-      this.$store.commit("main/SET_STATUS", {
-        status: "feed_loading",
-        flag: true,
-      });
+    getData: async function() {
       let tags = this.getEnabledTags;
+      //randomize an array
       for (let i = tags.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [tags[i], tags[j]] = [tags[j], tags[i]];
       }
-      let finalTags = tags.join();
-      const limit = tags.length ** 2;
-      this.$api
-        .get(`?q=${finalTags}&limit=${limit}&page=${1}`)
-        .then((response) => {
-          this.articles = response.data.data;
-          this.$store.commit("main/SET_STATUS", {
-            status: "feed_loading",
-            flag: false,
-          });
-          done();
-          //LocalStorage.set("feed", response.data.content);
-        });
+      let finalTags = tags.join(); //join the randomize array
+      const limit = 40;
+      let response = await this.$api.get(
+        `?q=${finalTags}&limit=${limit}&page=${1}`
+      );
+
+      return response.data.data;
+    },
+
+    refresh: async function(done) {
+      this.$store.commit("main/SET_STATUS", {
+        status: "feed_loading",
+        flag: true,
+      });
+
+      this.articles = await this.getData();
+      this.$store.commit("main/SET_STATUS", {
+        status: "feed_loading",
+        flag: false,
+      });
+      done();
     },
     loadMore() {
       this.$store.commit("main/SET_STATUS", {
@@ -152,7 +157,7 @@ export default {
         [tags[i], tags[j]] = [tags[j], tags[i]];
       }
       let finalTags = tags.join();
-      const limit = tags.length ** 2;
+      const limit = 40;
       this.$api
         .get(`?q=${finalTags}&limit=${limit}&page=${this.page}`)
         .then((response) => {
