@@ -63,8 +63,8 @@ export default {
   components: {
     //tags: require("components/Tags.vue").default, //tags to display in sidebar
     "nav-menu": require("components/menu/Menu.vue").default, //tags to display in sidebar
-    "left-sidebar": require("components/LeftSidebar.vue").default, //tags to display in sidebar
-    "right-sidebar": require("components/RightSidebar.vue").default, //tags to display in sidebar
+    "left-sidebar": require("components/sidebar/LeftSidebar.vue").default, //tags to display in sidebar
+    "right-sidebar": require("components/sidebar/RightSidebar.vue").default, //tags to display in sidebar
   },
 
   created() {

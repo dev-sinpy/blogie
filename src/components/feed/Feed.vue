@@ -58,8 +58,8 @@ import { mapState } from "vuex";
 export default {
   name: "Feed",
   components: {
-    "primary-card": require("components/PrimaryCard.vue").default,
-    "tiny-card": require("components/TinyCard.vue").default,
+    "primary-card": require("components/feed/cards/PrimaryCard.vue").default,
+    "tiny-card": require("components/feed/cards/TinyCard.vue").default,
   },
 
   created() {

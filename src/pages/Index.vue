@@ -426,8 +426,8 @@ export default {
     ...mapGetters("main", ["isAuthenticated"]),
   },
   components: {
-    "register-popup": require("components/Register.vue").default,
-    "login-popup": require("components/Login.vue").default,
+    "register-popup": require("components/popups/Register.vue").default,
+    "login-popup": require("components/popups/Login.vue").default,
   },
   created() {
     //for animations

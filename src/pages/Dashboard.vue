@@ -65,10 +65,10 @@ export default {
   },
 
   components: {
-    feed: require("components/Feed.vue").default,
-    "interests-popup": require("components/Interests.vue").default,
-    "initial-popup": require("components/InitialSetup.vue").default,
-    "delete-user-popup": require("components/DeleteAccount.vue").default,
+    feed: require("components/feed/Feed.vue").default,
+    "interests-popup": require("components/popups/Interests.vue").default,
+    "initial-popup": require("components/popups/InitialSetup.vue").default,
+    "delete-user-popup": require("components/popups/DeleteAccount.vue").default,
   },
 
   computed: {

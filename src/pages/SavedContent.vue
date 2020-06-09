@@ -45,9 +45,9 @@ import { mapState } from "vuex";
 export default {
   // name: 'PageName',
   components: {
-    "sub-card": require("components/SubCard.vue").default,
-    "interests-popup": require("components/Interests.vue").default,
-    "delete-user-popup": require("components/DeleteAccount.vue").default,
+    "sub-card": require("components/feed/cards/SubCard.vue").default,
+    "interests-popup": require("components/popups/Interests.vue").default,
+    "delete-user-popup": require("components/popups/DeleteAccount.vue").default,
   },
 
   computed: {
