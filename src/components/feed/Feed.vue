@@ -5,7 +5,7 @@
         <!--Primary card-->
         <primary-card
           class="q-mt-lg"
-          v-bind:article="primaryCard"
+          :article="primaryCard"
           :tags="getEnabledTags"
         />
         <q-separator />
@@ -14,7 +14,7 @@
         <tiny-card
           v-for="article in subCard"
           :key="article.index"
-          v-bind:article="article"
+          :article="article"
           :tags="getEnabledTags"
         />
         <q-separator />

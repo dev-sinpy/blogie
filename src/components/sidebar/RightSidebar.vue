@@ -14,40 +14,21 @@
         :style="{ background: isDarkMode ? '#3D3D3D' : '#f8f9fa' }"
       >
         <div class="q-ma-sm text-bold">
-          Latest News
+          Global News
         </div>
         <q-separator />
-        <q-card-section class="q-ma-none q-pa-none">
+        <q-card-section v-if="news" class="q-ma-none q-pa-none">
           <q-list>
-            <q-item clickable>
-              <q-item-section class="text-caption">
-                lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum
-                lorem ipsum
-              </q-item-section>
-            </q-item>
-            <q-item clickable>
-              <q-item-section class="text-caption">
-                lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum
-                lorem ipsum
-              </q-item-section>
-            </q-item>
-            <q-item clickable>
-              <q-item-section class="text-caption">
-                lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum
-                lorem ipsum
-              </q-item-section>
-            </q-item>
-            <q-item clickable>
-              <q-item-section class="text-caption">
-                lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum
-                lorem ipsum
-              </q-item-section>
-            </q-item>
-            <q-item clickable>
-              <q-item-section class="text-caption">
-                lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum
-                lorem ipsum
-              </q-item-section>
+            <q-item clickable v-for="item in news" :key="item.index">
+              <a
+                :href="item.source"
+                target="_blank"
+                style="text-decoration: none;"
+              >
+                <q-item-section class="text-caption">
+                  {{ item.title }}
+                </q-item-section>
+              </a>
             </q-item>
           </q-list>
         </q-card-section>
@@ -86,13 +67,24 @@ export default {
 
   preFetch({ store, currentRoute, previousRoute, redirect, ssrContext }) {},
 
-  methods: {},
+  mounted() {
+    this.getNews();
+  },
+
+  methods: {
+    getNews: async function() {
+      let response = await this.$api.get("news/");
+      this.news = response.data.data.splice(0, 10);
+    },
+  },
 
   computed: {
     ...mapGetters("main", ["isDarkMode"]),
   },
   data() {
-    return {};
+    return {
+      news: null,
+    };
   },
 };
 </script>
