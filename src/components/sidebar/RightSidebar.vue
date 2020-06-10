@@ -5,7 +5,7 @@
     persistent
     show-if-above
     side="right"
-    :breakpoint="500"
+    :breakpoint="1000"
     content-class="accent"
   >
     <q-scroll-area class="fit">
@@ -32,23 +32,10 @@
             </q-item>
           </q-list>
         </q-card-section>
-      </q-card>
 
-      <q-card
-        class="q-ma-sm"
-        :style="{ background: isDarkMode ? '#3D3D3D' : '#f8f9fa' }"
-      >
-        <div class="q-ma-sm text-bold">
-          Popular among others
+        <div v-else>
+          <q-skeleton square height="40em" />
         </div>
-        <q-separator />
-        <q-card-section class="q-gutter-sm">
-          <q-btn dense rounded size="sm" color="blue" label="android" />
-          <q-btn dense rounded size="sm" color="blue" label="android" />
-          <q-btn dense rounded size="sm" color="blue" label="android" />
-          <q-btn dense rounded size="sm" color="blue" label="android" />
-          <q-btn dense rounded size="sm" color="blue" label="android" />
-        </q-card-section>
       </q-card>
     </q-scroll-area>
   </q-drawer>
@@ -74,7 +61,7 @@ export default {
   methods: {
     getNews: async function() {
       let response = await this.$api.get("news/");
-      this.news = response.data.data.splice(0, 10);
+      this.news = response.data.data.splice(0, 30);
     },
   },
 

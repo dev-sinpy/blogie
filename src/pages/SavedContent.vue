@@ -31,7 +31,7 @@
 
       <div v-show="savedData" class="q-ma-lg text-weight-medium text-center">
         <div class="text-weight-medium">
-          Nothing to see here....
+          No other saved articles....
         </div>
       </div>
     </q-page>
@@ -45,7 +45,7 @@ import { mapState } from "vuex";
 export default {
   // name: 'PageName',
   components: {
-    "sub-card": require("components/feed/cards/SubCard.vue").default,
+    "sub-card": require("components/feed/cards/TinyCard.vue").default,
     "interests-popup": require("components/popups/Interests.vue").default,
     "delete-user-popup": require("components/popups/DeleteAccount.vue").default,
   },

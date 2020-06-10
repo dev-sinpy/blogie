@@ -14,6 +14,14 @@
 
         <q-card-section>
           <q-list>
+            <q-item clickable v-ripple @click="interestsPopup()">
+              <q-item-section avatar>
+                <q-icon name="edit" />
+              </q-item-section>
+
+              <q-item-section>Edit Preferences</q-item-section>
+            </q-item>
+
             <q-item
               clickable
               v-ripple
@@ -60,6 +68,15 @@ export default {
       */
 
       this.$store.commit("main/SET_POPUP", { popup: popup, flag: true });
+    },
+    interestsPopup() {
+      /*
+      Functionality: Displays a popup and fetches all the tags from the server.
+      */
+      this.$store.commit("main/SET_POPUP", {
+        popup: "interestsPopup",
+        flag: true,
+      });
     },
     goBack() {
       this.$emit("goBack");

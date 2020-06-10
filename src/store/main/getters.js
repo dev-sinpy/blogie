@@ -3,7 +3,7 @@ export function enabledTags(state) {
 }
 
 export function isDarkMode(state) {
-  return state.darkMode;
+  return state.userSettings.darkMode;
 }
 
 export function getEnabledTags(state) {
@@ -13,6 +13,10 @@ export function getEnabledTags(state) {
     tags.push(val.tag);
   });
   return tags;
+}
+
+export function getUserSettings(state) {
+  return state.userSettings;
 }
 
 export function getDefaultTags(state) {
@@ -35,20 +39,24 @@ export function user(state) {
   return state.user.email;
 }
 
+export function deleteAccount(state) {
+  return state.popups.deleteAccountPopup;
+}
+
 export function login(state) {
-  return state.loginPopup;
+  return state.popups.loginPopup;
 }
 
 export function register(state) {
-  return state.registerPopup;
+  return state.popups.registerPopup;
 }
 
 export function interests(state) {
-  return state.interestsPopup;
+  return state.popups.interestsPopup;
 }
 
 export function initialSetup(state) {
-  return state.initialPopup;
+  return state.popups.initialPopup;
 }
 
 export function isAuthenticated(state) {

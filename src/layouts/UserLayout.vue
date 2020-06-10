@@ -8,7 +8,7 @@ Uses quasar classes and some inline css.
 -->
 <template>
   <q-layout view="lhh LpR fFf" class="shadow-2">
-    <q-header reveal>
+    <q-header reveal :style="{ background: isDarkMode ? '' : 'white' }">
       <q-toolbar>
         <q-btn
           flat
@@ -16,14 +16,21 @@ Uses quasar classes and some inline css.
           round
           dense
           icon="linear_scale"
+          :color="isDarkMode ? 'white' : 'black'"
         />
+
         <q-space />
-        <div class="text-h5 text-bold text-orange logo-text">
+
+        <div class="q-pl-lg text-h5 text-bold text-orange logo-text">
           Blogie
         </div>
         <q-space />
 
         <!--navbar -->
+        <q-btn class="q-mr-sm" icon="home" to="/dashboard" flat />
+
+        <notifications />
+
         <nav-menu />
         <!-- end navbar -->
 
@@ -47,7 +54,7 @@ Uses quasar classes and some inline css.
 
     <!-- additional pages -->
     <keep-alive>
-      <router-view :success="success" :error="error" :deleteUser="deleteUser" />
+      <router-view :success="success" :error="error" />
     </keep-alive>
   </q-layout>
 </template>
@@ -63,12 +70,26 @@ export default {
   components: {
     //tags: require("components/Tags.vue").default, //tags to display in sidebar
     "nav-menu": require("components/menu/Menu.vue").default, //tags to display in sidebar
+    notifications: require("components/menu/Notification.vue").default, //tags to display in sidebar
     "left-sidebar": require("components/sidebar/LeftSidebar.vue").default, //tags to display in sidebar
     "right-sidebar": require("components/sidebar/RightSidebar.vue").default, //tags to display in sidebar
   },
 
+  computed: {
+    //...mapState("main", ["tags"]),
+    ...mapGetters("main", ["isAuthenticated"]),
+    ...mapGetters("main", ["status"]),
+    ...mapGetters("main", ["isDarkMode"]),
+  },
+
   created() {
-    this.$q.dark.set(true); //set default to dark theme
+    let userSettings = this.$q.localStorage.getItem("userSettings");
+    console.log(userSettings);
+    if (userSettings.darkMode) {
+      this.$store.commit("main/SET_DARK_MODE");
+    } else {
+      this.$store.commit("main/SET_LIGHT_MODE");
+    }
   },
 
   preFetch({ store, currentRoute, previousRoute, redirect, ssrContext }) {
@@ -80,98 +101,16 @@ export default {
     });
   },
 
-  methods: {
-    displayPopup(popup) {
-      /*
-      params: popup
-      type: String
-      */
-
-      this.$store.commit("main/SET_POPUP", { popup: popup, flag: true });
-    },
-
-    interestsPopup() {
-      /*
-      Functionality: Displays a popup and fetches all the tags from the server.
-      */
-      this.$store.commit("main/SET_STATUS", {
-        status: "popup_loading",
-        flag: true,
-      });
-      //this.$store.dispatch("main/fetchDefaultTags");
-      this.$store.commit("main/SET_POPUP", {
-        popup: "interestsPopup",
-        flag: true,
-      });
-      this.$store.commit("main/SET_STATUS", {
-        status: "popup_loading",
-        flag: false,
-      });
-    },
-
-    darkMode() {
-      //functionality: Toggles theme of the website
-      this.$q.dark.toggle();
-      this.$store.dispatch("main/setDarkMode");
-    },
-    logout() {
-      this.$q
-        .dialog({
-          title: "Logout",
-          message: "Are you sure you want to logout?",
-          cancel: true,
-          persistent: true,
-        })
-        .onOk(() => {
-          //
-        })
-        .onOk(() => {
-          AUTH.signOut()
-            .then(() => {
-              this.success = "Logged out successfully";
-              this.$store.dispatch("main/fetchUser");
-              window.location.href = "/";
-            })
-            .catch((error) => {
-              this.error = error;
-            });
-        })
-        .onCancel(() => {
-          // console.log('>>>> Cancel')
-        })
-        .onDismiss(() => {
-          // console.log('I am triggered on both OK and Cancel')
-        });
-    },
-  },
-
-  computed: {
-    //...mapState("main", ["tags"]),
-    ...mapGetters("main", ["isAuthenticated"]),
-    ...mapGetters("main", ["status"]),
-    ...mapGetters("main", ["isDarkMode"]),
-    dark: {
-      get() {
-        return this.isDarkMode;
-      },
-      set(val) {
-        this.$q.dark.toggle();
-        this.$store.dispatch("main/setDarkMode");
-      },
-    },
-  },
   data() {
     return {
       success: null,
       error: null,
-      popup: false,
-      settings: [{ label: "Enable Dark Theme" }],
-      drawer: false,
-      deleteUser: false,
       showLeftSidebar: this.$q.platform.is.mobile ? false : true,
       showRightSidebar: this.$q.platform.is.mobile ? false : true,
     };
   },
+
+  methods: {},
 };
 </script>
 

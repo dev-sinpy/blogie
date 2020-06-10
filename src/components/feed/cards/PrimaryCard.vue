@@ -43,10 +43,14 @@
         </div>
       </div>
 
-      <div class="text-h6 q-mt-sm q-mb-xs">{{ article.title }}</div>
-      <div class="text-caption text-grey">
-        {{ article.content | truncate(150, "...") }}
-      </div>
+      <a :href="article.url" target="_blank" style="text-decoration: none;">
+        <div class="text-bold q-mb-xs">
+          {{ article.title }}
+        </div>
+        <div class="text-caption text-grey">
+          {{ article.content | truncate(150, "...") }}
+        </div>
+      </a>
 
       <div class="row q-mt-sm">
         <q-badge outline color="accent">

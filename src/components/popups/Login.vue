@@ -51,6 +51,7 @@ export default {
   computed: {
     ...mapGetters("main", ["status"]),
     ...mapGetters("main", ["login"]),
+    ...mapGetters("main", ["getUserSettings"]),
   },
   data() {
     return {
@@ -82,8 +83,14 @@ export default {
         let user = result.user;
         let response = await this.$api.get(`user/${user.email}`);
         this.$store.dispatch("main/fetchUser", user);
+        let userSettings = this.$q.localStorage.getItem("userSettings");
+
+        if (!userSettings) {
+          this.$q.localStorage.set("userSettings", this.getUserSettings);
+        }
         window.location.href = "/dashboard";
       } catch (err) {
+        console.log(err);
         if (err.hasOwnProperty("response")) {
           this.error = "Your account is not registered, please sign up first";
           await this.$auth.signOut();

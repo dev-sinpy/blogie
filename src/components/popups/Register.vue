@@ -51,6 +51,7 @@ export default {
   //name: 'Register',
   computed: {
     ...mapGetters("main", ["register"]),
+    ...mapGetters("main", ["getUserSettings"]),
     ...mapGetters("main", ["status"]),
   },
 
@@ -89,6 +90,7 @@ export default {
         });
         this.$store.dispatch("main/fetchUser", user);
         this.$q.localStorage.set("savedData", []);
+        this.$q.localStorage.set("userSettings", this.getUserSettings);
         window.location.href = "/dashboard/?tutorial=true";
       } catch (err) {
         console.log(err);

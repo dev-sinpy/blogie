@@ -1,11 +1,6 @@
 import { LocalStorage } from "quasar";
 import { AUTH } from "../../boot/firebase";
 import { API } from "../../boot/axios";
-import { Dark } from "quasar";
-
-export function setDarkMode({ commit }, payload) {
-  commit("SET_DARK_MODE", payload);
-}
 
 export function fetchUser({ commit }, payload) {
   if (payload) {
@@ -22,6 +17,14 @@ export function fetchUser({ commit }, payload) {
         //LocalStorage.remove("feed");
       }
     });
+  }
+}
+
+export function toggleTheme({ commit, getters }, payload) {
+  if (getters.isDarkMode) {
+    commit("SET_LIGHT_MODE");
+  } else {
+    commit("SET_DARK_MODE");
   }
 }
 
@@ -46,7 +49,6 @@ export function fetchTags({ commit, getters }, payload) {
       });
 
       commit("SET_TAGS", newTags);
-      LocalStorage.set("tags", newTags);
       commit("SET_STATUS", { status: "tags_loading", flag: false });
     });
   } else {
@@ -61,7 +63,6 @@ export function fetchTags({ commit, getters }, payload) {
         });
       });
       commit("SET_TAGS", newTags);
-      LocalStorage.set("tags", newTags);
       commit("SET_STATUS", { status: "tags_loading", flag: false });
     });
   }

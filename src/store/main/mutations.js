@@ -22,7 +22,7 @@ export function SET_USER(state, user) {
 
 export function SET_POPUP(state, payload) {
   //For displaying popups
-  state[`${payload.popup}`] = payload.flag;
+  state.popups[`${payload.popup}`] = payload.flag;
 }
 
 export function SET_TAGS(state, tags) {
@@ -34,8 +34,16 @@ export function SET_DEFAULT_TAGS(state, tags) {
   state.defaultTags = tags;
 }
 
-export function SET_DARK_MODE(state, darkMode) {
-  state.darkMode = !state.darkMode;
+export function SET_LIGHT_MODE(state, payload) {
+  state.userSettings.darkMode = false;
+  Dark.set(false);
+  LocalStorage.set("userSettings", state.userSettings);
+}
+
+export function SET_DARK_MODE(state, payload) {
+  state.userSettings.darkMode = true;
+  Dark.set(true);
+  LocalStorage.set("userSettings", state.userSettings);
 }
 
 export function SET_STATUS(state, payload) {

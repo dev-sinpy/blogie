@@ -1,20 +1,23 @@
 export default function() {
   return {
-    loginPopup: false,
-    registerPopup: false,
-    interestsPopup: false,
-    initialPopup: false,
-    deleteAccountPopup: false,
+    popups: {
+      loginPopup: false,
+      registerPopup: false,
+      interestsPopup: false,
+      initialPopup: false,
+      deleteAccountPopup: false,
+    },
     //end poppups
-
-    tags: null, //user tags
     user: {
       avatar: null,
       email: null,
       name: null,
       verified: null,
     },
-    isAuthenticated: false,
+    userSettings: {
+      darkMode: true,
+      layoutSettings: "default",
+    },
     status: {
       //global status of the app. Change these statuses when fetching some data
       loading: false,
@@ -23,8 +26,10 @@ export default function() {
       popup_loading: false,
       data_posting: false,
     },
+    savedData: [],
     darkMode: true,
     defaultTags: null, // default tags from the server, fetch only if used in multiple components
-    savedData: [],
+    isAuthenticated: false,
+    tags: null, //user tags
   };
 }

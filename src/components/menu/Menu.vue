@@ -1,7 +1,11 @@
 <template>
   <div>
     <div>
-      <q-btn class="q-ma-sm" icon="menu" @click="closeMenu" flat dense />
+      <q-btn @click="closeMenu" flat>
+        <q-avatar size="40px">
+          <img :src="getUser.avatar" />
+        </q-avatar>
+      </q-btn>
       <q-menu v-model="opened" no-parent-event>
         <q-card flat style="height: 400px; width: 350px;">
           <q-card-section class="row flex-center">
@@ -141,8 +145,8 @@ export default {
     },
     darkMode() {
       //functionality: Toggles theme of the website
-      this.$q.dark.toggle();
-      this.$store.dispatch("main/setDarkMode");
+      //this.$q.dark.toggle();
+      this.$store.dispatch("main/toggleTheme");
     },
     logout() {
       this.$q

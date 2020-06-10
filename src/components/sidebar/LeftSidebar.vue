@@ -33,11 +33,25 @@
           </q-item-section>
         </q-item>
         <q-separator />
-        <tags v-for="tag in tags" v-bind:tag="tag" :key="tag.tag" />
+        <q-item
+          v-for="tag in tags"
+          :key="tag.tag"
+          v-ripple
+          clickable
+          @click="tag.enabled = !tag.enabled"
+        >
+          <q-item-section side top>
+            <q-checkbox keep-color color="accent" v-model="tag.enabled" />
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label>{{ tag.tag }}</q-item-label>
+          </q-item-section>
+        </q-item>
       </q-list>
 
       <div v-else>
-        <q-skeleton square height="20em" />
+        <q-skeleton square height="40em" />
       </div>
       <!--end tags-section -->
     </q-scroll-area>
@@ -52,11 +66,21 @@ import { mapState } from "vuex";
 export default {
   name: "LeftSidebar",
   props: ["show"],
-  components: {
-    tags: require("components/Tags.vue").default, //tags to display in sidebar
+  components: {},
+
+  computed: {
+    ...mapState("main", ["tags"]),
+    ...mapGetters("main", ["isAuthenticated"]),
+    ...mapGetters("main", ["status"]),
+    ...mapGetters("main", ["isDarkMode"]),
   },
-  created() {
-    this.$q.dark.set(true); //set default to dark theme
+
+  data() {
+    return {
+      success: null,
+      error: null,
+      popup: false,
+    };
   },
 
   methods: {
@@ -87,64 +111,6 @@ export default {
         flag: false,
       });
     },
-
-    darkMode() {
-      //functionality: Toggles theme of the website
-      this.$q.dark.toggle();
-      this.$store.dispatch("main/setDarkMode");
-    },
-    logout() {
-      this.$q
-        .dialog({
-          title: "Logout",
-          message: "Are you sure you want to logout?",
-          cancel: true,
-          persistent: true,
-        })
-        .onOk(() => {
-          //
-        })
-        .onOk(() => {
-          AUTH.signOut()
-            .then(() => {
-              this.success = "Logged out successfully";
-              this.$store.dispatch("main/fetchUser");
-              window.location.href = "/";
-            })
-            .catch((error) => {
-              this.error = error;
-            });
-        })
-        .onCancel(() => {
-          // console.log('>>>> Cancel')
-        })
-        .onDismiss(() => {
-          // console.log('I am triggered on both OK and Cancel')
-        });
-    },
-  },
-
-  computed: {
-    ...mapState("main", ["tags"]),
-    ...mapGetters("main", ["isAuthenticated"]),
-    ...mapGetters("main", ["status"]),
-    ...mapGetters("main", ["isDarkMode"]),
-    dark: {
-      get() {
-        return this.isDarkMode;
-      },
-      set(val) {
-        this.$q.dark.toggle();
-        this.$store.dispatch("main/setDarkMode");
-      },
-    },
-  },
-  data() {
-    return {
-      success: null,
-      error: null,
-      popup: false,
-    };
   },
 };
 </script>
