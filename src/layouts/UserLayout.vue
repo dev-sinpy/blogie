@@ -7,49 +7,74 @@ Defines header and sidebar of the dashboard.
 Uses quasar classes and some inline css.
 -->
 <template>
-  <q-layout view="lhh LpR fFf" class="shadow-2">
-    <q-header reveal :style="{ background: isDarkMode ? '' : 'white' }">
+  <q-layout view="hHh LpR fFf">
+    <q-header reveal :style="{ background: isDarkMode ? '' : '#1976D2' }">
       <q-toolbar>
         <q-btn
           flat
-          @click="showLeftSidebar = !showLeftSidebar"
+          @click="left = !left"
           round
           dense
           icon="linear_scale"
           :color="isDarkMode ? 'white' : 'black'"
         />
 
-        <q-space />
-
-        <div class="q-pl-lg text-h5 text-bold text-orange logo-text">
+        <div class="q-pl-lg text-h4 text-bold logo-text">
           Blogie
         </div>
+        <q-input
+          dark
+          dense
+          standout
+          v-model="text"
+          input-class="text-left"
+          class="q-ml-md mobile-hide"
+        >
+          <template v-slot:append>
+            <q-icon v-if="text === ''" name="search" />
+            <q-icon
+              v-else
+              name="clear"
+              class="cursor-pointer"
+              @click="text = ''"
+            />
+          </template>
+        </q-input>
         <q-space />
 
         <!--navbar -->
-        <q-btn class="q-mr-sm" icon="home" to="/dashboard" flat />
+        <q-btn
+          class="q-mr-md"
+          icon="home"
+          :color="isDarkMode ? 'white' : 'black'"
+          to="/dashboard"
+          dense
+          flat
+        />
 
-        <notifications />
+        <!-- <notifications /> -->
+        <notifications class="mobile-hide" />
 
         <nav-menu />
         <!-- end navbar -->
 
-        <!-- <q-btn
+        <q-btn
+          @click="right = !right"
+          icon="linear_scale"
+          :color="isDarkMode ? 'white' : 'black'"
           flat
-          @click="showRightSidebar = !showRightSidebar"
           round
           dense
-          icon="linear_scale"
-        /> -->
+        />
       </q-toolbar>
     </q-header>
 
     <!-- right sidebar -->
-    <left-sidebar :show="showLeftSidebar" />
+    <left-sidebar :left="left" />
     <!-- end right sidebar -->
 
     <!-- right sidebar -->
-    <right-sidebar :show="showRightSidebar" />
+    <right-sidebar :right="right" />
     <!-- end right sidebar -->
 
     <!-- additional pages -->
@@ -68,9 +93,8 @@ export default {
   name: "DashboardLayout",
 
   components: {
-    //tags: require("components/Tags.vue").default, //tags to display in sidebar
     "nav-menu": require("components/menu/Menu.vue").default, //tags to display in sidebar
-    notifications: require("components/menu/Notification.vue").default, //tags to display in sidebar
+    notifications: require("components/menu/Notification.vue").default,
     "left-sidebar": require("components/sidebar/LeftSidebar.vue").default, //tags to display in sidebar
     "right-sidebar": require("components/sidebar/RightSidebar.vue").default, //tags to display in sidebar
   },
@@ -103,10 +127,11 @@ export default {
 
   data() {
     return {
+      text: "",
       success: null,
       error: null,
-      showLeftSidebar: this.$q.platform.is.mobile ? false : true,
-      showRightSidebar: this.$q.platform.is.mobile ? false : true,
+      left: false,
+      right: false,
     };
   },
 
@@ -119,10 +144,5 @@ export default {
 
 .logo-text {
   font-family: "Righteous", cursive;
-}
-
-.my-menu-link {
-  color: black;
-  background: #e6f1fc;
 }
 </style>

@@ -25,6 +25,15 @@ export function SET_POPUP(state, payload) {
   state.popups[`${payload.popup}`] = payload.flag;
 }
 
+export function TOGGLE_SIDEBAR(state, payload) {
+  //For displaying popups
+  if (payload == "left") {
+    state.userSettings.hideLeftSidebar = !state.userSettings.hideLeftSidebar;
+  } else {
+    state.userSettings.hideRightSidebar = !state.userSettings.hideRightSidebar;
+  }
+}
+
 export function SET_TAGS(state, tags) {
   //Set tags of the current logged in user
   state.tags = tags;

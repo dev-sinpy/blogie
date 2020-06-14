@@ -43,16 +43,20 @@
         </div>
       </div>
 
-      <a :href="article.url" target="_blank" style="text-decoration: none;">
-        <div class="text-bold q-mb-xs">
+      <a
+        :href="article.url"
+        target="_blank"
+        style="text-decoration: none; color: inherit;"
+      >
+        <div class="text-bold q-mb-xs" style="font-size: 18px;">
           {{ article.title }}
         </div>
-        <div class="text-caption text-grey">
-          {{ article.content | truncate(150, "...") }}
+        <div class="text-caption">
+          {{ article.content | truncate(200, "...") }}
         </div>
       </a>
 
-      <div class="row q-mt-sm">
+      <div class="row q-mt-md">
         <q-badge outline color="accent">
           {{ article.searched_for }}
         </q-badge>

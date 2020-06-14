@@ -19,8 +19,6 @@
               <q-item-section>Edit Layout</q-item-section>
             </q-item>
 
-            <q-separator />
-
             <q-item clickable v-ripple>
               <q-item-section avatar>
                 <q-icon name="edit" />

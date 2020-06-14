@@ -1,9 +1,9 @@
 <template>
   <!-- Sidebar for dashboard. -->
   <q-drawer
-    v-model="show"
     persistent
     show-if-above
+    v-model="right"
     side="right"
     :breakpoint="1000"
     content-class="accent"
@@ -13,7 +13,7 @@
         class="q-ma-sm"
         :style="{ background: isDarkMode ? '#3D3D3D' : '#f8f9fa' }"
       >
-        <div class="q-ma-sm text-bold">
+        <div class="q-ma-sm text-h6 text-bold">
           Global News
         </div>
         <q-separator />
@@ -23,9 +23,9 @@
               <a
                 :href="item.source"
                 target="_blank"
-                style="text-decoration: none;"
+                style="text-decoration: none; color: inherit;"
               >
-                <q-item-section class="text-caption">
+                <q-item-section class="text-caption text-bold">
                   {{ item.title }}
                 </q-item-section>
               </a>
@@ -47,7 +47,7 @@ import { mapState } from "vuex";
 
 export default {
   name: "RightSidebar",
-  props: ["show"],
+  props: ["right"],
   components: {},
 
   created() {},

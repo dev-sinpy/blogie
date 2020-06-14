@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <q-btn @click="closeMenu" flat>
+      <q-btn class="q-mr-md" @click="closeMenu" dense flat>
         <q-avatar size="40px">
           <img :src="getUser.avatar" />
         </q-avatar>
@@ -12,7 +12,7 @@
             <q-avatar size="50px" class="q-mr-md">
               <img :src="getUser.avatar" />
             </q-avatar>
-            <span class="text-weight-medium">{{ getUser.name }}</span>
+            <span class="text-h6 text-bold">{{ getUser.name }}</span>
           </q-card-section>
 
           <q-separator />
@@ -24,7 +24,7 @@
                   <q-icon name="bookmarks" />
                 </q-item-section>
 
-                <q-item-section>Saved</q-item-section>
+                <q-item-section class="text-bold">Saved</q-item-section>
 
                 <q-item-section top side class="q-ma-sm">
                   <q-badge color="orange">
@@ -38,7 +38,7 @@
                   <q-icon name="notifications" />
                 </q-item-section>
 
-                <q-item-section>Notifications</q-item-section>
+                <q-item-section class="text-bold">Notifications</q-item-section>
 
                 <q-item-section top side class="q-ma-sm">
                   <q-badge color="orange">
@@ -52,7 +52,7 @@
                   <q-icon name="account_circle" />
                 </q-item-section>
 
-                <q-item-section>Personal</q-item-section>
+                <q-item-section class="text-bold">Personal</q-item-section>
 
                 <q-item-section top side class="q-ma-sm">
                   <q-icon name="navigate_next" />
@@ -64,7 +64,7 @@
                   <q-icon name="settings" />
                 </q-item-section>
 
-                <q-item-section>Settings</q-item-section>
+                <q-item-section class="text-bold">Settings</q-item-section>
 
                 <q-item-section top side class="q-ma-sm">
                   <q-icon name="navigate_next" />

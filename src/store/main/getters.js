@@ -19,6 +19,14 @@ export function getUserSettings(state) {
   return state.userSettings;
 }
 
+export function leftSidebar(state) {
+  return state.userSettings.hideLeftSidebar;
+}
+
+export function rightSidebar(state) {
+  return state.userSettings.hideRightSidebar;
+}
+
 export function getDefaultTags(state) {
   return state.defaultTags;
 }

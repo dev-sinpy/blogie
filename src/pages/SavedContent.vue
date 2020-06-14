@@ -1,14 +1,6 @@
 <template>
   <q-page-container>
-    <q-page padding>
-      <!-- popups-->
-      <initial-popup />
-
-      <interests-popup />
-
-      <delete-user-popup :deleteUser="deleteUser" />
-      <!-- End popups -->
-
+    <q-page class="q-pa-sm">
       <div
         class="q-pa-sm text-h6 text-weight-bold"
         v-bind:class="[isDarkMode ? 'text-white' : 'text-black']"
@@ -46,8 +38,6 @@ export default {
   // name: 'PageName',
   components: {
     "sub-card": require("components/feed/cards/TinyCard.vue").default,
-    "interests-popup": require("components/popups/Interests.vue").default,
-    "delete-user-popup": require("components/popups/DeleteAccount.vue").default,
   },
 
   computed: {

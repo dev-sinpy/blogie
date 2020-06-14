@@ -17,6 +17,8 @@ export default function() {
     userSettings: {
       darkMode: true,
       layoutSettings: "default",
+      hideLeftSidebar: false,
+      hideRightSidebar: false,
     },
     status: {
       //global status of the app. Change these statuses when fetching some data

@@ -1,9 +1,9 @@
 <template>
   <!-- Sidebar for dashboard. -->
   <q-drawer
-    v-model="show"
     persistent
     show-if-above
+    v-model="left"
     side="left"
     :width="220"
     :breakpoint="500"
@@ -16,7 +16,7 @@
         <q-item>
           <q-item-section>
             <q-item-label>
-              <span class="text-bold">Tags</span>
+              <span class="text-h6 text-bold">Tags</span>
             </q-item-label>
           </q-item-section>
           <q-item-section top side>
@@ -45,7 +45,7 @@
           </q-item-section>
 
           <q-item-section>
-            <q-item-label>{{ tag.tag }}</q-item-label>
+            <q-item-label class="text-bold">{{ tag.tag }}</q-item-label>
           </q-item-section>
         </q-item>
       </q-list>
@@ -65,7 +65,7 @@ import { mapState } from "vuex";
 
 export default {
   name: "LeftSidebar",
-  props: ["show"],
+  props: ["left"],
   components: {},
 
   computed: {
