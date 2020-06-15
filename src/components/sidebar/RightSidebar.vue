@@ -1,9 +1,9 @@
 <template>
   <!-- Sidebar for dashboard. -->
   <q-drawer
+    v-model="show"
     persistent
     show-if-above
-    v-model="right"
     side="right"
     :breakpoint="1000"
     content-class="accent"
@@ -47,7 +47,7 @@ import { mapState } from "vuex";
 
 export default {
   name: "RightSidebar",
-  props: ["right"],
+  props: ["show"],
   components: {},
 
   created() {},

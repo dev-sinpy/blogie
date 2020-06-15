@@ -7,7 +7,7 @@ Defines header and sidebar of the dashboard.
 Uses quasar classes and some inline css.
 -->
 <template>
-  <q-layout view="hHh LpR fFf">
+  <q-layout view="lhh LpR fFf">
     <q-header reveal :style="{ background: isDarkMode ? '' : '#1976D2' }">
       <q-toolbar>
         <q-btn
@@ -22,6 +22,7 @@ Uses quasar classes and some inline css.
         <div class="q-pl-lg text-h4 text-bold logo-text">
           Blogie
         </div>
+        <q-space />
         <q-input
           dark
           dense
@@ -69,12 +70,71 @@ Uses quasar classes and some inline css.
       </q-toolbar>
     </q-header>
 
+    <!-- Sidebar for dashboard. -->
+    <q-drawer
+      v-model="left"
+      persistent
+      show-if-above
+      side="left"
+      :width="220"
+      :breakpoint="500"
+      bordered
+      content-class="accent"
+    >
+      <q-scroll-area class="fit">
+        <!-- tags-section -->
+        <q-list v-if="!status.tags_loading">
+          <q-item>
+            <q-item-section>
+              <q-item-label>
+                <span class="text-h6 text-bold">Tags</span>
+              </q-item-label>
+            </q-item-section>
+            <q-item-section top side>
+              <div>
+                <q-btn
+                  @click="interestsPopup()"
+                  size="16px"
+                  flat
+                  dense
+                  round
+                  icon="edit"
+                />
+              </div>
+            </q-item-section>
+          </q-item>
+          <q-separator />
+          <q-item
+            v-for="tag in tags"
+            :key="tag.tag"
+            v-ripple
+            clickable
+            @click="tag.enabled = !tag.enabled"
+          >
+            <q-item-section side top>
+              <q-checkbox keep-color color="accent" v-model="tag.enabled" />
+            </q-item-section>
+
+            <q-item-section>
+              <q-item-label class="text-bold">{{ tag.tag }}</q-item-label>
+            </q-item-section>
+          </q-item>
+        </q-list>
+
+        <div v-else>
+          <q-skeleton square height="40em" />
+        </div>
+        <!--end tags-section -->
+      </q-scroll-area>
+    </q-drawer>
+    <!-- end left sidebar -->
+
     <!-- right sidebar -->
-    <left-sidebar :left="left" />
+    <!-- <left-sidebar :show="left" /> -->
     <!-- end right sidebar -->
 
     <!-- right sidebar -->
-    <right-sidebar :right="right" />
+    <right-sidebar :show="right" />
     <!-- end right sidebar -->
 
     <!-- additional pages -->
@@ -95,12 +155,12 @@ export default {
   components: {
     "nav-menu": require("components/menu/Menu.vue").default, //tags to display in sidebar
     notifications: require("components/menu/Notification.vue").default,
-    "left-sidebar": require("components/sidebar/LeftSidebar.vue").default, //tags to display in sidebar
+    // "left-sidebar": require("components/sidebar/LeftSidebar.vue").default, //tags to display in sidebar
     "right-sidebar": require("components/sidebar/RightSidebar.vue").default, //tags to display in sidebar
   },
 
   computed: {
-    //...mapState("main", ["tags"]),
+    ...mapState("main", ["tags"]),
     ...mapGetters("main", ["isAuthenticated"]),
     ...mapGetters("main", ["status"]),
     ...mapGetters("main", ["isDarkMode"]),
@@ -135,7 +195,35 @@ export default {
     };
   },
 
-  methods: {},
+  methods: {
+    displayPopup(popup) {
+      /*
+      params: popup
+      type: String
+      */
+
+      this.$store.commit("main/SET_POPUP", { popup: popup, flag: true });
+    },
+
+    interestsPopup() {
+      /*
+      Functionality: Displays a popup and fetches all the tags from the server.
+      */
+      this.$store.commit("main/SET_STATUS", {
+        status: "popup_loading",
+        flag: true,
+      });
+      //this.$store.dispatch("main/fetchDefaultTags");
+      this.$store.commit("main/SET_POPUP", {
+        popup: "interestsPopup",
+        flag: true,
+      });
+      this.$store.commit("main/SET_STATUS", {
+        status: "popup_loading",
+        flag: false,
+      });
+    },
+  },
 };
 </script>
 

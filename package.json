@@ -18,11 +18,11 @@
     "aos": "^2.3.4",
     "axios": "^0.18.1",
     "firebase": "^7.14.2",
-    "quasar": "^1.12.4",
+    "quasar": "^1.11.1",
     "vue-multiselect": "^2.1.6"
   },
   "devDependencies": {
-    "@quasar/app": "^1.9.6",
+    "@quasar/app": "^1.8.6",
     "babel-eslint": "^10.0.1",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.9.0",
