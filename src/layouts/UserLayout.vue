@@ -8,7 +8,7 @@ Uses quasar classes and some inline css.
 -->
 <template>
   <q-layout view="lhh LpR fFf">
-    <q-header reveal :style="{ background: isDarkMode ? '' : '#1976D2' }">
+    <q-header reveal :style="{ background: isDarkMode ? '' : 'white' }">
       <q-toolbar>
         <q-btn
           flat
@@ -19,28 +19,10 @@ Uses quasar classes and some inline css.
           :color="isDarkMode ? 'white' : 'black'"
         />
 
-        <div class="q-pl-lg text-h4 text-bold logo-text">
+        <div class="q-pl-lg text-h4 text-bold logo-text text-orange">
           Blogie
         </div>
-        <q-space />
-        <q-input
-          dark
-          dense
-          standout
-          v-model="text"
-          input-class="text-left"
-          class="q-ml-md mobile-hide"
-        >
-          <template v-slot:append>
-            <q-icon v-if="text === ''" name="search" />
-            <q-icon
-              v-else
-              name="clear"
-              class="cursor-pointer"
-              @click="text = ''"
-            />
-          </template>
-        </q-input>
+
         <q-space />
 
         <!--navbar -->
@@ -130,11 +112,54 @@ Uses quasar classes and some inline css.
     <!-- end left sidebar -->
 
     <!-- right sidebar -->
+    <q-drawer
+      v-model="right"
+      persistent
+      show-if-above
+      side="right"
+      :breakpoint="1000"
+      content-class="accent"
+    >
+      <q-scroll-area class="fit">
+        <q-card
+          class="q-ma-sm"
+          :style="{ background: isDarkMode ? '#3D3D3D' : '#f8f9fa' }"
+        >
+          <div class="q-ma-sm text-h6 text-bold">
+            Global News
+          </div>
+          <q-separator />
+          <q-card-section v-if="news" class="q-ma-none q-pa-none">
+            <q-list v-for="item in news" :key="item.index">
+              <q-item clickable>
+                <a
+                  :href="item.source"
+                  target="_blank"
+                  style="text-decoration: none; color: inherit;"
+                >
+                  <q-item-section class="text-caption text-bold">
+                    {{ item.title }}
+                  </q-item-section>
+                </a>
+              </q-item>
+              <q-separator inset />
+            </q-list>
+          </q-card-section>
+
+          <div v-else>
+            <q-skeleton square height="40em" />
+          </div>
+        </q-card>
+      </q-scroll-area>
+    </q-drawer>
+    <!-- end right sidebar -->
+
+    <!-- right sidebar -->
     <!-- <left-sidebar :show="left" /> -->
     <!-- end right sidebar -->
 
     <!-- right sidebar -->
-    <right-sidebar :show="right" />
+    <!-- <right-sidebar :show="right" /> -->
     <!-- end right sidebar -->
 
     <!-- additional pages -->
@@ -156,7 +181,7 @@ export default {
     "nav-menu": require("components/menu/Menu.vue").default, //tags to display in sidebar
     notifications: require("components/menu/Notification.vue").default,
     // "left-sidebar": require("components/sidebar/LeftSidebar.vue").default, //tags to display in sidebar
-    "right-sidebar": require("components/sidebar/RightSidebar.vue").default, //tags to display in sidebar
+    // "right-sidebar": require("components/sidebar/RightSidebar.vue").default, //tags to display in sidebar
   },
 
   computed: {
@@ -176,6 +201,10 @@ export default {
     }
   },
 
+  mounted() {
+    this.getNews();
+  },
+
   preFetch({ store, currentRoute, previousRoute, redirect, ssrContext }) {
     //Prefetching interests of the current logged in user
     store.subscribe((mutation, state) => {
@@ -187,7 +216,7 @@ export default {
 
   data() {
     return {
-      text: "",
+      news: null,
       success: null,
       error: null,
       left: false,
@@ -196,6 +225,11 @@ export default {
   },
 
   methods: {
+    getNews: async function() {
+      let response = await this.$api.get("news/");
+      this.news = response.data.data.splice(0, 30);
+    },
+
     displayPopup(popup) {
       /*
       params: popup
@@ -227,10 +261,4 @@ export default {
 };
 </script>
 
-<style lang="css">
-@import url("https://fonts.googleapis.com/css2?family=Righteous&display=swap");
-
-.logo-text {
-  font-family: "Righteous", cursive;
-}
-</style>
+<style lang="css"></style>

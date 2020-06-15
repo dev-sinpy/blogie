@@ -59,10 +59,9 @@
         <q-btn
           type="a"
           target="_blank"
-          color="accent"
+          color="blue"
           size="sm"
           :href="article.url"
-          outline
           rounded
         >
           read more

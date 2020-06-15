@@ -115,12 +115,6 @@ export default {
 </script>
 
 <style lang="css">
-@import url("https://fonts.googleapis.com/css2?family=Righteous&display=swap");
-
-.logo-text {
-  font-family: "Righteous", cursive;
-}
-
 .bg-gradient {
   background: linear-gradient(#ffff00, #ffff4d);
 }

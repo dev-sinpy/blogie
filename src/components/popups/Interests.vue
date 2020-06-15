@@ -3,7 +3,7 @@
     <q-dialog v-model="interests">
       <q-card style="height: 500px; width: 50rem;">
         <q-card-section class="row items-center q-pb-none">
-          <div class="text-weight-medium text-center">
+          <div class="text-bold" style="font-size: 17px;">
             Your Interests
           </div>
           <q-space />

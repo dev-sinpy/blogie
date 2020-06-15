@@ -1,9 +1,9 @@
 <template>
   <div v-if="!status.popup_loading">
     <q-dialog v-model="initialSetup">
-      <q-card class="bg-black" style="height: 500px; width: 50rem;">
+      <q-card style="height: 500px; width: 50rem;">
         <q-card-section class="row items-center q-pb-none">
-          <div class="text-weight-medium text-center">
+          <div class="text-bold" style="font-size: 17px;">
             Choose your interests
           </div>
           <q-space />

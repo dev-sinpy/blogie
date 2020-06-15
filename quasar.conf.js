@@ -38,9 +38,8 @@ module.exports = function(/* ctx */) {
       // 'eva-icons',
       // 'themify',
       // 'line-awesome',
-      // 'roboto-font-latin-ext', // this or either 'roboto-font', NEVER both!
 
-      "roboto-font", // optional, you are not bound to it
+      // "roboto-font", // optional, you are not bound to it
       "material-icons", // optional, you are not bound to it
     ],
 
@@ -68,10 +67,7 @@ module.exports = function(/* ctx */) {
           primary: "#121212",
           secondary: "#4ecdc4",
           accent: "#50B4F4",
-
           dark: "#1d1d1d",
-          dark: "#1d1d1d",
-
           positive: "#21BA45",
           negative: "#C10015",
           info: "#1789fc",
