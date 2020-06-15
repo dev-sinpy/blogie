@@ -114,7 +114,7 @@ export default {
 };
 </script>
 
-<style lang="css">
+<style lang="css" scoped>
 .bg-gradient {
   background: linear-gradient(#ffff00, #ffff4d);
 }

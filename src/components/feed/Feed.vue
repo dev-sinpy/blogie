@@ -95,11 +95,6 @@ export default {
           });
 
           let tags = this.getEnabledTags;
-          //randomize an array
-          for (let i = tags.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [tags[i], tags[j]] = [tags[j], tags[i]];
-          }
           let finalTags = tags.join(); //join the randomize array
           const limit = 40;
           this.$api
@@ -116,17 +111,12 @@ export default {
       });
     },
 
-    getData: async function() {
+    getData: async function(page) {
       let tags = this.getEnabledTags;
-      //randomize an array
-      for (let i = tags.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [tags[i], tags[j]] = [tags[j], tags[i]];
-      }
       let finalTags = tags.join(); //join the randomize array
       const limit = 40;
       let response = await this.$api.get(
-        `?q=${finalTags}&limit=${limit}&page=${1}`
+        `?q=${finalTags}&limit=${limit}&page=${page}`
       );
 
       return response.data.data;
@@ -138,35 +128,21 @@ export default {
         flag: true,
       });
 
-      this.articles = await this.getData();
+      this.articles = await this.getData(1);
       this.$store.commit("main/SET_STATUS", {
         status: "feed_loading",
         flag: false,
       });
       done();
     },
-    loadMore() {
+    loadMore: async function() {
       this.$store.commit("main/SET_STATUS", {
         status: "feed_loading",
         flag: true,
       });
       this.page++;
-      let tags = this.getEnabledTags;
-      for (let i = tags.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [tags[i], tags[j]] = [tags[j], tags[i]];
-      }
-      let finalTags = tags.join();
-      const limit = 40;
-      this.$api
-        .get(`?q=${finalTags}&limit=${limit}&page=${this.page}`)
-        .then((response) => {
-          this.articles.push(...response.data.data);
-          this.$store.commit("main/SET_STATUS", {
-            status: "feed_loading",
-            flag: false,
-          });
-        });
+      let data = await this.getData(this.page);
+      this.articles.push(...data);
     },
   },
 

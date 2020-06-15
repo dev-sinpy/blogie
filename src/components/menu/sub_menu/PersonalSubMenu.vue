@@ -5,7 +5,7 @@
         <q-card-section class="row space-between q-pa-none">
           <q-btn @click="goBack" icon="navigate_before" size="md" dense flat />
           <q-space />
-          <div class="q-ma-sm text-h6">Personal</div>
+          <div class="q-ma-sm text-h6 text-bold">Personal</div>
           <q-space />
           <q-btn icon="info" size="md" dense flat />
         </q-card-section>
@@ -19,7 +19,9 @@
                 <q-icon name="edit" />
               </q-item-section>
 
-              <q-item-section>Edit Preferences</q-item-section>
+              <q-item-section class="text-bold"
+                >Edit Preferences</q-item-section
+              >
             </q-item>
 
             <q-item
@@ -31,7 +33,7 @@
                 <q-icon name="delete" />
               </q-item-section>
 
-              <q-item-section>Delete Account</q-item-section>
+              <q-item-section class="text-bold">Delete Account</q-item-section>
             </q-item>
           </q-list>
         </q-card-section>

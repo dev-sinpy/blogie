@@ -5,7 +5,7 @@
         <q-card-section class="row space-between q-pa-none">
           <q-btn @click="goBack" icon="navigate_before" size="md" dense flat />
           <q-space />
-          <div class="q-ma-sm text-h6">Settings</div>
+          <div class="q-ma-sm text-h6 text-bold">Settings</div>
           <q-space />
           <q-btn icon="info" size="md" dense flat />
         </q-card-section>
@@ -16,14 +16,14 @@
               <q-item-section avatar>
                 <q-icon name="edit" />
               </q-item-section>
-              <q-item-section>Edit Layout</q-item-section>
+              <q-item-section class="text-bold">Edit Layout</q-item-section>
             </q-item>
 
             <q-item clickable v-ripple>
               <q-item-section avatar>
                 <q-icon name="edit" />
               </q-item-section>
-              <q-item-section>Customise Theme</q-item-section>
+              <q-item-section class="text-bold">Customise Theme</q-item-section>
             </q-item>
           </q-list>
         </q-card-section>

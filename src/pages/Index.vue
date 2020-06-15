@@ -19,8 +19,6 @@ Uses quasar classes and global css defined in src/css folder.
 <script>
 import { mapGetters } from "vuex";
 import { AUTH } from "../boot/firebase";
-import AOS from "aos";
-import "aos/dist/aos.css";
 
 export default {
   name: "PageIndex",
@@ -30,10 +28,6 @@ export default {
   components: {
     "register-popup": require("components/popups/Register.vue").default,
     "login-popup": require("components/popups/Login.vue").default,
-  },
-  created() {
-    //for animations
-    AOS.init();
   },
   methods: {
     toDashboard() {

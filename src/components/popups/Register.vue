@@ -2,7 +2,9 @@
   <q-dialog v-model="register">
     <q-card style="height: 230px; width: 400px;">
       <q-card-section class="row items-center q-pb-none">
-        <div class="text-h6 text-black">Register</div>
+        <div class="q-pl-sm text-h6 text-bold">
+          Register
+        </div>
         <q-space />
         <q-btn flat dense @click="closePopup" icon="close" v-close-popup />
       </q-card-section>
@@ -109,7 +111,7 @@ export default {
 };
 </script>
 
-<style lang="css">
+<style lang="css" scoped>
 #or {
   position: relative;
   width: 300px;
