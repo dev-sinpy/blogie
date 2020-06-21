@@ -33,7 +33,7 @@
           />
 
           <q-btn
-            @click="share"
+            @click="share(true)"
             class="q-mr-sm"
             dense
             round
@@ -115,17 +115,94 @@ export default {
       }
     },
 
-    share() {
-      if (navigator.share) {
-        navigator
-          .share({
-            title: "blogie.now.sh",
-            text: "Checkout this awesome article!",
-            url: this.article.url,
-          })
-          .then(() => console.log("Successful share"))
-          .catch((error) => console.log("Error sharing", error));
-      }
+    share(grid) {
+      this.$q
+        .bottomSheet({
+          grid,
+          actions: [
+            {
+              label: "Email",
+              icon: "fas fa-envelope",
+              id: "email",
+            },
+            {
+              label: "Twitter",
+              icon: "fab fa-twitter",
+              color: "blue",
+              id: "twitter",
+            },
+            {
+              label: "Reddit",
+              color: "red-14",
+              icon: "fab fa-reddit",
+              id: "reddit",
+            },
+            {
+              label: "Whatsapp",
+              color: "green-13",
+              icon: "fab fa-whatsapp",
+              id: "whatsapp",
+            },
+            {
+              label: "Linkedin",
+              icon: "fab fa-linkedin",
+              color: "blue-10",
+              id: "linkedin",
+            },
+            {
+              label: "Facebook",
+              color: "indigo",
+              icon: "fab fa-facebook",
+              id: "facebook",
+            },
+          ],
+        })
+        .onOk((action) => {
+          switch (action.id) {
+            case "email":
+              window.open(
+                `mailto:?subject=Checkout%20this%20awesome%20article!&body=${this.article.url}`,
+                "_blank"
+              );
+              break;
+            case "twitter":
+              window.open(
+                `https://twitter.com/intent/tweet?text=Checkout%20this%20awesome%20article!&url=${this.article.url}`,
+                "_blank"
+              );
+              break;
+            case "linkedin":
+              window.open(
+                `http://www.linkedin.com/shareArticle?title=Checkout%20this%20awesome%20article!&url=${this.article.url}`,
+                "_blank"
+              );
+              break;
+            case "reddit":
+              window.open(
+                `https://www.reddit.com/submit?title=Checkout%20this%20awesome%20article!&url=${this.article.url}`,
+                "_blank"
+              );
+              break;
+            case "facebook":
+              window.open(
+                `https://www.facebook.com/sharer/sharer.php?u=${this.article.url}`,
+                "_blank"
+              );
+              break;
+            case "whatsapp":
+              window.open(
+                `https://api.whatsapp.com/send?text=${this.article.url}`,
+                "_blank"
+              );
+              break;
+          }
+        })
+        .onCancel(() => {
+          console.log("Dismissed");
+        })
+        .onDismiss(() => {
+          // console.log('I am triggered on both OK and Cancel')
+        });
     },
   },
   data() {
