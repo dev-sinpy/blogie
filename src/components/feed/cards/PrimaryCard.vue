@@ -63,6 +63,7 @@
 
         <q-space />
         <q-btn
+          class="text-bold"
           type="a"
           target="_blank"
           color="blue"

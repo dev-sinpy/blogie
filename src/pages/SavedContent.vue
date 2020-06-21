@@ -22,7 +22,7 @@
       </div>
 
       <div v-show="savedData" class="q-ma-lg text-weight-medium text-center">
-        <div class="text-weight-medium">
+        <div class="text-bold">
           No other saved articles....
         </div>
       </div>

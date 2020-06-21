@@ -17,15 +17,14 @@
           :article="article"
           :tags="getEnabledTags"
         />
-        <q-separator />
 
         <div class="row">
           <q-btn
-            outline
-            class="q-ma-lg col"
+            class="q-ma-lg text-bold col"
             label="Load More"
             @click="loadMore"
-            color="accent"
+            color="blue"
+            :loading="feed_loading"
           />
         </div>
       </div>
@@ -136,19 +135,18 @@ export default {
       done();
     },
     loadMore: async function() {
-      this.$store.commit("main/SET_STATUS", {
-        status: "feed_loading",
-        flag: true,
-      });
+      this.feed_loading = true;
       this.page++;
       let data = await this.getData(this.page);
       this.articles.push(...data);
+      this.feed_loading = false;
     },
   },
 
   data() {
     return {
       articles: null,
+      feed_loading: false,
       page: 1, //for pagination
     };
   },
