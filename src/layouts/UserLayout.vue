@@ -194,7 +194,6 @@ export default {
 
   created() {
     let userSettings = this.$q.localStorage.getItem("userSettings");
-    console.log(userSettings);
     if (userSettings.darkMode) {
       this.$store.commit("main/SET_DARK_MODE");
     } else {

@@ -4,7 +4,7 @@ import axios from "axios";
 // We create our own axios instance and set a custom base URL.
 //Primary api for blogie, all the network requests are done from this instance
 const API = axios.create({
-  baseURL: "https://blogie-api.now.sh/api/",
+  baseURL: "https://blogie-backend.vercel.app/api/",
 });
 
 // for using inside Vue files through this.$axios
