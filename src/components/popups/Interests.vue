@@ -69,6 +69,7 @@ export default {
   computed: {
     ...mapGetters("main", ["getDefaultTags"]),
     ...mapGetters("main", ["user"]),
+    ...mapGetters("main", ["getUser"]),
     ...mapGetters("main", ["status"]),
     ...mapGetters("main", ["interests"]),
   },
@@ -95,7 +96,13 @@ export default {
       this.loading = true;
       let tags = this.value.map((val) => val.name.toLowerCase().trim()).join();
       let email = this.user;
-      await this.$api.post(`updateuser/?email=${email}&tags=${tags}`);
+      await this.$api.post(
+        `updateuser/?email=${email}&tags=${tags}`,
+        {},
+        {
+          headers: { apikey: this.getUser.apiKey },
+        }
+      );
       this.$store.dispatch("main/fetchTags", { reload: true });
       this.loading = false;
       this.success = "Updated your preferences";

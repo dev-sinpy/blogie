@@ -22,20 +22,20 @@ Uses additional global css defined in src/css folder.
           >
             <div class="heading-brand logo-text">Blogie</div>
 
-            <btn
+            <button
               v-if="isAuthenticated"
               @click="toDashboard"
               class="btn btn-dark"
             >
               Dashboard
-            </btn>
-            <btn
+            </button>
+            <button
               v-if="!isAuthenticated"
               class="btn btn-dark"
               @click="displayPopup('loginPopup')"
             >
               Log In
-            </btn>
+            </button>
           </div>
         </div>
         <div class="rows mt-4">
@@ -47,13 +47,13 @@ Uses additional global css defined in src/css folder.
               enjoy reading so you can spend more time reading instead of
               googling keywords for hours.
             </p>
-            <btn
+            <button
               class="btn btn-success svg-icon"
               @click="displayPopup('registerPopup')"
             >
               <em data-feather="github"></em>
               Signup
-            </btn>
+            </button>
           </div>
         </div>
         <div class="rows mt-5">

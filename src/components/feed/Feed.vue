@@ -67,6 +67,7 @@ export default {
 
   computed: {
     ...mapGetters("main", ["status"]),
+    ...mapGetters("main", ["getUser"]),
     ...mapGetters("main", ["getEnabledTags"]),
     ...mapState("main", ["tags"]),
 
@@ -97,7 +98,9 @@ export default {
           let finalTags = tags.join(); //join the randomize array
           const limit = 40;
           this.$api
-            .get(`?q=${finalTags}&limit=${limit}&page=${1}`)
+            .get(`?q=${finalTags}&limit=${limit}&page=${1}`, {
+              headers: { apikey: this.getUser.apiKey },
+            })
             .then((response) => {
               this.articles = response.data.data;
               this.$store.commit("main/SET_STATUS", {
@@ -115,7 +118,10 @@ export default {
       let finalTags = tags.join(); //join the randomize array
       const limit = 40;
       let response = await this.$api.get(
-        `?q=${finalTags}&limit=${limit}&page=${page}`
+        `?q=${finalTags}&limit=${limit}&page=${page}`,
+        {
+          headers: { apikey: this.getUser.apiKey },
+        }
       );
 
       return response.data.data;

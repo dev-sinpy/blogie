@@ -75,6 +75,7 @@ export default {
     },
 
     signup: async function(val) {
+      this.error = "";
       this.loading = true;
 
       try {

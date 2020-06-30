@@ -199,9 +199,7 @@ export default {
               break;
           }
         })
-        .onCancel(() => {
-          console.log("Dismissed");
-        })
+        .onCancel(() => {})
         .onDismiss(() => {
           // console.log('I am triggered on both OK and Cancel')
         });

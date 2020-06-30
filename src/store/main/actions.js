@@ -2,14 +2,19 @@ import { LocalStorage } from "quasar";
 import { AUTH } from "../../boot/firebase";
 import { API } from "../../boot/axios";
 
-export function fetchUser({ commit }, payload) {
+export async function fetchUser({ commit }, payload) {
   if (payload) {
+    let response = await API.get(`createtoken/${payload.email}`);
+    payload.apiKey = response.data.api_key;
     commit("SET_USER", payload);
   } else {
     AUTH.onAuthStateChanged((user) => {
       if (user) {
         // Signed in. Let Vuex know.
-        commit("SET_USER", user);
+        API.get(`createtoken/${user.email}`).then((response) => {
+          user.apiKey = response.data.api_key;
+          commit("SET_USER", user);
+        });
       } else {
         // Signed out. Let Vuex know.
         commit("RESET_USER");
@@ -38,7 +43,9 @@ export function fetchTags({ commit, getters }, payload) {
     console.log("refreshing tags");
 
     let email = getters.user;
-    API.get(`user/${email}`).then((response) => {
+    API.get(`user/${email}`, {
+      headers: { apikey: getters.getUser.apiKey },
+    }).then((response) => {
       let tags = response.data.data.preferences;
       let newTags = Array();
       tags.forEach((val) => {
@@ -53,7 +60,9 @@ export function fetchTags({ commit, getters }, payload) {
     });
   } else {
     let email = getters.user;
-    API.get(`user/${email}`).then((response) => {
+    API.get(`user/${email}`, {
+      headers: { apikey: getters.getUser.apiKey },
+    }).then((response) => {
       let tags = response.data.data.preferences;
       let newTags = Array();
       tags.forEach((val) => {

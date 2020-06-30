@@ -18,6 +18,7 @@ export function SET_USER(state, user) {
   state.user.email = user.email;
   state.user.name = user.displayName;
   state.user.verified = user.emailVerified;
+  state.user.apiKey = user.apiKey;
 }
 
 export function SET_POPUP(state, payload) {

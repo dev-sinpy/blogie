@@ -189,6 +189,7 @@ export default {
     ...mapState("main", ["tags"]),
     ...mapGetters("main", ["isAuthenticated"]),
     ...mapGetters("main", ["status"]),
+    ...mapGetters("main", ["getUser"]),
     ...mapGetters("main", ["isDarkMode"]),
   },
 

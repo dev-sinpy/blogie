@@ -12,6 +12,7 @@ export default function() {
       avatar: null,
       email: null,
       name: null,
+      apiKey: null,
       verified: null,
     },
     userSettings: {

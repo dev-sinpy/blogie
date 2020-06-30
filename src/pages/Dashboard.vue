@@ -55,9 +55,6 @@ export default {
   props: ["success", "error", "deleteUser"],
 
   preFetch({ store, currentRoute, previousRoute, redirect }) {
-    //if (!store.getters['main/user']) {
-    //redirect('/')
-    //}
     //for new user, display a popup for selecting some tags
     if (currentRoute.query.tutorial) {
       store.commit("main/SET_POPUP", { popup: "initialPopup", flag: true });
@@ -76,10 +73,18 @@ export default {
     ...mapGetters("main", ["isDarkMode"]),
   },
 
-  methods: {},
+  created() {
+    this.$auth.onAuthStateChanged(function(user) {
+      if (!user) {
+        window.location.href = "/";
+      }
+    });
+  },
 
   data() {
     return {};
   },
+
+  methods: {},
 };
 </script>

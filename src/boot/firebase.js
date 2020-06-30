@@ -3,6 +3,7 @@
 
 import Vue from "vue";
 import firebase from "firebase/app";
+import "firebase/analytics";
 import "firebase/auth";
 
 //secret creds only for development purposes. DO NOT SHARE
@@ -19,6 +20,7 @@ var config = {
 
 if (firebase.apps.length === 0) {
   firebase.initializeApp(config);
+  firebase.analytics();
   var AUTH = firebase.auth();
 }
 

@@ -52,6 +52,7 @@ export default {
     ...mapGetters("main", ["status"]),
     ...mapGetters("main", ["login"]),
     ...mapGetters("main", ["getUserSettings"]),
+    ...mapGetters("main", ["getUser"]),
   },
   data() {
     return {
@@ -69,6 +70,7 @@ export default {
       });
     },
     signin: async function(val) {
+      this.error = "";
       this.loading = true;
       try {
         let provider;

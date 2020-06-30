@@ -2,7 +2,7 @@
   <q-dialog v-model="deleteAccount">
     <q-card style="height: 220px; width: 450px;">
       <q-card-section class="row items-center q-pb-none">
-        <div class="text-weight-medium text-negative text-center">
+        <div class="text-bold text-negative" style="font-size: 17px;">
           Delete your account
         </div>
         <q-space />
@@ -25,7 +25,7 @@
 
         <div class="row items-center q-ma-lg">
           <q-btn
-            @click="deleteAccount"
+            @click="deleteUserAccount"
             class="full-width"
             color="negative"
             label="delete"
@@ -46,6 +46,7 @@ export default {
     ...mapGetters("main", ["deleteAccount"]),
     ...mapGetters("main", ["status"]),
     ...mapGetters("main", ["user"]),
+    ...mapGetters("main", ["getUser"]),
   },
   methods: {
     close() {
@@ -55,12 +56,18 @@ export default {
       });
     },
 
-    deleteAccount: async function() {
+    deleteUserAccount: async function() {
       this.loading = true;
 
       try {
         let email = this.user;
-        await this.$api.post(`deleteuser/${email}`);
+        await this.$api.post(
+          `deleteuser/${email}`,
+          {},
+          {
+            headers: { apikey: this.getUser.apiKey },
+          }
+        );
         let user = this.$auth.currentUser;
         console.log(user);
         await user.delete();
