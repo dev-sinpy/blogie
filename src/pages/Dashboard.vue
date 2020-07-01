@@ -69,16 +69,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters("main", ["status"]), //status of the current state of the app
     ...mapGetters("main", ["isDarkMode"]),
-  },
-
-  created() {
-    this.$auth.onAuthStateChanged(function(user) {
-      if (!user) {
-        window.location.href = "/";
-      }
-    });
   },
 
   data() {

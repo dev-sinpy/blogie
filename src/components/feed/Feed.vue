@@ -66,7 +66,6 @@ export default {
   },
 
   computed: {
-    ...mapGetters("main", ["status"]),
     ...mapGetters("main", ["getUser"]),
     ...mapGetters("main", ["getEnabledTags"]),
     ...mapState("main", ["tags"]),

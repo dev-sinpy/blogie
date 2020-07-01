@@ -191,6 +191,12 @@ export default {
   },
 
   created() {
+    this.$auth.onAuthStateChanged(function(user) {
+      if (!user) {
+        window.location.href = "/";
+      }
+    });
+
     let userSettings = this.$q.localStorage.getItem("userSettings");
     if (userSettings.darkMode) {
       this.$store.commit("main/SET_DARK_MODE");

@@ -1,4 +1,4 @@
-import { LocalStorage } from "quasar";
+// import { LocalStorage } from "quasar";
 import { AUTH } from "../../boot/firebase";
 import { API } from "../../boot/axios";
 
@@ -18,7 +18,7 @@ export async function fetchUser({ commit }, payload) {
       } else {
         // Signed out. Let Vuex know.
         commit("RESET_USER");
-        LocalStorage.remove("tags");
+        // LocalStorage.remove("tags");
         //LocalStorage.remove("feed");
       }
     });

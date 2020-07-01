@@ -512,11 +512,4 @@ a:not(.heading-brand) {
 .code-window .dots div.green {
   background-color: #5cc72a;
 }
-/**
- * okaidia theme for JavaScript, CSS and HTML
- * Loosely based on Monokai textmate theme by http://www.monokai.nl/
- * @author ocodia
- */
-/* Code blocks */
-/* Inline code */
 </style>
