@@ -64,7 +64,7 @@ Uses additional global css defined in src/css folder.
                 <div class="orange"></div>
                 <div class="green"></div>
               </div>
-              <q-img src="statics/showcase.jpg" />
+              <q-img src="statics/showcase.webp" />
             </div>
           </div>
         </div>
