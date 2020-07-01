@@ -50,8 +50,7 @@ export default {
   name: "PersonalSubMenu",
   props: ["showSubMenu"],
   components: {
-    "delete-account-popup": require("components/popups/DeleteAccount.vue")
-      .default,
+    "delete-account-popup": () => import("components/popups/DeleteAccount.vue"),
   },
   computed: {
     ...mapGetters("main", ["getUser"]),

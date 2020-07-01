@@ -1,8 +1,6 @@
 <!--
 Home page layout
-
 Defines header and footer of the homepage.
-
 *Styling*
 Uses additional global css defined in src/css folder.
 -->
@@ -78,30 +76,24 @@ Uses additional global css defined in src/css folder.
 <script>
 import { mapGetters } from "vuex";
 import { AUTH } from "../boot/firebase";
-
 export default {
   name: "Layout",
-
   components: {
-    "register-popup": require("components/popups/Register.vue").default,
-    "login-popup": require("components/popups/Login.vue").default,
+    "register-popup": () => import("components/popups/Register.vue"),
+    "login-popup": () => import("components/popups/Login.vue"),
   },
-
   methods: {
     toDashboard() {
       window.location.href = "/dashboard";
     },
-
     displayPopup(popup) {
       /*
       params: popup
       type: String
       */
-
       this.$store.commit("main/SET_POPUP", { popup: popup, flag: true });
     },
   },
-
   computed: {
     ...mapGetters("main", ["isAuthenticated"]),
   },
@@ -118,7 +110,6 @@ export default {
 .bg-gradient {
   background: linear-gradient(#ffff00, #ffff4d);
 }
-
 :root {
   --blue: #0000ff;
   --indigo: #3d5afe;
@@ -152,13 +143,11 @@ export default {
   --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
     "Liberation Mono", "Courier New", monospace;
 }
-
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
-
 html {
   font-family: sans-serif;
   line-height: 1.15;
@@ -167,15 +156,12 @@ html {
   -ms-overflow-style: scrollbar;
   -webkit-tap-highlight-color: transparent;
 }
-
 @-ms-viewport {
   width: device-width;
 }
-
 section {
   display: block;
 }
-
 body {
   margin: 0;
   font-family: K2D, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
@@ -188,17 +174,14 @@ body {
   text-align: left;
   background-color: #ffffff;
 }
-
 h1 {
   margin-top: 0;
   margin-bottom: 1rem;
 }
-
 p {
   margin-top: 0;
   margin-bottom: 1rem;
 }
-
 a {
   color: #000000;
   text-decoration: none;
@@ -209,7 +192,6 @@ a:hover {
   color: #666666;
   text-decoration: none;
 }
-
 a:not([href]):not([tabindex]) {
   color: inherit;
   text-decoration: none;
@@ -222,11 +204,9 @@ a:not([href]):not([tabindex]):focus {
 a:not([href]):not([tabindex]):focus {
   outline: 0;
 }
-
 template {
   display: none;
 }
-
 h1,
 .h1 {
   margin-bottom: 1rem;
@@ -235,17 +215,14 @@ h1,
   line-height: 1.5;
   color: #000000;
 }
-
 h1,
 .h1 {
   font-size: 2.5rem;
 }
-
 .lead {
   font-size: 1.2rem;
   font-weight: 500;
 }
-
 .container {
   width: 100%;
   padding-right: 15px;
@@ -273,7 +250,6 @@ h1,
     max-width: 1140px;
   }
 }
-
 .row {
   display: -ms-flexbox;
   display: flex;
@@ -282,7 +258,6 @@ h1,
   margin-right: -15px;
   margin-left: -15px;
 }
-
 .col-12,
 .col-md-8,
 .col-md-9 {
@@ -292,13 +267,11 @@ h1,
   padding-right: 15px;
   padding-left: 15px;
 }
-
 .col-12 {
   -ms-flex: 0 0 100%;
   flex: 0 0 100%;
   max-width: 100%;
 }
-
 @media (min-width: 768px) {
   .col-md-8 {
     -ms-flex: 0 0 66.66667%;
@@ -311,7 +284,6 @@ h1,
     max-width: 75%;
   }
 }
-
 .btn {
   display: inline-block;
   font-weight: 700;
@@ -351,7 +323,6 @@ h1,
 .btn:not(:disabled):not(.disabled):active {
   background-image: none;
 }
-
 .btn-success {
   color: #ffffff;
   background-color: #5cc72a;
@@ -378,7 +349,6 @@ h1,
 .btn-success:not(:disabled):not(.disabled):active:focus {
   box-shadow: 0 0 0 0.2rem rgba(92, 199, 42, 0.5);
 }
-
 .btn-dark {
   color: #ffffff;
   background-color: black;
@@ -405,63 +375,49 @@ h1,
 .btn-dark:not(:disabled):not(.disabled):active:focus {
   box-shadow: 0 0 0 0.2rem rgba(0, 0, 0, 0.5);
 }
-
 .d-flex {
   display: -ms-flexbox !important;
   display: flex !important;
 }
-
 .flex-row {
   -ms-flex-direction: row !important;
   flex-direction: row !important;
 }
-
 .justify-content-between {
   -ms-flex-pack: justify !important;
   justify-content: space-between !important;
 }
-
 .align-items-center {
   -ms-flex-align: center !important;
   align-items: center !important;
 }
-
 .mr-2 {
   margin-right: 0.5rem !important;
 }
-
 .mt-4 {
   margin-top: 1.5rem !important;
 }
-
 .mt-5 {
   margin-top: 3rem !important;
 }
-
 .mb-5 {
   margin-bottom: 3rem !important;
 }
-
 .pt-4 {
   padding-top: 1.5rem !important;
 }
-
 .pb-6 {
   padding-bottom: 6rem !important;
 }
-
 .mx-auto {
   margin-right: auto !important;
 }
-
 .mx-auto {
   margin-left: auto !important;
 }
-
 .text-center {
   text-align: center !important;
 }
-
 @media print {
   *,
   *::before,
@@ -486,7 +442,6 @@ h1,
     min-width: 992px !important;
   }
 }
-
 /*****************
 Custom CSS
 *****************/
@@ -494,16 +449,13 @@ Custom CSS
   background-color: #ffff00;
   color: #000000;
 }
-
 a:not(.heading-brand) {
   font-weight: 500;
 }
-
 .heading-brand {
   font-weight: 800;
   font-size: 2.2rem;
 }
-
 .svg-icon {
   display: -ms-inline-flexbox;
   display: inline-flex;
@@ -512,7 +464,6 @@ a:not(.heading-brand) {
   -ms-flex-align: center;
   align-items: center;
 }
-
 /* Buttons */
 .btn {
   box-shadow: 0 4px 6px rgba(255, 255, 0, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
@@ -522,19 +473,12 @@ a:not(.heading-brand) {
 .btn:focus {
   box-shadow: none !important;
 }
-
 /*Forms*/
-
 /*Feature Grid*/
-
 /*Press Icons*/
-
 /*footer*/
-
 /* Icon Boxes */
-
 /*Gradients*/
-
 /*Code Window*/
 .code-window {
   border-radius: 0.45rem;
@@ -568,14 +512,11 @@ a:not(.heading-brand) {
 .code-window .dots div.green {
   background-color: #5cc72a;
 }
-
 /**
  * okaidia theme for JavaScript, CSS and HTML
  * Loosely based on Monokai textmate theme by http://www.monokai.nl/
  * @author ocodia
  */
-
 /* Code blocks */
-
 /* Inline code */
 </style>

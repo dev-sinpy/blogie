@@ -37,7 +37,7 @@ import { mapState } from "vuex";
 export default {
   // name: 'PageName',
   components: {
-    "sub-card": require("components/feed/cards/TinyCard.vue").default,
+    "sub-card": () => import("components/feed/cards/TinyCard.vue"),
   },
 
   computed: {

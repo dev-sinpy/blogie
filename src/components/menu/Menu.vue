@@ -110,10 +110,10 @@ import { mapGetters } from "vuex";
 export default {
   name: "Menu",
   components: {
-    "personal-sub-menu": require("components/menu/sub_menu/PersonalSubMenu.vue")
-      .default,
-    "settings-sub-menu": require("components/menu/sub_menu/SettingsSubMenu.vue")
-      .default,
+    "personal-sub-menu": () =>
+      import("components/menu/sub_menu/PersonalSubMenu.vue"),
+    "settings-sub-menu": () =>
+      import("components/menu/sub_menu/SettingsSubMenu.vue"),
   },
   computed: {
     ...mapGetters("main", ["getUser"]),

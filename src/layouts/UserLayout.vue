@@ -173,16 +173,13 @@ Uses quasar classes and some inline css.
 <script>
 import { mapGetters } from "vuex";
 import { mapState } from "vuex";
-import { AUTH } from "../boot/firebase";
 
 export default {
   name: "DashboardLayout",
 
   components: {
-    "nav-menu": require("components/menu/Menu.vue").default, //tags to display in sidebar
-    notifications: require("components/menu/Notification.vue").default,
-    // "left-sidebar": require("components/sidebar/LeftSidebar.vue").default, //tags to display in sidebar
-    // "right-sidebar": require("components/sidebar/RightSidebar.vue").default, //tags to display in sidebar
+    "nav-menu": () => import("components/menu/Menu.vue"),
+    notifications: () => import("components/menu/Notification.vue"),
   },
 
   computed: {
