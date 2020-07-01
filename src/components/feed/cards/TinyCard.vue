@@ -7,7 +7,7 @@
     :style="{ background: isDarkMode ? '' : '#FAFAFA' }"
   >
     <q-card-section>
-      <div class="row">
+      <div class="row q-mb-md">
         <div class="text-overline text-orange">{{ article.website_name }}</div>
 
         <q-space />
@@ -18,7 +18,7 @@
           }}</q-badge>
 
           <q-btn
-            class="q-mr-sm"
+            class="q-mr-lg"
             @click="saveData"
             dense
             round
