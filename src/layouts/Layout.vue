@@ -40,10 +40,10 @@ Uses additional global css defined in src/css folder.
           <div class="col-md-8 mx-auto text-center">
             <h1>Discover the best articles from the Internet</h1>
             <p class="lead mb-5">
-              Blogie helps you discover content from various sites. Your feed is
-              always optimized to only show articles which you would actually
-              enjoy reading so you can spend more time reading instead of
-              googling keywords for hours.
+              Blogie is a news aggregator website which helps you discover
+              content from major tech websites. Blogie is optimized to only show
+              articles based on user interests, so that you can spend more time
+              reading instead of googling keywords for hours.
             </p>
             <button
               class="btn btn-success svg-icon"
