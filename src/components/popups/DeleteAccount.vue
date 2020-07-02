@@ -68,7 +68,6 @@ export default {
           }
         );
         let user = this.$auth.currentUser;
-        console.log(user);
         await user.delete();
         await user.signOut();
         window.location.href = "/";

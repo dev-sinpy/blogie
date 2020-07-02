@@ -92,7 +92,6 @@ export default {
         }
         window.location.href = "/dashboard";
       } catch (err) {
-        console.log(err);
         if (err.hasOwnProperty("response")) {
           this.error = "Your account is not registered, please sign up first";
           await this.$auth.signOut();

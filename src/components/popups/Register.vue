@@ -96,7 +96,6 @@ export default {
         this.$q.localStorage.set("userSettings", this.getUserSettings);
         window.location.href = "/dashboard/?tutorial=true";
       } catch (err) {
-        console.log(err);
         if (err.hasOwnProperty("response")) {
           this.error = err.response.data.detail;
           await this.$auth.signOut();
