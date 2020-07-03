@@ -75,7 +75,7 @@ Uses additional global css defined in src/css folder.
 
 <script>
 import { mapGetters } from "vuex";
-import { AUTH } from "../boot/firebase";
+
 export default {
   name: "Layout",
   components: {
