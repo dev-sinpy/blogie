@@ -108,33 +108,4 @@ export default {
 };
 </script>
 
-<style lang="css" scoped>
-#or {
-  position: relative;
-  width: 300px;
-  height: 40px;
-
-  line-height: 50px;
-  text-align: center;
-}
-
-#or::before,
-#or::after {
-  position: absolute;
-  width: 130px;
-  height: 1px;
-
-  top: 24px;
-  background-color: #aaa;
-
-  content: "";
-}
-
-#or::before {
-  left: 0;
-}
-
-#or::after {
-  right: 0;
-}
-</style>
+<style lang="css" scoped></style>
