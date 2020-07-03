@@ -10,7 +10,7 @@
   "scripts": {
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore ./",
     "test": "echo \"No test specified\" && exit 0",
-    "build": "quasar build",
+    "build": "quasar build --modern",
     "deploy": "now"
   },
   "dependencies": {
