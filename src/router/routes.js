@@ -9,7 +9,7 @@ const routes = [
 
   {
     path: "/",
-    component: () => import("layouts/Layout.vue"),
+    component: () => import("layouts/Landing.vue"),
   },
 
   {
