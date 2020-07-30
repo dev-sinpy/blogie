@@ -54,17 +54,8 @@ Uses additional global css defined in src/css folder.
             </button>
           </div>
         </div>
-        <div class="rows mt-5">
-          <div class="col-md-9 mx-auto">
-            <div class="code-window">
-              <div class="dots">
-                <div class="red"></div>
-                <div class="orange"></div>
-                <div class="green"></div>
-              </div>
-              <q-img src="statics/showcase.webp" />
-            </div>
-          </div>
+        <div class="rows mt-5 col-md-9 mx-auto">
+          <CodeWindow />
         </div>
       </div>
     </section>
@@ -75,12 +66,14 @@ Uses additional global css defined in src/css folder.
 
 <script>
 import { mapGetters } from "vuex";
+import CodeWindow from "../components/landing/CodeWindow";
 
 export default {
   name: "Layout",
   components: {
     "register-popup": () => import("components/popups/Register.vue"),
     "login-popup": () => import("components/popups/Login.vue"),
+    CodeWindow
   },
   methods: {
     toDashboard() {
@@ -472,44 +465,5 @@ a:not(.heading-brand) {
 .btn:focus,
 .btn:focus {
   box-shadow: none !important;
-}
-/*Forms*/
-/*Feature Grid*/
-/*Press Icons*/
-/*footer*/
-/* Icon Boxes */
-/*Gradients*/
-/*Code Window*/
-.code-window {
-  border-radius: 0.45rem;
-  background-color: #ffffff;
-  padding: 1.52rem;
-  box-shadow: 0 8px 24px 0 rgba(0, 0, 0, 0.1);
-}
-.code-window .dots {
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -ms-flex-align: center;
-  align-items: center;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-}
-.code-window .dots div {
-  margin-right: 0.5rem;
-  width: 0.75rem;
-  height: 0.75rem;
-  border-radius: 50%;
-  background-color: #e9ecef;
-}
-.code-window .dots div.red {
-  background-color: #ff1744;
-}
-.code-window .dots div.orange {
-  background-color: #f6c343;
-}
-.code-window .dots div.green {
-  background-color: #5cc72a;
 }
 </style>
