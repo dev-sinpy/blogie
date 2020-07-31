@@ -1,0 +1,47 @@
+// Global styles
+// These will be applied all across the website
+
+@import "./variables";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+	font-family: $font-body;
+}
+
+.logo__text {
+	font-family: $font-logo;
+}
+
+#or {
+  position: relative;
+  width: 300px;
+  height: 40px;
+
+  line-height: 50px;
+  text-align: center;
+}
+
+#or::before,
+#or::after {
+  position: absolute;
+  width: 130px;
+  height: 1px;
+
+  top: 24px;
+  background-color: #aaa;
+
+  content: "";
+}
+
+#or::before {
+  left: 0;
+}
+
+#or::after {
+  right: 0;
+}

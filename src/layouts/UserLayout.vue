@@ -19,7 +19,7 @@ Uses quasar classes and some inline css.
           :color="isDarkMode ? 'white' : 'black'"
         />
 
-        <div class="q-pl-lg text-h4 text-bold logo-text text-orange">
+        <div class="q-pl-lg text-h4 text-bold logo__text text-orange">
           Blogie
         </div>
         <q-badge outline class="q-ma-sm text-bold" color="orange">Beta</q-badge>

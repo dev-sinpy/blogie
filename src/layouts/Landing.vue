@@ -6,19 +6,19 @@ Uses additional global css defined in src/css folder.
 -->
 
 <template>
-  <q-layout>
+  <q-layout class="landing__container">
     <!-- popups-->
     <login-popup />
     <register-popup />
     <!-- end popups-->
 
-    <section class="bg-gradient pt-4 pb-6">
+    <section class="main__container pt-4 pb-6">
       <div class="container">
         <div class="rows">
           <div
             class="col-12 d-flex flex-rows align-items-center justify-content-between"
           >
-            <div class="heading-brand logo-text">Blogie</div>
+            <div class="heading-brand logo__text">Blogie</div>
 
             <button
               v-if="isAuthenticated"
@@ -38,8 +38,8 @@ Uses additional global css defined in src/css folder.
         </div>
         <div class="rows mt-4">
           <div class="col-md-8 mx-auto text-center">
-            <h1>Discover the best articles from the Internet</h1>
-            <p class="lead mb-5">
+            <h1 class="intro__title">Discover the best articles from the Internet</h1>
+            <p class="intro__text lead mb-5">
               Blogie is a news aggregator website which helps you discover
               content from major tech websites. Blogie is optimized to only show
               articles based on user interests, so that you can spend more time
@@ -54,17 +54,8 @@ Uses additional global css defined in src/css folder.
             </button>
           </div>
         </div>
-        <div class="rows mt-5">
-          <div class="col-md-9 mx-auto">
-            <div class="code-window">
-              <div class="dots">
-                <div class="red"></div>
-                <div class="orange"></div>
-                <div class="green"></div>
-              </div>
-              <q-img src="statics/showcase.webp" />
-            </div>
-          </div>
+        <div class="rows mt-5 col-md-9 mx-auto">
+          <CodeWindow />
         </div>
       </div>
     </section>
@@ -75,12 +66,14 @@ Uses additional global css defined in src/css folder.
 
 <script>
 import { mapGetters } from "vuex";
+import CodeWindow from "../components/landing/CodeWindow";
 
 export default {
   name: "Layout",
   components: {
     "register-popup": () => import("components/popups/Register.vue"),
     "login-popup": () => import("components/popups/Login.vue"),
+    CodeWindow
   },
   methods: {
     toDashboard() {
@@ -106,82 +99,23 @@ export default {
 };
 </script>
 
-<style lang="css" scoped>
-.bg-gradient {
-  background: linear-gradient(#ffff00, #ffff4d);
+<style lang="scss" scoped>
+@import "../css/variables";
+
+.main__container {
+  background: $main-background;
 }
-:root {
-  --blue: #0000ff;
-  --indigo: #3d5afe;
-  --purple: #aa00ff;
-  --pink: #f50057;
-  --red: #ff1744;
-  --orange: #f6c343;
-  --yellow: #ffff00;
-  --green: #5cc72a;
-  --teal: #1de9b6;
-  --cyan: #00e5ff;
-  --white: #ffffff;
-  --gray: #868e96;
-  --gray-dark: #343a40;
-  --primary: #ffff00;
-  --secondary: #0000ff;
-  --success: #5cc72a;
-  --info: #00e5ff;
-  --warning: #f6c343;
-  --danger: #ff1744;
-  --light: #f8f9fa;
-  --dark: black;
-  --breakpoint-xs: 0;
-  --breakpoint-sm: 576px;
-  --breakpoint-md: 768px;
-  --breakpoint-lg: 992px;
-  --breakpoint-xl: 1200px;
-  --font-family-sans-serif: K2D, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji",
-    "Segoe UI Emoji", "Segoe UI Symbol";
-  --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
-    "Liberation Mono", "Courier New", monospace;
-}
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-html {
-  font-family: sans-serif;
-  line-height: 1.15;
-  -webkit-text-size-adjust: 100%;
-  -ms-text-size-adjust: 100%;
-  -ms-overflow-style: scrollbar;
-  -webkit-tap-highlight-color: transparent;
-}
-@-ms-viewport {
-  width: device-width;
-}
-section {
-  display: block;
-}
-body {
-  margin: 0;
-  font-family: K2D, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
-    "Segoe UI Symbol";
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.5;
-  color: #343a40;
-  text-align: left;
-  background-color: #ffffff;
-}
-h1 {
+
+.intro__title {
   margin-top: 0;
   margin-bottom: 1rem;
 }
-p {
+
+.intro__text {
   margin-top: 0;
   margin-bottom: 1rem;
 }
+
 a {
   color: #000000;
   text-decoration: none;
@@ -472,44 +406,5 @@ a:not(.heading-brand) {
 .btn:focus,
 .btn:focus {
   box-shadow: none !important;
-}
-/*Forms*/
-/*Feature Grid*/
-/*Press Icons*/
-/*footer*/
-/* Icon Boxes */
-/*Gradients*/
-/*Code Window*/
-.code-window {
-  border-radius: 0.45rem;
-  background-color: #ffffff;
-  padding: 1.52rem;
-  box-shadow: 0 8px 24px 0 rgba(0, 0, 0, 0.1);
-}
-.code-window .dots {
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -ms-flex-align: center;
-  align-items: center;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-}
-.code-window .dots div {
-  margin-right: 0.5rem;
-  width: 0.75rem;
-  height: 0.75rem;
-  border-radius: 50%;
-  background-color: #e9ecef;
-}
-.code-window .dots div.red {
-  background-color: #ff1744;
-}
-.code-window .dots div.orange {
-  background-color: #f6c343;
-}
-.code-window .dots div.green {
-  background-color: #5cc72a;
 }
 </style>
