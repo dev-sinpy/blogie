@@ -1,4 +1,9 @@
 # Blogie
+
+<p align="center">
+  <img alt="Blogie Demo" src="./demo.jpg">
+</p>
+
 A news aggregator web-app that helps you discover content from major tech websites.
 
 ## Get started
