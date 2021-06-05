@@ -1,5 +1,5 @@
 # Blogie
-A news aggregator web-app, which helps you discover content from major tech websites.
+A news aggregator web-app that helps you discover content from major tech websites.
 
 ## Get started
 
